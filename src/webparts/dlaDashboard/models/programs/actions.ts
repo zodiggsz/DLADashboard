@@ -1,0 +1,492 @@
+import { PageContext } from "@microsoft/sp-page-context";
+import {
+    SPHttpClient,
+    SPHttpClientResponse
+} from '@microsoft/sp-http';
+import { sp } from "@pnp/sp";
+import { Web } from "@pnp/sp/webs";
+import "@pnp/sp/lists";
+import "@pnp/sp/items";
+import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
+import { toast } from 'react-toastify';
+import { slice } from './index';
+
+let web;
+
+if (Environment.type === EnvironmentType.Local) {  
+    web = Web("https://localhost:4323");
+} else {
+    web = Web("https://codicast1.sharepoint.com/");
+}
+
+export function getProgramImprovements(ID){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        let programs = web.lists.getByTitle("Improvements").items.filter("ProgramID eq '"+ID+"'").get().then( items => {
+            if(items){
+                dispatch(slice.actions.setProgramImprovements(items));
+            }
+
+        });
+        
+    };
+
+}
+
+export function setProgramImprovements(improvements){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setProgramImprovements(improvements));
+    };
+
+}
+
+export function addImprovement(id, improvement){
+    
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        let results = web.lists.getByTitle("Improvements").items.filter("ID eq '"+id+"'").get().then( items => {
+            // dispatch(slice.actions.setProgramInterests(items.results));
+            if(items.length > 0){
+                web.lists.getByTitle("Improvements").items.getById(id).update(improvement).then( result => {
+                    dispatch(slice.actions.setLoading(false));
+                    toast.success(`Successfully updated Improvement`);
+                });
+                
+            }else{
+                web.lists.getByTitle("Improvements").items.add(improvement).then(result => {
+                    dispatch(slice.actions.setLoading(false));
+                    dispatch(slice.actions.addProgramImprovement(result.data))
+                    console.log(result);
+                    toast.success(`Successfully added Improvement`);
+                });
+                
+            }
+
+        });
+        
+    };
+}
+
+export function getUserProgram(ID){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        const result = web.lists.getByTitle("DLA_User_Programs").items.filter("ProgramID eq '"+ID+"'").get().then( user => {
+            return user[0];
+        } );
+        
+        return result;
+        
+    };
+
+}
+
+export function addUserProgram(program){
+    
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        try {
+            const items: any[] = await web.lists.getByTitle("DLA_User_Programs").items.filter("ProgramID eq '"+program.ProgramID+"'").get();
+            if (items.length > 0) {
+                const update = await web.lists.getByTitle("DLA_User_Programs").items.getById(items[0].ID).update(program);
+                toast.success(`Successfully updated Program "${program.Title}"`);
+            }else{
+                web.lists.getByTitle("DLA_User_Programs").items.add(program).then( result => {
+                    console.log(result.data);
+                    dispatch(slice.actions.updateUserPrograms(result.data));
+                });
+                toast.success(`Successfully added "${program.Title}"`);
+            }
+            
+        } catch (e) {
+            toast.error("Error adding Program");
+            return e;
+        }
+        
+    }; 
+}
+
+export function removeUserProgram(program){
+    
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        try {
+            web.lists.getByTitle("DLA_User_Programs").items.filter("ProgramID eq '"+program.ID+"'").delete();
+            dispatch(slice.actions.setLoading(false));
+        } catch (e) {
+            toast.error("Error creating user");
+            return e;
+        }
+        
+    }; 
+}
+
+export function updateUserProgram(program){
+    
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        try {
+
+            const items: any[] = await web.lists.getByTitle("DLA_User_Programs").items.filter("ProgramID eq '"+program.ProgramID+"'").get();
+            if (items.length > 0) {
+                const update = await web.lists.getByTitle("DLA_User_Programs").items.getById(items[0].ID).update(program);
+                toast.success(`Successfully updated Program "${program.Title}"`);
+            }
+            
+            dispatch(slice.actions.setLoading(false));
+        } catch (e) {
+            toast.error("Error updating program");
+            return e;
+        }
+        
+    }; 
+}
+
+export function getUserPrograms(userID){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        let programIDs = [];
+        let programs = web.lists.getByTitle("DLA_User_Programs").items.select("ProgramID").filter("UserID eq '"+userID+"' and Active eq 'Active'").top(50).orderBy("Created", false).get().then( items => {
+            const list = Object.values(items);
+            list.map(item => {
+                const programID = `${item['ProgramID']}`;
+                programIDs.push(programID);
+            });
+
+            dispatch(slice.actions.setUserPrograms(programIDs));
+
+            if(items.hasNext){
+                dispatch(slice.actions.setNext(items.nextUrl));
+            }   
+
+        });
+        
+    };
+
+}
+
+export function setUserPrograms(programs){
+
+    return async (dispatch) => {
+
+        dispatch(slice.actions.setUserPrograms(programs));
+        
+    };
+
+}
+
+export function getAllPrograms(){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        let programs = web.lists.getByTitle("DLA_Programs").items.filter("Active eq 'Active'").top(50).orderBy("Created", false).getPaged().then( items => {
+            dispatch(slice.actions.setPrograms(items.results));
+
+            if(items.hasNext){
+                dispatch(slice.actions.setNext(items.nextUrl));
+            }   
+
+        });
+        
+    };
+
+}
+
+export function getProgram(email){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        const result = web.lists.getByTitle("DLA_Programs").items.filter("Email eq '"+email+"'").get().then( user => {
+            dispatch(slice.actions.setProgram(user[0]));
+            return user[0];
+        } );
+        
+        return result;
+        
+    };
+
+}
+
+export function getProgramByID(id){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        const program = await web.lists.getByTitle("DLA_Programs").items.select("ID", "Acronym").top(100).orderBy("Created", false).getById(id).get();
+        dispatch(slice.actions.setProgram(program));
+        
+    };
+
+}
+
+export function addProgram(program){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.addProgram(program));
+    };
+
+}
+
+export function showProgramByID(id){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        const program = await web.lists.getByTitle("DLA_Programs").items.select("ID", "Acronym").top(100).orderBy("Created", false).getById(id).get();
+        return program;
+        
+    };
+
+}
+
+export function getScoreHistory(program){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        const score = await web.lists.getByTitle("Total_Program_Scores").items.getByTitle(program).orderBy("Created", false).getAll().then( data => {
+            if(data.length > 0){
+                console.log(data);
+                return data;
+            }else{
+                return false;
+            }
+            
+        } );
+        
+    };
+    
+}
+
+export async function getCompositeScore(id){
+
+    const score = await web.lists.getByTitle("Total_Program_Scores").items.filter("ProgramID eq '"+id+"'").select("CompositeScore", "TotalScore").top(1).orderBy("Created", false).get().then( data => {
+        if(data.length > 0){
+            return data[0];
+        }else{
+            return 0.0;
+        }
+        
+    } );
+
+    return score;
+    
+}
+
+export function addCompositeScore(score){
+    
+    return async (dispatch) => {
+        try {
+
+            dispatch(slice.actions.setLoading(true));
+            const result = await web.lists.getByTitle("Total_Program_Scores").items.add(score);
+            toast.success(`Successfully add Score for "${score.Title}"`);
+            return result;
+            
+        } catch (e) {
+            toast.error("Error adding Composite Score");
+            return e;
+        }
+        
+
+    }; 
+}
+
+export function addScore(score, type){
+    
+    return async (dispatch) => {
+        try {
+
+            dispatch(slice.actions.setLoading(true));
+            const result = await web.lists.getByTitle(type).items.add(score);
+            return result;
+            
+        } catch (e) {
+            toast.error("Error adding score for " + type);
+            console.log(e);
+            return e;
+        }
+    }; 
+}
+
+export function getProgramScores(id, type){
+    
+    
+    const select = ['ProgramID', 'Title', 'OriginalScore', 'TargetScore', 'TotalScoreID'];
+    const defaultScore = {
+        OriginalScore: 0,
+        TargetScore:0
+    };
+
+    let filter = '';
+
+    if(type === 'history'){
+        filter = `TotalScoreID eq ${id}`;
+    }else{
+        filter = `ProgramID eq ${id}`;
+    }
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        
+        const governance = await web.lists.getByTitle("Program_Governance").items.select(select).filter(filter).top(1).orderBy("Created", false).get().then( data => {
+            return data[0] ? data[0]: defaultScore;
+        } );
+
+        const operations =  await web.lists.getByTitle("Program_Operations").items.select(select).filter(filter).top(1).orderBy("Created", false).get().then( data => {
+            return data[0] ? data[0]: defaultScore;
+        } );
+
+        const people =  await web.lists.getByTitle("Program_People_Culture").items.select(select).filter(filter).top(1).orderBy("Created", false).get().then( data => {
+            return data[0] ? data[0]: defaultScore;
+        } );
+
+        const strategy =  await web.lists.getByTitle("Program_Strategy").items.select(select).filter(filter).top(1).orderBy("Created", false).get().then( data => {
+            return data[0] ? data[0]: defaultScore;
+        } );
+
+        const technology =  await web.lists.getByTitle("Program_Technology").select(select).items.filter(filter).top(1).orderBy("Created", false).get().then( data => {
+            return data[0] ? data[0]: defaultScore;
+        } );
+
+        const scoreData = {governance, operations, people, strategy, technology};
+
+        dispatch(slice.actions.setProgramScores(scoreData));
+        
+    };
+
+}
+
+export function getProgramHistory(id){
+    
+    
+    const select = ["*", "Author/ID", "Author/Title"];
+    let includeFields = ['ID', 'Title', 'Modified', 'Modified By', 'Created', 'Created By'];
+    let filter = `ProgramID eq ${id}`;
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        
+        const score = await web.lists.getByTitle("Total_Program_Scores").items.filter(filter).top(5).select(select).expand("Author").orderBy("Created", false).get().then( data => {
+            return data[0] ? data: [];
+        } );
+
+        const insights = await web.lists.getByTitle("Insights").items.filter(filter).top(5).select(select).expand("Author").orderBy("Created", false).get().then( data => {
+            return data[0] ? data: [];
+        } );
+
+        const improvements = await web.lists.getByTitle("Improvements").items.filter(filter).top(5).select(select).expand("Author").orderBy("Created", false).get().then( data => {
+            return data[0] ? data: [];
+        } );
+
+        const historyData = {improvements, insights, score};
+
+        dispatch(slice.actions.setProgramHistory(historyData));
+        
+    };
+
+}
+
+
+
+export function removeInsight(id){
+    
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        try {
+            const items = await web.lists.getByTitle("Insights").items.getById(id).get();
+            if (items) {
+                web.lists.getByTitle("Insights").items.getById(id).delete();
+                dispatch(slice.actions.setLoading(false));
+                
+            }
+
+            toast.success(`Successfully removed Insight`);
+            
+        } catch (e) {
+            toast.error("Error removing insight");
+            return e;
+        }
+        
+    }; 
+}
+
+export function addInsight(id, insight){
+    
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        try {
+            if(id > 0){
+                const item = await web.lists.getByTitle("Insights").items.filter(`Id eq ${id}`).get();
+                if (item) {
+                    web.lists.getByTitle("Insights").items.getById(id).update(insight);
+                    dispatch(slice.actions.setLoading(false));
+                    toast.success(`Successfully updated Insight`);
+                }
+            
+            }else{
+
+                web.lists.getByTitle("Insights").items.add(insight);
+                dispatch(slice.actions.setLoading(false));
+                toast.success(`Successfully added Insight`);
+
+            }   
+        } catch (e) {
+            toast.error("Error adding insight");
+            console.log(e);
+            return e;
+        }
+        
+    }; 
+}
+
+export function getProgramInsights(id){
+    
+    const select = ['ID','Lens', 'Content'];
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        
+        const governance = await web.lists.getByTitle("Insights").items.select(select).filter(`ProgramID eq ${id} and Lens eq 'governance'`).orderBy("Created", false).getAll().then( data => {
+            return data ? data: [];
+        } );
+
+        const operations =  await web.lists.getByTitle("Insights").items.select(select).filter(`ProgramID eq ${id} and Lens eq 'operations'`).orderBy("Created", false).getAll().then( data => {
+            return data ? data: [];
+        } );
+
+        const people =  await web.lists.getByTitle("Insights").items.select(select).filter(`ProgramID eq ${id} and Lens eq 'people'`).orderBy("Created", false).getAll().then( data => {
+            return data ? data: [];
+        } );
+
+        const strategy =  await web.lists.getByTitle("Insights").items.select(select).filter(`ProgramID eq ${id} and Lens eq 'strategy'`).orderBy("Created", false).getAll().then( data => {
+            return data ? data: [];
+        } );
+
+        const technology =  await web.lists.getByTitle("Insights").items.select(select).filter(`ProgramID eq ${id} and Lens eq 'technology'`).orderBy("Created", false).getAll().then( data => {
+            return data ? data: [];
+        } );
+
+        const insightData = {governance, operations, people, strategy, technology};
+
+        dispatch(slice.actions.setProgramInsights(insightData));
+        return insightData;
+        
+    };
+
+}
+
+export function getProgramAccomplishments(id){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        const result = web.lists.getByTitle("DLA_Users").items.filter("Email eq '"+id+"'").get().then( user => {
+            dispatch(slice.actions.setProgram(user[0]));
+            return user[0];
+        } );
+        
+        return result;
+        
+    };
+
+}

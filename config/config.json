@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "dla-dashboard-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/dlaDashboard/DlaDashboardWebPart.js",
+          "manifest": "./src/webparts/dlaDashboard/DlaDashboardWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "DlaDashboardWebPartStrings": "lib/webparts/dlaDashboard/loc/{locale}.js"
+  }
+}

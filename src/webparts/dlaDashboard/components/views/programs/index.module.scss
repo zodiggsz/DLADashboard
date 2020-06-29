@@ -1,0 +1,48 @@
+table {
+    width: 100%;
+    padding: 15px;
+    border-spacing: 0px;
+    border-collapse: separate;
+
+    thead {
+        tr {
+            text-align: left;
+            font-weight: normal;
+        }
+    }
+
+    tbody {
+        tr {
+            cursor: pointer;
+            &:nth-child(odd) {
+                background-color: #cdd5e6;
+            }
+
+            &:nth-child(even) {
+                background-color: #e8ecf4;
+            }
+        }
+    }
+
+    td, th {
+        padding: 8px;
+        &.green {
+            background-color: green;
+        }
+
+        &.yellow {
+            background-color: yellow;
+        }
+
+        &.red {
+            background-color: red;
+        }
+        &.neutral {
+            background-color: #e8ecf4;
+        }
+    }
+}
+
+.programList .tableRow.selected, .programList .tableRow.selected:hover{
+    background-color: #73B5EF;
+}

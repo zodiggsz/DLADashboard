@@ -1,0 +1,26 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+    "id": "59caf2a9-b743-48fa-96ff-e1f16aca9cd4",
+    "alias": "DlaDashboardWebPart",
+    "componentType": "WebPart",
+    "version": "*",
+    "manifestVersion": 2,
+    "supportsFullBleed": true,
+    "requiresCustomScript": false,
+    "supportedHosts": ["SharePointWebPart", "SharePointFullPage", "TeamsTab"],
+
+    "preconfiguredEntries": [{
+        "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+        "group": { "default": "Other" },
+        "title": { "default": "DLA Dashboard" },
+        "description": { "default": "DLA Dashboard for ETM users" },
+        "officeFabricIconFontName": "Page",
+        "properties": {
+            "description": "DLA Dashboard",
+            "test": "Multi-line text field",
+            "test1": true,
+            "test2": "2",
+            "test3": true
+        }
+    }]
+}

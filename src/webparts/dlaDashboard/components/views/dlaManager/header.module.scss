@@ -1,0 +1,45 @@
+.pfHeader {
+    top:0;
+    right:0;
+    left:0;
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    background-color: #08243E;
+    border-bottom: 1px solid darkblue;
+    z-index: 99999;
+
+    h3.header {
+        margin: 0 15px;
+        color: white;
+        font-size: 1.25rem;
+        font-family: proxima-nova, sans-serif;
+        font-weight: 700;
+        font-style: normal;
+    }
+
+    h5.pfUser {
+        color: white;
+        margin: 0 15px;
+        font-family: proxima-nova, sans-serif;
+        font-size: 1rem;
+        font-weight: 300;
+        font-style: normal;
+    }
+    
+    .toolbar {
+        width:60;
+        background-color:"#08243E";
+        color:"#ffffff";
+        height:'100%';
+        display: 'flex';
+        align-items: 'center';
+        justify-content: 'center';
+        padding: 0px;
+        margin-left: 20px;
+    }
+}
