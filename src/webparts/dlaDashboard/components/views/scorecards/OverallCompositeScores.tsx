@@ -85,9 +85,11 @@ export default function OverallCompositeScores(props) {
     const { etmTitle="ETM Scorecard Results" } = props;
 
     React.useEffect(() => {
-
+        
         if(programs.length > 0){
             collectScores();
+        }else{
+            dispatch(actions.getAllPrograms());
         }
 
     }, [programs]);
