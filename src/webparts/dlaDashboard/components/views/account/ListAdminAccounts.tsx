@@ -75,13 +75,13 @@ export default function ListAdminAccounts() {
 
     }, [accounts, userAccounts]);
 
-    function handleAccountClick(username) {
-        return () => history.push(`/accounts/peo/${username}`);
+    function handleAccountClick(id) {
+        return () => history.push(`/account/${id}`);
     }
 
     return (
         <Paper className={`${classes.paper} ${dlaStyles.listManager}`}>
-            <h1 className={dlaStyles.title}>ETM Operators</h1>
+            <h1 className={dlaStyles.title}>ECM Operators</h1>
             <TableContainer>
                 <Table aria-label="customized table">
                 <TableBody>
@@ -91,7 +91,7 @@ export default function ListAdminAccounts() {
                             <TableCell align="center">{account.Last_Name}</TableCell>
                             <TableCell align="center">{account.Email}</TableCell>
                             <TableCell align="center">
-                                <Button onClick={handleAccountClick(account.Title)} style={{fontWeight:700}}>VIEW</Button>
+                                <Button onClick={handleAccountClick(account.ID)} style={{fontWeight:700}}>VIEW</Button>
                             </TableCell>
                         </TableRow>
                     ))}

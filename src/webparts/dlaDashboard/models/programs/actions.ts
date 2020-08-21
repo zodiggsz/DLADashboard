@@ -16,7 +16,7 @@ let web;
 if (Environment.type === EnvironmentType.Local) {  
     web = Web("https://localhost:4323");
 } else {
-    web = Web("https://codicast1.sharepoint.com/");
+    web = Web("https://dlamil.dps.mil/");
 }
 
 export function getProgramImprovements(ID){
@@ -57,7 +57,7 @@ export function addImprovement(id, improvement){
             }else{
                 web.lists.getByTitle("Improvements").items.add(improvement).then(result => {
                     dispatch(slice.actions.setLoading(false));
-                    dispatch(slice.actions.addProgramImprovement(result.data))
+                    dispatch(slice.actions.addProgramImprovement(result.data));
                     console.log(result);
                     toast.success(`Successfully added Improvement`);
                 });

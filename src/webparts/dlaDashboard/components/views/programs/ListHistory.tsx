@@ -210,7 +210,7 @@ export default function ListHistory() {
         if(selectedProgram){
             if(selectedProgram.ID && program.ID !== selectedProgram.ID){
                 setProgram(selectedProgram);
-                dispatch(actions.getProgramHistory(selectedProgram.ID))
+                dispatch(actions.getProgramHistory(selectedProgram.ID));
             }
         }
 

@@ -347,7 +347,7 @@ export default function ListPrograms({userID, navigate = false}) {
                     };
                     dispatch(programActions.addProgram(update));
                 });
-            })
+            });
 
         });
         setProgramFilter(true);

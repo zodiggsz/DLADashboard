@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { UserAgentApplication } from 'msal';
 import { config } from './config';
-import { getUserDetails } from './services/GraphServices';
+import { getUserDetails } from './webparts/dlaDashboard/services/GraphServices';
 
 export interface AuthComponentProps {
   error: any;

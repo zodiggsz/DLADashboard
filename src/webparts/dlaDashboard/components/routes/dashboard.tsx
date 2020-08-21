@@ -4,9 +4,11 @@ import TableChartIcon from '@material-ui/icons/TableChart';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
+import ShowChartIcon from '@material-ui/icons/ShowChart';
 
 import Account from '../views/account';
 import ManageAccounts from '../views/account/ManageAccounts';
@@ -24,8 +26,8 @@ var dashRoutes = [
     {
         collapse: true,
         path: "/",
-        name: "Dashboard",
-        icon: DashboardIcon,
+        name: "Account",
+        icon: AccountCircleIcon,
         component: Account,
         group:["admin","operator","peo","portfolio","program"],
     },
@@ -33,7 +35,7 @@ var dashRoutes = [
         form: true,
         path: "/teams",
         name: "Teams",
-        icon: AccountCircleIcon,
+        icon: AccountTreeIcon,
         component: ManageTeams,
         hidden: false,
         group:["admin","operator","portfolio","program"]
@@ -58,7 +60,7 @@ var dashRoutes = [
         form: true,
         path: "/improvements",
         name: "Improvements",
-        icon: CheckBoxIcon,
+        icon: ShowChartIcon,
         component: Improvements,
         hidden: true,
         group:["admin","operator","portfolio","program"]

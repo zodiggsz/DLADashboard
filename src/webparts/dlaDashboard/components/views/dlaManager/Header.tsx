@@ -103,7 +103,7 @@ export default function Header({drawer = () => {}, user}) {
             default:
                 break;
         }
-    }
+    };
 
     return (
         <header className={headerStyles.pfHeader}>

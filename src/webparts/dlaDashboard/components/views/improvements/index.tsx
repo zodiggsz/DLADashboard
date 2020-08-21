@@ -108,7 +108,7 @@ function AlertModal({classes, alert, msg, handleAlert=()=>{}}){
           </div>
         </Fade>
       </Modal>
-    )
+    );
 }
 
 interface ProgramData {
@@ -171,7 +171,7 @@ export default function Improvements() {
     };
 
     function handleInputChange(key) {
-        return function (e) {
+        return (e) => {
             setImprovement({
                 ...improvement,
                 [key]: e.target.value
@@ -193,10 +193,10 @@ export default function Improvements() {
                 Subject: improvement.Subject,
                 Description: improvement.Description
             };
-            let prog = await dispatch(actions.setProgramImprovements(update));
+            let progImp = await dispatch(actions.setProgramImprovements(update));
         }
 
-        let prog = await dispatch(actions.addImprovement(improvement.ID, improvement));
+        let imp = await dispatch(actions.addImprovement(improvement.ID, improvement));
     }
 
     function deleteImprovement(item){
@@ -263,7 +263,7 @@ export default function Improvements() {
                             </TableRow>
                             </TableHead>
                             <TableBody>
-                            {improvements.length > 0 && improvements.map(function(item, key) {
+                            {improvements.length > 0 && improvements.map((item, key) => {
                                 return (
                                     <TableRow key={key}>
                                         <TableCell align="left">{item.Subject}</TableCell>

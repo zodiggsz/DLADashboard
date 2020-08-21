@@ -20,7 +20,7 @@ function WelcomeContent(props: WelcomeProps) {
     return (
       <div>
         <h4>Welcome {props.user.displayName}!</h4>
-        <p>If you need access to the DLA Dashboard<br />Please contact your ETM Administrator for Access</p>
+        <p>If you need access to the DLA Dashboard<br />Please contact your ECM Administrator for Access</p>
       </div>
     );
   }
@@ -35,7 +35,7 @@ export default class Welcome extends React.Component<WelcomeProps, WelcomeState>
       <Jumbotron className={styles.jumbotron}>
         <h1>DLA Dashboard</h1>
         <p className="lead">
-            MVP Dashboard for ETM Administration
+            MVP Dashboard for ECM Administration
         </p>
         <WelcomeContent
           isAuthenticated={this.props.isAuthenticated}

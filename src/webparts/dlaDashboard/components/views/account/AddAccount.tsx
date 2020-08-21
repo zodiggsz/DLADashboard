@@ -165,7 +165,7 @@ export default function AddAccount({ admin, closeModal = () => {} }) {
                             </Select>
                         </FormControl>
                         {   
-                            user.Group == 'portfolio' || user.Group == 'program'  ?
+                            user.Group == 'portfolio' || user.Group == 'program' || user.Group == 'admin'  ?
                                 <TextField
                                     id="filled-full-width"
                                     label="JCODE"

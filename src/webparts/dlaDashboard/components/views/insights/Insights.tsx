@@ -283,10 +283,10 @@ export default function Insights() {
                 ProgramID: selectedProgram.ID,
                 Lens: lens,
                 Content: item.Content
-            }
+            };
             dispatch(actions.addInsight(item.ID, update));
             
-        })
+        });
 
     }
 

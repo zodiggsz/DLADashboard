@@ -104,7 +104,7 @@ function AlertModal({classes, alert, msg, handleAlert=()=>{}}){
           </div>
         </Fade>
       </Modal>
-    )
+    );
 }
 
 interface ProgramData {
@@ -167,7 +167,7 @@ export default function Improvements() {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {improvements.length > 0 && improvements.map(function(item, key) {
+                    {improvements.length > 0 && improvements.map((item, key) => {
                         return (
                             <TableRow key={key}>
                                 <TableCell align="left">{item.Subject}</TableCell>
