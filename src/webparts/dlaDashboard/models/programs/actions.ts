@@ -16,7 +16,7 @@ let web;
 if (Environment.type === EnvironmentType.Local) {  
     web = Web("https://localhost:4323");
 } else {
-    web = Web("https://dlamil.dps.mil/");
+    web = Web("https://dlamil.dps.mil/sites/SPO_PEODashboard");
 }
 
 export function getProgramImprovements(ID){
