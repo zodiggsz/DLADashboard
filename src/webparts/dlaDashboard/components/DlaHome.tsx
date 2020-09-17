@@ -30,6 +30,8 @@ export function DlaUser({user, props}){
 
     }, []);
 
+    console.log(userData);
+    
     return (
         <div>
             
@@ -38,6 +40,7 @@ export function DlaUser({user, props}){
             <Welcome {...props}
             isAuthenticated={props.isAuthenticated}
             user={dlaUser}
+            message="Did Load DlaUser but userData not set"
             authButtonMethod={props.login} />
         }
         </div>
@@ -71,6 +74,7 @@ class DlaHome extends React.Component<AuthComponentProps> {
                             <Welcome {...props}
                             isAuthenticated={this.props.isAuthenticated}
                             user={this.props.user}
+                            message="Did not Load DlaUser"
                             authButtonMethod={this.props.login} />
                         } />
                     </Container>

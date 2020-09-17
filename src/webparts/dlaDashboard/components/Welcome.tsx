@@ -8,6 +8,7 @@ interface WelcomeProps {
   isAuthenticated : boolean;
   authButtonMethod : any;
   user : any;
+  message : string;
 }
 
 interface WelcomeState {
@@ -20,7 +21,7 @@ function WelcomeContent(props: WelcomeProps) {
     return (
       <div>
         <h4>Welcome {props.user.displayName}!</h4>
-        <p>If you need access to the DLA Dashboard<br />Please contact your ECM Administrator for Access</p>
+        <p>{props.message}</p>
       </div>
     );
   }
@@ -40,7 +41,8 @@ export default class Welcome extends React.Component<WelcomeProps, WelcomeState>
         <WelcomeContent
           isAuthenticated={this.props.isAuthenticated}
           user={this.props.user}
-          authButtonMethod={this.props.authButtonMethod} />
+          authButtonMethod={this.props.authButtonMethod}
+          message={this.props.message} />
       </Jumbotron>
     );
   }
