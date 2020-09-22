@@ -31,7 +31,7 @@ export function DlaUser({user, props}){
     }, []);
 
     console.log(userData);
-    
+    console.log(user);
     return (
         <div>
             
