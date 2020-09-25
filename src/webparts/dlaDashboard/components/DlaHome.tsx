@@ -20,22 +20,24 @@ export function DlaUser({user, props}){
     const userData = useSelector(state => state.user.data);
     const userGroup = useSelector(state => state.user.data.Group);
     const [dlaUser, setUser] = React.useState(userData);
+    const [email, setEmail] = React.useState(userData);
     const dispatch = useDispatch();
     
     React.useEffect(() => {
         // console.log(user);
         dispatch(userActions.getUser(user.email)).then((response) => {
+            const checkEmail = user.email;
             setUser(response);
+            setEmail(checkEmail.toLowerCase());
         });
 
     }, []);
 
-    console.log(userData);
-    console.log(user);
+    console.log(`${email} ${userData.Email}`);
     return (
         <div>
             
-        {user.email == userData.Email ? 
+        {email == userData.Email ? 
             <DLAManager user={dlaUser} /> :
             <Welcome {...props}
             isAuthenticated={props.isAuthenticated}
