@@ -14,7 +14,23 @@ import store from '../models';
 import { actions as userActions } from '../models/user';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { sp } from "@pnp/sp";
+import "@pnp/sp/webs";
+import { Web } from "@pnp/sp/webs";
+import "@pnp/sp/clientside-pages/web";
+
 import withAuthProvider, { AuthComponentProps } from '../AuthProvider';
+
+const hideHeader = async () => {
+    
+    const page = await sp.web.loadClientsidePage("/sites/SPO_PEODashboard/SitePages/PEO-Dashboard.aspx");
+    const value = page.showTopicHeader;
+    page.showTopicHeader = false;
+    // page.layoutType = "Home";
+    await page.save();
+
+};
+
 export function DlaUser({user, props}){
     // const userLoaded = useSelector(state => state.user);
     const userData = useSelector(state => state.user.data);
@@ -22,7 +38,7 @@ export function DlaUser({user, props}){
     const [dlaUser, setUser] = React.useState(userData);
     const [email, setEmail] = React.useState(userData);
     const dispatch = useDispatch();
-    
+    hideHeader();
     React.useEffect(() => {
         // console.log(user);
         dispatch(userActions.getUser(user.email)).then((response) => {

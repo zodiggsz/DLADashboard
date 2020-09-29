@@ -137,6 +137,7 @@ a.btn {
         text-align: center;
         align-items: center;
         justify-content: center;
+        margin: auto;
          h1{
              text-align: center;
          }
@@ -158,6 +159,7 @@ a.btn {
         @include ms-Grid-row;
         @include ms-fontColor-white;
         padding: 5px;
+        margin: 0px !important;
     }
 
     .column {

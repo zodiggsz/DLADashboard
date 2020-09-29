@@ -45,10 +45,6 @@ export default class DlaDashboardWebPart extends BaseClientSideWebPart <IDlaDash
     ReactDom.unmountComponentAtNode(this.domElement);
   }
 
-  protected get dataVersion(): Version {
-    return Version.parse('1.0');
-  }
-
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
     return {
       pages: [
