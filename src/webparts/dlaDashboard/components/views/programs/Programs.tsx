@@ -64,7 +64,8 @@ export default function Programs() {
         <Grid container spacing={2}>
             <Grid item xs={5}>
                 {user.Group == 'admin' && <ListPrograms userID={ID ? ID : ''} />}
-                {user.Group == 'peo' && <ListPrograms userID={user.ID} />}
+                {user.Group == 'peo' && <ListPrograms userID={ID ? ID : ''} />}
+                {user.Group == 'operator' && <ListPrograms userID={user.ID} />}
             </Grid>
             <Grid item xs={7}>
                 <ScoreCard />

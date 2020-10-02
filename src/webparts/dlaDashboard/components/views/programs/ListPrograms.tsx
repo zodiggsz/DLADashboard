@@ -302,7 +302,7 @@ export default function ListPrograms({userID, navigate = false}) {
     
     React.useEffect(() => {
 
-        if(account.Group !== 'admin'){
+        if(account.Group !== 'admin' || account.Group !== 'peo'){
             if(userPrograms.length < 1 && !programFilter){
                 dispatch(programActions.getUserPrograms(userID));
                

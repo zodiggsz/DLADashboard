@@ -20,6 +20,10 @@ import programStyles from './index.module.scss';
 import { maxWidth } from '@material-ui/system';
 let cx = classNames.bind(programStyles);
 
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import TableChartIcon from '@material-ui/icons/TableChart';
+import ShowChartIcon from '@material-ui/icons/ShowChart';
+
 const people =  require("../../../assets/images/lens_icons/people.png");
 const operations =  require("../../../assets/images/lens_icons/operations.png");
 const strategy =  require("../../../assets/images/lens_icons/strategy.png");
@@ -261,6 +265,15 @@ export default function ListHistory() {
             
             case 'operations':
                 return <img className="insightIcon" src={operations} width="50px" height="50px" />;
+
+            case 'scores':
+                return <TableChartIcon style={{width: 50, height: 50}}></TableChartIcon>;
+
+            case 'insights':
+                return <EqualizerIcon style={{width: 50, height: 50}}></EqualizerIcon>;
+
+            case 'improvements':
+                return <ShowChartIcon style={{width: 50, height: 50}}></ShowChartIcon>;
             default:
                 return <img className="insightIcon" src={governance} width="50px" height="50px" />;
         }
@@ -280,9 +293,9 @@ export default function ListHistory() {
                         aria-label="scrollable force tabs example"
                         className={classes.tabs}
                     >
-                        <Tab className={classes.tab} label="Scores" icon={setLensImage('governance')} {...a11yProps(0)} key={0} />
-                        <Tab className={classes.tab} label="Insights" icon={setLensImage('operations')} {...a11yProps(1)} key={1} />
-                        <Tab className={classes.tab} label="Improvements" icon={setLensImage('strategy')} {...a11yProps(2)} key={2} />
+                        <Tab className={classes.tab} label="Scores" icon={setLensImage('scores')} {...a11yProps(0)} key={0} />
+                        <Tab className={classes.tab} label="Insights" icon={setLensImage('insights')} {...a11yProps(1)} key={1} />
+                        <Tab className={classes.tab} label="Improvements" icon={setLensImage('improvements')} {...a11yProps(2)} key={2} />
                     </Tabs>
                 </AppBar>
                 <ScoresHistoryPanel value={value} history={programHistory.score} index={0} />

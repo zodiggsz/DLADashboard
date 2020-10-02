@@ -153,7 +153,6 @@ export default function ManageTeams() {
                                 <StyledTableCell align="center"></StyledTableCell>
                                 <StyledTableCell align="center">FIRST NAME</StyledTableCell>
                                 <StyledTableCell align="center">LAST NAME</StyledTableCell>
-                                <StyledTableCell align="center">JCODE</StyledTableCell>
                                 <StyledTableCell align="center">EMAIL</StyledTableCell>
                                 <StyledTableCell align="center"></StyledTableCell>
                             </TableRow>
@@ -164,7 +163,6 @@ export default function ManageTeams() {
                                     <StyledTableCell align="center">{index + 1}</StyledTableCell>
                                     <StyledTableCell align="center">{account.First_Name}</StyledTableCell>
                                     <StyledTableCell align="center">{account.Last_Name}</StyledTableCell>
-                                    <StyledTableCell align="center">{account.JCODE}</StyledTableCell>
                                     <StyledTableCell align="center">{account.Email}</StyledTableCell>
                                     <StyledTableCell align="center">
                                         <ButtonGroup

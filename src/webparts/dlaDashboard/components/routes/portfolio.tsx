@@ -37,7 +37,7 @@ var portfolioRoutes = [
         icon: AccountCircleIcon,
         component: ManageTeams,
         hidden: false,
-        group:["admin","operator","peo","portfolio","program"]
+        group:["admin","portfolio","program"]
     },
     {
         form: true,

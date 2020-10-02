@@ -26,10 +26,19 @@ var dashRoutes = [
     {
         collapse: true,
         path: "/",
-        name: "Account",
+        name: "Dashboard",
         icon: AccountCircleIcon,
         component: Account,
         group:["admin","operator","peo","portfolio","program"],
+    },{
+        path: "/programs",
+        name: "Programs",
+        icon: AssignmentTurnedInIcon,
+        component: Programs,
+        hidden: false,
+        group:["admin","operator","peo","portfolio","program"],
+        exact:true,
+        breadcrumb: null
     },
     {
         form: true,
@@ -38,7 +47,7 @@ var dashRoutes = [
         icon: AccountTreeIcon,
         component: ManageTeams,
         hidden: false,
-        group:["admin","operator","portfolio","program"]
+        group:["admin","portfolio","program"]
     },
     {
         path: "/scores",
@@ -64,16 +73,6 @@ var dashRoutes = [
         component: Improvements,
         hidden: true,
         group:["admin","operator","portfolio","program"]
-    },
-    {
-        path: "/programs",
-        name: "Programs",
-        icon: AssignmentTurnedInIcon,
-        component: Programs,
-        hidden: false,
-        group:["admin","operator","peo","portfolio","program"],
-        exact:true,
-        breadcrumb: null
     },
     {
         path: "/budgets",
