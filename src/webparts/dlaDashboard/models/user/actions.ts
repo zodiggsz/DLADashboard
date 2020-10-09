@@ -20,6 +20,7 @@ if (Environment.type === EnvironmentType.Local) {
     web = Web("https://localhost:4323");
 } else {
     web = Web("https://dlamil.dps.mil/sites/SPO_PEODashboard");
+    // web = Web("https://codicast1.sharepoint.com/");
 }
 
 export function addAccount(account){

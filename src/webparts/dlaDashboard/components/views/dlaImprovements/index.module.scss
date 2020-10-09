@@ -1,0 +1,27 @@
+#improvements {
+    display: flex;
+    flex: 1;
+    padding: 15px;
+    overflow: auto;
+
+    h4 { margin-top: 0; }
+
+    .addInsight {
+        overflow: auto;
+    }
+
+    .addInsight, .viewInsight {
+        padding: 0 10px;
+    }
+
+    .viewInsight {
+        .insights {
+            border: 1px solid lightgray;
+            border-radius: 5px;
+        }
+    }
+
+    .improvementData {
+        display: flex;
+    }
+}

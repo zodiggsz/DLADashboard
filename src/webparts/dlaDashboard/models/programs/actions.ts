@@ -17,6 +17,7 @@ if (Environment.type === EnvironmentType.Local) {
     web = Web("https://localhost:4323");
 } else {
     web = Web("https://dlamil.dps.mil/sites/SPO_PEODashboard");
+    // web = Web("https://codicast1.sharepoint.com/");
 }
 
 export function getProgramImprovements(ID){
@@ -40,33 +41,6 @@ export function setProgramImprovements(improvements){
         dispatch(slice.actions.setProgramImprovements(improvements));
     };
 
-}
-
-export function addImprovement(id, improvement){
-    
-    return async (dispatch) => {
-        dispatch(slice.actions.setLoading(true));
-        let results = web.lists.getByTitle("Improvements").items.filter("ID eq '"+id+"'").get().then( items => {
-            // dispatch(slice.actions.setProgramInterests(items.results));
-            if(items.length > 0){
-                web.lists.getByTitle("Improvements").items.getById(id).update(improvement).then( result => {
-                    dispatch(slice.actions.setLoading(false));
-                    toast.success(`Successfully updated Improvement`);
-                });
-                
-            }else{
-                web.lists.getByTitle("Improvements").items.add(improvement).then(result => {
-                    dispatch(slice.actions.setLoading(false));
-                    dispatch(slice.actions.addProgramImprovement(result.data));
-                    console.log(result);
-                    toast.success(`Successfully added Improvement`);
-                });
-                
-            }
-
-        });
-        
-    };
 }
 
 export function getUserProgram(ID){
@@ -471,6 +445,93 @@ export function getProgramInsights(id){
 
         dispatch(slice.actions.setProgramInsights(insightData));
         return insightData;
+        
+    };
+
+}
+
+export function removeImprovement(id){
+    
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        try {
+            const items = await web.lists.getByTitle("DLA_Improvements").items.getById(id).get();
+            if (items) {
+                web.lists.getByTitle("DLA_Improvements").items.getById(id).delete();
+                dispatch(slice.actions.setLoading(false));
+                
+            }
+
+            toast.success(`Successfully removed Improvement`);
+            
+        } catch (e) {
+            toast.error("Error removing improvement");
+            return e;
+        }
+        
+    }; 
+}
+
+export function addDLAImprovement(id, improvement){
+    
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        try {
+            if(id > 0){
+                const item = await web.lists.getByTitle("DLA_Improvements").items.filter(`Id eq ${id}`).get();
+                if (item) {
+                    web.lists.getByTitle("DLA_Improvements").items.getById(id).update(improvement);
+                    dispatch(slice.actions.setLoading(false));
+                    toast.success(`Successfully updated Improvement`);
+                }
+            
+            }else{
+
+                web.lists.getByTitle("DLA_Improvements").items.add(improvement);
+                dispatch(slice.actions.setLoading(false));
+                toast.success(`Successfully added Improvement`);
+
+            }   
+        } catch (e) {
+            toast.error("Error adding Improvement");
+            console.log(e);
+            return e;
+        }
+        
+    }; 
+}
+
+export function getDLAImprovements(id){
+    
+    const select = ['ID','Remediation', 'Responsibility', 'Estimated_Completion', 'Status'];
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        
+        const governance = await web.lists.getByTitle("DLA_Improvements").items.select(select).filter(`ProgramID eq ${id} and Lens eq 'governance'`).orderBy("Created", false).getAll().then( data => {
+            return data ? data: [];
+        } );
+
+        const operations =  await web.lists.getByTitle("DLA_Improvements").items.select(select).filter(`ProgramID eq ${id} and Lens eq 'operations'`).orderBy("Created", false).getAll().then( data => {
+            return data ? data: [];
+        } );
+
+        const people =  await web.lists.getByTitle("DLA_Improvements").items.select(select).filter(`ProgramID eq ${id} and Lens eq 'people'`).orderBy("Created", false).getAll().then( data => {
+            return data ? data: [];
+        } );
+
+        const strategy =  await web.lists.getByTitle("DLA_Improvements").items.select(select).filter(`ProgramID eq ${id} and Lens eq 'strategy'`).orderBy("Created", false).getAll().then( data => {
+            return data ? data: [];
+        } );
+
+        const technology =  await web.lists.getByTitle("DLA_Improvements").items.select(select).filter(`ProgramID eq ${id} and Lens eq 'technology'`).orderBy("Created", false).getAll().then( data => {
+            return data ? data: [];
+        } );
+
+        const improvementData = {governance, operations, people, strategy, technology};
+
+        dispatch(slice.actions.setProgramImprovements(improvementData));
+        return improvementData;
         
     };
 

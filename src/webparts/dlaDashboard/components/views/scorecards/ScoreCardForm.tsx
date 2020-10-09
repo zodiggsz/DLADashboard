@@ -223,34 +223,6 @@ export default function ScoreCardForm() {
                 
                     <Grid item xs={12}><ProgramSelector value={program.ID} onChange={onProgramChange} /></Grid>
 
-                    <Grid item xs={4}><span className={scoreStyles.label}>Governance</span></Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            id="outlined-number"
-                            label="Original"
-                            type="number"
-                            value={governance.OriginalScore}
-                            onChange={governanceChange('OriginalScore')}
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                            variant="outlined"
-                        />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            id="outlined-number"
-                            label="Target"
-                            type="number"
-                            value={governance.TargetScore}
-                            onChange={governanceChange('TargetScore')}
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                            variant="outlined"
-                        />
-                    </Grid>
-
                     <Grid item xs={4}><span className={scoreStyles.label}>People & Culture</span></Grid>
                     <Grid item xs={4}>
                         <TextField
@@ -272,34 +244,6 @@ export default function ScoreCardForm() {
                             type="number"
                             value={people.TargetScore}
                             onChange={peopleChange('TargetScore')}
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                            variant="outlined"
-                        />
-                    </Grid>
-
-                    <Grid item xs={4}><span className={scoreStyles.label}>Technology</span></Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            id="outlined-number"
-                            label="Original"
-                            type="number"
-                            value={technology.OriginalScore}
-                            onChange={technologyChange('OriginalScore')}
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                            variant="outlined"
-                        />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            id="outlined-number"
-                            label="Target"
-                            type="number"
-                            value={technology.TargetScore}
-                            onChange={technologyChange('TargetScore')}
                             InputLabelProps={{
                             shrink: true,
                             }}
@@ -356,6 +300,62 @@ export default function ScoreCardForm() {
                             type="number"
                             value={operations.TargetScore}
                             onChange={operationsChange('TargetScore')}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            variant="outlined"
+                        />
+                    </Grid>
+
+                    <Grid item xs={4}><span className={scoreStyles.label}>Governance</span></Grid>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="outlined-number"
+                            label="Original"
+                            type="number"
+                            value={governance.OriginalScore}
+                            onChange={governanceChange('OriginalScore')}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            variant="outlined"
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="outlined-number"
+                            label="Target"
+                            type="number"
+                            value={governance.TargetScore}
+                            onChange={governanceChange('TargetScore')}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            variant="outlined"
+                        />
+                    </Grid>
+
+                    <Grid item xs={4}><span className={scoreStyles.label}>Technology</span></Grid>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="outlined-number"
+                            label="Original"
+                            type="number"
+                            value={technology.OriginalScore}
+                            onChange={technologyChange('OriginalScore')}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            variant="outlined"
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="outlined-number"
+                            label="Target"
+                            type="number"
+                            value={technology.TargetScore}
+                            onChange={technologyChange('TargetScore')}
                             InputLabelProps={{
                             shrink: true,
                             }}

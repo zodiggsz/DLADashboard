@@ -38,7 +38,7 @@ export function DlaUser({user, props}){
     const [dlaUser, setUser] = React.useState(userData);
     const [email, setEmail] = React.useState(userData);
     const dispatch = useDispatch();
-    hideHeader();
+    // hideHeader();
     React.useEffect(() => {
         // console.log(user);
         dispatch(userActions.getUser(user.email)).then((response) => {

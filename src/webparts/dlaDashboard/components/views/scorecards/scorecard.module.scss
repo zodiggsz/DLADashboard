@@ -379,9 +379,10 @@
                 color: rgb(255, 255, 255);
                 text-decoration: none;
                 text-transform: uppercase;
+                font-weight: 700;
                 padding: 10px;
                 width: 100%;
-                &:visited { color: lightslategray; }
+                &:visited { color: rgb(255, 255, 255);; }
                 &.active {
                     background-color: #476ba2;
                     color: whitesmoke;

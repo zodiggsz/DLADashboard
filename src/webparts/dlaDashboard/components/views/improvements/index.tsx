@@ -196,7 +196,7 @@ export default function Improvements() {
             let progImp = await dispatch(actions.setProgramImprovements(update));
         }
 
-        let imp = await dispatch(actions.addImprovement(improvement.ID, improvement));
+        //let imp = await dispatch(actions.addImprovement(improvement.ID, improvement));
     }
 
     function deleteImprovement(item){

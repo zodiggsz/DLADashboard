@@ -302,7 +302,7 @@ export default function ListPrograms({userID, navigate = false}) {
     
     React.useEffect(() => {
 
-        if(account.Group !== 'admin' || account.Group !== 'peo'){
+        if(account.Group === 'operator'){
             if(userPrograms.length < 1 && !programFilter){
                 dispatch(programActions.getUserPrograms(userID));
                
@@ -333,7 +333,7 @@ export default function ListPrograms({userID, navigate = false}) {
             setSelected([id]);
         }
 
-    }, [user, userAccounts, userPrograms, selected]);
+    }, [userAccounts, userPrograms, selected]);
 
     async function filterPrograms(){
         

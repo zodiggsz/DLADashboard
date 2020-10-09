@@ -146,11 +146,11 @@ export default function ScoreCard() {
             </div>
             <div className={scoreStyles.programHead}>
                 <div className={scoreStyles.lens}>
-                    <Item label="Governance" score={scores.governance.OriginalScore} />
                     <Item label="People & Culture" score={scores.people.OriginalScore} />
-                    <Item label="Technology" score={scores.technology.OriginalScore} />
                     <Item label="Strategy" score={scores.strategy.OriginalScore} />
                     <Item label="Operations" score={scores.operations.OriginalScore} />
+                    <Item label="Governance" score={scores.governance.OriginalScore} />
+                    <Item label="Technology" score={scores.technology.OriginalScore} />
                 </div>
                 <ul className={scoreStyles.programHeaderNav}>
                     <li>

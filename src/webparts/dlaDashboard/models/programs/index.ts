@@ -34,7 +34,13 @@ export const slice = createSlice({
             people: [],
         },
         programInterests: [],
-        programImprovements: [],
+        programImprovements: {
+            governance: [],
+            technology: [],
+            strategy: [],
+            operations: [],
+            people: [],
+        },
         programHistory: [],
         budgets: {},
         hasNext: false,
@@ -82,9 +88,6 @@ export const slice = createSlice({
         },
         setBudgets(state, action) {
             state.budgets = action.payload;
-        },
-        addProgramImprovement(state, action) {
-            state.programImprovements.push(action.payload);
         },
         updateUserPrograms(state, action) {
             state.userPrograms.push(action.payload);

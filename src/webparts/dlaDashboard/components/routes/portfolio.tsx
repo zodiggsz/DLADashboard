@@ -14,7 +14,7 @@ import Account from '../views/account/Account';
 import EditScoreCard from '../views/scorecards/EditScoreCard';
 import Programs from '../views/programs/Programs';
 import Insights from '../views/insights/Insights';
-import Improvements from '../views/improvements';
+import DLAImprovements from '../views/dlaImprovements/improvements';
 
 import { Dashboard } from '@material-ui/icons';
 
@@ -91,7 +91,7 @@ var portfolioRoutes = [
         path: "/improvements",
         name: "Improvements",
         icon: CheckBoxIcon,
-        component: Improvements,
+        component: DLAImprovements,
         hidden: true,
         group:["admin","operator","peo","portfolio","program"]
     }

@@ -16,7 +16,7 @@ import ManageTeams from '../views/account/ManageTeams';
 import EditScoreCard from '../views/scorecards/EditScoreCard';
 import Programs from '../views/programs/Programs';
 import Insights from '../views/insights/Insights';
-import Improvements from '../views/improvements';
+import DLAImprovements from '../views/dlaImprovements/improvements';
 
 
 import { Dashboard } from '@material-ui/icons';
@@ -70,7 +70,7 @@ var dashRoutes = [
         path: "/improvements",
         name: "Improvements",
         icon: ShowChartIcon,
-        component: Improvements,
+        component: DLAImprovements,
         hidden: true,
         group:["admin","operator","portfolio","program"]
     },

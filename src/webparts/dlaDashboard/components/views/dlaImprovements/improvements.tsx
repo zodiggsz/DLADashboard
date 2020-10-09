@@ -18,7 +18,7 @@ import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/s
 
 import AddIcon from '@material-ui/icons/Add';
 
-import insightStyle from './index.module.scss';
+import improvementStyle from './index.module.scss';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -147,7 +147,10 @@ interface InsightData {
 const defaultContent = {
     ID: 0,
     Lens: '',
-    Content: '',
+    Remediation: '',
+    Responsibility: '',
+    Estimated_Completion: '',
+    Status: '',
 };
 
 const defaultProgramData = {
@@ -155,7 +158,7 @@ const defaultProgramData = {
     Acronym: 'Program'
 };
 
-export default function Insights() {
+export default function DLAImprovements() {
     const dispatch = useDispatch();
     const classes = useStyles();
     const [inputs, addInput] = React.useState(defaultInputs);
@@ -169,7 +172,7 @@ export default function Insights() {
     const user = useSelector((state) => state.user.data);
     const programs = useSelector((state) => state.programs.list);
     const selectedProgram = useSelector(state => state.programs.program);
-    const insight = useSelector((state) => state.programs.programInsights);
+    const improvements = useSelector((state) => state.programs.programImprovements);
     const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
 
 
@@ -195,7 +198,10 @@ export default function Insights() {
         const newItem = {
             ID: 0,
             Lens: '',
-            Content: '',
+            Remediation: '',
+            Responsibility: '',
+            Estimated_Completion: '',
+            Status: '',
         };
         
         setContent([
@@ -209,7 +215,7 @@ export default function Insights() {
         setAlert(!alert);
     }
 
-    function handleInputChange(index, id) {
+    function handleInputChange(index, id, key) {
 
         return (e) => {
             // const index = content.findIndex(element => element.ID == item );
@@ -218,7 +224,7 @@ export default function Insights() {
                 ...newArray[index],
                 ID: id ? id: 0,
                 Lens: lens,
-                Content: e.target.value,
+                [key]: e.target.value,
             };
 
             console.log(newArray[index]);
@@ -234,7 +240,7 @@ export default function Insights() {
         console.log(newArray);
         if (index > 0) {
             if(remove.ID > 0){
-                const removeInsight = await dispatch(actions.removeInsight(remove.ID));
+                const removeInsight = await dispatch(actions.removeImprovement(remove.ID));
             }
             newArray.splice(index, 1);
             setContent(newArray);
@@ -242,24 +248,24 @@ export default function Insights() {
 
     }
 
-    function changeInsight(e){
+    function changeImprovements(e){
         if(Object.keys(program).length > 0){ 
             setLens(e.target.value);
             switch (e.target.value) {
                 case 'governance':
-                    setContent(insight.governance);
+                    setContent(improvements.governance);
                     break;
                 case 'people_culture':
-                    setContent(insight.people);
+                    setContent(improvements.people);
                     break;
                 case 'technology':
-                    setContent(insight.technology);
+                    setContent(improvements.technology);
                     break;
                 case 'strategy':
-                    setContent(insight.strategy);
+                    setContent(improvements.strategy);
                     break;
                 case 'operations':
-                    setContent(insight.operations);
+                    setContent(improvements.operations);
                     break;
                 default:
                     setContent([]);
@@ -282,7 +288,10 @@ export default function Insights() {
                 Title:selectedProgram.Acronym,
                 ProgramID: selectedProgram.ID,
                 Lens: lens,
-                Content: item.Content
+                Remediation: item.Remediation,
+                Responsibility: item.Responsibility,
+                Estimated_Completion: item.Estimated_Completion,
+                Status: item.Status
             };
             dispatch(actions.addInsight(item.ID, update));
             
@@ -291,7 +300,7 @@ export default function Insights() {
     }
 
     return (
-        <Grid container id={insightStyle.insights} spacing={3}>
+        <Grid container id={improvementStyle.improvements} spacing={3}>
             <Grid item xs={5}>
                 <ListPrograms userID={""} />
             </Grid>
@@ -307,7 +316,7 @@ export default function Insights() {
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
                         value={lens}
-                        onChange={changeInsight}
+                        onChange={changeImprovements}
                         labelWidth={labelWidth}>
 
                         {Object.keys(defaultInsights).map((key) => {
@@ -320,23 +329,64 @@ export default function Insights() {
                     </FormControl>
                     
                     {content.map( (item, key) => (
-                        <FormControl variant="outlined" style={{width:"100%", margin:5}} key={key} >
-                            <TextField
-                                label="Insight"
-                                multiline
-                                onChange={handleInputChange(key, item.ID)}
-                                rows="4"
-                                value={item.Content}
-                                variant="outlined"
-                            />   
-                            <Fab className={classes.fab} color="secondary" onClick={() => deleteInput(key)}>x</Fab> 
-                        </FormControl>
+                        <Grid container id={improvementStyle.improvementData} spacing={3}>
+                            <Grid item xs={6}>
+                                <FormControl variant="outlined" style={{width:"100%", margin:5}} key={key} >
+                                    <TextField
+                                        label="Remediation"
+                                        multiline
+                                        onChange={handleInputChange(key, item.ID, 'Remediation')}
+                                        rows="4"
+                                        value={item.Remediation}
+                                        variant="outlined"
+                                    />   
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <FormControl variant="outlined" style={{width:"100%", margin:5}} key={key} >
+                                    <TextField
+                                        label="Responsibility"
+                                        multiline
+                                        onChange={handleInputChange(key, item.ID, 'Responsibility')}
+                                        rows="4"
+                                        value={item.Responsibility}
+                                        variant="outlined"
+                                    />   
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <FormControl variant="outlined" style={{width:"100%", margin:5}} key={key} >
+                                    <TextField
+                                        label="Estimated Completion"
+                                        multiline
+                                        onChange={handleInputChange(key, item.ID, 'Estimated_Completion')}
+                                        rows="4"
+                                        value={item.Estimated_Completion}
+                                        variant="outlined"
+                                    />   
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <FormControl variant="outlined" style={{width:"100%", margin:5}} key={key} >
+                                    <TextField
+                                        label="Status"
+                                        multiline
+                                        onChange={handleInputChange(key, item.ID, 'Status')}
+                                        rows="4"
+                                        value={item.Status}
+                                        variant="outlined"
+                                    />   
+                                    <Fab className={classes.fab} color="secondary" onClick={() => deleteInput(key)}>x</Fab> 
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                        
                     ))}
                     <Fab color="primary" onClick={() => addInsight()} aria-label="add">
                         <AddIcon />
                     </Fab>
                     <div style={{padding:20}}>
-                        <Button variant="contained" color="primary" onClick={() => saveInsight()}>SAVE INSIGHT</Button>
+                        <Button variant="contained" color="primary" onClick={() => saveInsight()}>SAVE IMPROVEMENT</Button>
                     </div>
                     
                 </Paper>
