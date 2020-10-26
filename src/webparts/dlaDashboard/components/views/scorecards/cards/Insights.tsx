@@ -217,12 +217,11 @@ export default function ProgramInsights() {
                         indicatorColor="primary"
                         textColor="primary"
                         aria-label="scrollable force tabs example"
-                    >
-                        
-                        <Tab label="Governance" icon={setLensImage('governance')} {...a11yProps(0)} key={0} />
-                        <Tab label="Operations" icon={setLensImage('operations')} {...a11yProps(1)} key={1} />
+                    >      
+                        <Tab label="People & Culture" icon={setLensImage('people')} {...a11yProps(3)} key={3} />                  
                         <Tab label="Strategy" icon={setLensImage('strategy')} {...a11yProps(2)} key={2} />
-                        <Tab label="People & Culture" icon={setLensImage('people')} {...a11yProps(3)} key={3} />
+                        <Tab label="Operations" icon={setLensImage('operations')} {...a11yProps(1)} key={1} />
+                        <Tab label="Governance" icon={setLensImage('governance')} {...a11yProps(0)} key={0} />
                         <Tab label="Technology" icon={setLensImage('technology')} {...a11yProps(4)} key={4} />
                     </Tabs>
                 </AppBar>

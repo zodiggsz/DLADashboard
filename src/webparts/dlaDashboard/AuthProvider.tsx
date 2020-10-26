@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { UserAgentApplication } from 'msal';
-import { config, testConfig } from '../../config';
+import { config } from '../../config';
 import { getUserDetails } from './services/GraphServices';
 
 export interface AuthComponentProps {

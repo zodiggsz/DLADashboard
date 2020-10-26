@@ -227,7 +227,7 @@ export default function ScoreCardForm() {
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
-                            label="Original"
+                            label="Post-Improvement"
                             type="number"
                             value={people.OriginalScore}
                             onChange={peopleChange('OriginalScore')}
@@ -240,7 +240,7 @@ export default function ScoreCardForm() {
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
-                            label="Target"
+                            label="Original"
                             type="number"
                             value={people.TargetScore}
                             onChange={peopleChange('TargetScore')}
@@ -255,7 +255,7 @@ export default function ScoreCardForm() {
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
-                            label="Original"
+                            label="Post-Improvement"
                             type="number"
                             value={strategy.OriginalScore}
                             onChange={strategyChange('OriginalScore')}
@@ -268,7 +268,7 @@ export default function ScoreCardForm() {
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
-                            label="Target"
+                            label="Original"
                             type="number"
                             value={strategy.TargetScore}
                             onChange={strategyChange('TargetScore')}
@@ -283,7 +283,7 @@ export default function ScoreCardForm() {
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
-                            label="Original"
+                            label="Post-Improvement"
                             type="number"
                             value={operations.OriginalScore}
                             onChange={operationsChange('OriginalScore')}
@@ -296,7 +296,7 @@ export default function ScoreCardForm() {
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
-                            label="Target"
+                            label="Original"
                             type="number"
                             value={operations.TargetScore}
                             onChange={operationsChange('TargetScore')}
@@ -311,7 +311,7 @@ export default function ScoreCardForm() {
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
-                            label="Original"
+                            label="Post-Improvement"
                             type="number"
                             value={governance.OriginalScore}
                             onChange={governanceChange('OriginalScore')}
@@ -324,7 +324,7 @@ export default function ScoreCardForm() {
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
-                            label="Target"
+                            label="Original"
                             type="number"
                             value={governance.TargetScore}
                             onChange={governanceChange('TargetScore')}
@@ -339,7 +339,7 @@ export default function ScoreCardForm() {
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
-                            label="Original"
+                            label="Post-Improvement"
                             type="number"
                             value={technology.OriginalScore}
                             onChange={technologyChange('OriginalScore')}
@@ -352,7 +352,7 @@ export default function ScoreCardForm() {
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
-                            label="Target"
+                            label="Original"
                             type="number"
                             value={technology.TargetScore}
                             onChange={technologyChange('TargetScore')}
@@ -367,7 +367,7 @@ export default function ScoreCardForm() {
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-read-only-input"
-                            label="Total Original Score"
+                            label="Post Total Score"
                             value={calcAvgOrig()}
                             InputProps={{
                                 readOnly: true,
@@ -378,7 +378,7 @@ export default function ScoreCardForm() {
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-read-only-input"
-                            label="Total Target Score"
+                            label="Total Original Score"
                             value={calcAvgTarget()}
                             InputProps={{
                                 readOnly: true,

@@ -59,6 +59,9 @@ const useStyles = makeStyles((theme: Theme) =>
         position: 'absolute',
         bottom: theme.spacing(2),
         right: theme.spacing(2),
+        padding: '0px',
+        width: '35px',
+        height: '30px',
     },
     button: {
         '& > *': {
@@ -137,11 +140,11 @@ interface defaultInsights {
 }
 
 interface InsightData {
-    governance: defaultInsights;
-    technology: defaultInsights;
+    people: defaultInsights;
     strategy: defaultInsights;
     operations: defaultInsights;
-    people: defaultInsights;
+    governance: defaultInsights;
+    technology: defaultInsights;
 }
 
 const defaultContent = {
@@ -249,7 +252,7 @@ export default function Insights() {
                 case 'governance':
                     setContent(insight.governance);
                     break;
-                case 'people_culture':
+                case 'people':
                     setContent(insight.people);
                     break;
                 case 'technology':

@@ -93,8 +93,43 @@ export default function EditScoreCard() {
             <Grid item xs={6}>
                 <ScoreCardForm />
             </Grid>
-            <Grid item xs={6}>
-                
+            <Grid item xs={6} id={scoreStyles.scorecard}>
+                <Grid item xs={12}>
+                    <section className={scoreStyles.legendTextDark}>
+                            The following scores are based on critical factors across the following 
+                            five lenses: Strategy, Operations, Technology, People & Culture and 
+                            Governance. Each lens and the composite are scored on a 5 point scale. 
+                            Further, each lens is weighted and those weights are included in the 
+                            calculation of the composite score. The scores are based on research, 
+                            analysis of data, and interviews with government and contract personnel 
+                            from the Functional Sponsor and Program Management Office, Customers, and 
+                            System Vendors and Integrators.
+                    </section>
+                    <div className={scoreStyles.legend}>
+
+                        <h1 style={{color:'#000000'}}>LEGEND</h1>
+                        <Grid container>
+                            <Grid item xs={4}>
+                                <div className={scoreStyles.indicatorContainer}>
+                                    <div className={`${scoreStyles.indicator} ${scoreStyles.red}`}></div>
+                                    <h3 style={{color: '#000000'}}>1 - 2.50</h3>
+                                </div>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <div className={scoreStyles.indicatorContainer}>
+                                    <div className={`${scoreStyles.indicator} ${scoreStyles.yellow}`}></div>
+                                    <h3 style={{color: '#000000'}}>2.51 - 3.75</h3>
+                                </div>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <div className={scoreStyles.indicatorContainer}>
+                                    <div className={`${scoreStyles.indicator} ${scoreStyles.green}`}></div>
+                                    <h3 style={{color: '#000000'}}>3.76 - 5</h3>
+                                </div>
+                            </Grid>
+                        </Grid>
+                    </div>
+                </Grid>
             </Grid>
         </Grid>
     );

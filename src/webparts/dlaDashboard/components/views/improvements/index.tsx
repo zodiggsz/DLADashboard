@@ -66,6 +66,8 @@ const useStyles = makeStyles((theme: Theme) =>
             position: 'absolute',
             bottom: theme.spacing(2),
             right: theme.spacing(2),
+            width: '35px',
+            height: '30px',
         },
         button: {
             '& > *': {

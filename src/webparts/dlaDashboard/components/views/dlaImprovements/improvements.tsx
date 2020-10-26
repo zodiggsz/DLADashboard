@@ -15,7 +15,11 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
 
 import improvementStyle from './index.module.scss';
@@ -57,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     fab: {
         position: 'absolute',
-        bottom: theme.spacing(2),
+        bottom: -50,
         right: theme.spacing(2),
     },
     button: {
@@ -144,12 +148,14 @@ interface InsightData {
     people: defaultInsights;
 }
 
+const date = new Date();
+
 const defaultContent = {
     ID: 0,
     Lens: '',
     Remediation: '',
     Responsibility: '',
-    Estimated_Completion: '',
+    Estimated_Completion: date,
     Status: '',
 };
 
@@ -200,7 +206,7 @@ export default function DLAImprovements() {
             Lens: '',
             Remediation: '',
             Responsibility: '',
-            Estimated_Completion: '',
+            Estimated_Completion: date,
             Status: '',
         };
         
@@ -214,6 +220,19 @@ export default function DLAImprovements() {
     function toggleAlert(){
         setAlert(!alert);
     }
+
+    const dateSubmitted = (estimatedDate, index, id, key) => {
+        let newArray = [...content];
+            newArray[index] = {
+                ...newArray[index],
+                ID: id ? id: 0,
+                Lens: lens,
+                [key]: estimatedDate,
+            };
+
+            console.log(newArray[index]);
+            setContent(newArray);
+    };
 
     function handleInputChange(index, id, key) {
 
@@ -280,7 +299,7 @@ export default function DLAImprovements() {
 
     }
 
-    function saveInsight(){
+    function saveImprovement(){
         // const insightData = Object.values(inputs);
         console.log(content);
         content.map(item => {
@@ -293,7 +312,7 @@ export default function DLAImprovements() {
                 Estimated_Completion: item.Estimated_Completion,
                 Status: item.Status
             };
-            dispatch(actions.addInsight(item.ID, update));
+            dispatch(actions.addDLAImprovement(item.ID, update));
             
         });
 
@@ -333,7 +352,7 @@ export default function DLAImprovements() {
                             <Grid item xs={6}>
                                 <FormControl variant="outlined" style={{width:"100%", margin:5}} key={key} >
                                     <TextField
-                                        label="Remediation"
+                                        label="Improvements"
                                         multiline
                                         onChange={handleInputChange(key, item.ID, 'Remediation')}
                                         rows="4"
@@ -355,27 +374,41 @@ export default function DLAImprovements() {
                                 </FormControl>
                             </Grid>
                             <Grid item xs={6}>
-                                <FormControl variant="outlined" style={{width:"100%", margin:5}} key={key} >
-                                    <TextField
-                                        label="Estimated Completion"
-                                        multiline
-                                        onChange={handleInputChange(key, item.ID, 'Estimated_Completion')}
-                                        rows="4"
-                                        value={item.Estimated_Completion}
-                                        variant="outlined"
-                                    />   
+                                <FormControl variant="outlined" style={{width:"100%", margin:0}} key={key} >
+                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <KeyboardDatePicker
+                                            disableToolbar
+                                            variant="inline"
+                                            format="MM/dd/yyyy"
+                                            margin="normal"
+                                            id="date-picker-inline"
+                                            label="Estimated Completion"
+                                            value={item.Estimated_Completion}
+                                            onChange={(estimatedDate) => dateSubmitted(estimatedDate, key, item.ID, 'Estimated_Completion')}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change date',
+                                            }}
+                                        />
+                                    </MuiPickersUtilsProvider>
                                 </FormControl>
                             </Grid>
                             <Grid item xs={6}>
-                                <FormControl variant="outlined" style={{width:"100%", margin:5}} key={key} >
-                                    <TextField
-                                        label="Status"
-                                        multiline
-                                        onChange={handleInputChange(key, item.ID, 'Status')}
-                                        rows="4"
-                                        value={item.Status}
-                                        variant="outlined"
-                                    />   
+                                <FormControl variant="outlined" style={{width:"100%", marginBottom:10}}  >
+                                    <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
+                                    Status
+                                    </InputLabel>
+                                    <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={item.Status}
+                                    onChange={handleInputChange(key, item.ID, 'Status')}
+                                    labelWidth={labelWidth}>
+
+                                        <MenuItem style={{backgroundColor: '#73B5EF'}} value="To Do">To Do</MenuItem>
+                                        <MenuItem style={{backgroundColor: '#FFCC3F'}} value="Work In Progress">Work In Progress</MenuItem>
+                                        <MenuItem style={{backgroundColor: '#00FF00'}} value="Completed">Completed</MenuItem>
+
+                                    </Select>
                                     <Fab className={classes.fab} color="secondary" onClick={() => deleteInput(key)}>x</Fab> 
                                 </FormControl>
                             </Grid>
@@ -386,7 +419,7 @@ export default function DLAImprovements() {
                         <AddIcon />
                     </Fab>
                     <div style={{padding:20}}>
-                        <Button variant="contained" color="primary" onClick={() => saveInsight()}>SAVE IMPROVEMENT</Button>
+                        <Button variant="contained" color="primary" onClick={() => saveImprovement()}>SAVE IMPROVEMENT</Button>
                     </div>
                     
                 </Paper>

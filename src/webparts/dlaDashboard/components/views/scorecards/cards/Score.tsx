@@ -108,27 +108,16 @@ export default function Score(props: ScoreProps) {
                     <TableHead>
                         <TableRow>
                             <StyledTableCell align="center">LENS</StyledTableCell>
+                            <StyledTableCell align="center">POST-IMPROVEMENT</StyledTableCell>
                             <StyledTableCell align="center">ORIGINAL</StyledTableCell>
-                            <StyledTableCell align="center">TARGET</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        <ScoreResult
-                            label="Governance"
-                            original={governance.OriginalScore}
-                            target={governance.TargetScore}
-                        />
-                        
+
                         <ScoreResult
                             label="People & Culture"
                             original={people.OriginalScore}
                             target={people.TargetScore}
-                        />
-                        
-                        <ScoreResult
-                            label="Technology"
-                            original={technology.OriginalScore}
-                            target={technology.TargetScore}
                         />
                         
                         <ScoreResult
@@ -141,6 +130,18 @@ export default function Score(props: ScoreProps) {
                             label="Operations"
                             original={operations.OriginalScore}
                             target={operations.TargetScore}
+                        />
+
+                        <ScoreResult
+                            label="Governance"
+                            original={governance.OriginalScore}
+                            target={governance.TargetScore}
+                        />
+                                                
+                        <ScoreResult
+                            label="Technology"
+                            original={technology.OriginalScore}
+                            target={technology.TargetScore}
                         />
                         
                         <ScoreResult
