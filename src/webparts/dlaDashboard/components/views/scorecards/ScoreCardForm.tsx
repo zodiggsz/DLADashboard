@@ -144,21 +144,21 @@ export default function ScoreCardForm() {
 
     function calcAvgOrig() {
         return ((
-            Number(governance.OriginalScore) + 
-            Number(operations.OriginalScore) + 
-            Number(people.OriginalScore) + 
-            Number(strategy.OriginalScore) + 
-            Number(technology.OriginalScore)) / 5
+            (Number(governance.OriginalScore) * .10) + 
+            (Number(operations.OriginalScore) * .10) + 
+            (Number(people.OriginalScore) * .17) + 
+            (Number(strategy.OriginalScore) * .35) + 
+            (Number(technology.OriginalScore)) * .28) / 5
         ).toFixed(2);
     }
 
     function calcAvgTarget() {
         return ((
-            Number(governance.TargetScore) + 
-            Number(operations.TargetScore) + 
-            Number(people.TargetScore) + 
-            Number(strategy.TargetScore) + 
-            Number(technology.TargetScore)) / 5
+            (Number(governance.TargetScore) * .10) + 
+            (Number(operations.TargetScore) * .10) + 
+            (Number(people.TargetScore) * .17) + 
+            (Number(strategy.TargetScore) * .35) + 
+            (Number(technology.TargetScore)) * .28) / 5
         ).toFixed(2);
     }
 
