@@ -148,7 +148,7 @@ export default function ScoreCardForm() {
             (Number(operations.OriginalScore) * .10) + 
             (Number(people.OriginalScore) * .17) + 
             (Number(strategy.OriginalScore) * .35) + 
-            (Number(technology.OriginalScore)) * .28) / 5
+            (Number(technology.OriginalScore)) * .28)
         ).toFixed(2);
     }
 
@@ -158,7 +158,7 @@ export default function ScoreCardForm() {
             (Number(operations.TargetScore) * .10) + 
             (Number(people.TargetScore) * .17) + 
             (Number(strategy.TargetScore) * .35) + 
-            (Number(technology.TargetScore)) * .28) / 5
+            (Number(technology.TargetScore)) * .28)
         ).toFixed(2);
     }
 
