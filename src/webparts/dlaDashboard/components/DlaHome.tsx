@@ -40,16 +40,15 @@ export function DlaUser({user, props}){
     const dispatch = useDispatch();
     // hideHeader();
     React.useEffect(() => {
-        // console.log(user);
         dispatch(userActions.getUser(user.email)).then((response) => {
             const checkEmail = user.email;
             setUser(response);
             setEmail(checkEmail.toLowerCase());
+        }).catch((error) => {
+            console.log(error);
         });
 
     }, []);
-
-    console.log(`${email} ${userData.Email}`);
     return (
         <div>
             
