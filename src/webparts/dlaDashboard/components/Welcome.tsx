@@ -6,7 +6,6 @@ import styles from './DlaDashboard.module.scss';
 
 interface WelcomeProps {
   isAuthenticated : boolean;
-  authButtonMethod : any;
   user : any;
   message : string;
 }
@@ -20,14 +19,13 @@ function WelcomeContent(props: WelcomeProps) {
   if (props.isAuthenticated) {
     return (
       <div>
-        <h4>Welcome {props.user.displayName}!</h4>
+        <h4>Welcome {props.user}!</h4>
         <p>{props.message}</p>
       </div>
     );
   }
 
   // Not authenticated, present a sign in button
-  return <Button color="primary" className={styles.dlaButton} onClick={props.authButtonMethod}>Click here to sign in</Button>;
 }
 
 export default class Welcome extends React.Component<WelcomeProps, WelcomeState> {
@@ -41,7 +39,6 @@ export default class Welcome extends React.Component<WelcomeProps, WelcomeState>
         <WelcomeContent
           isAuthenticated={this.props.isAuthenticated}
           user={this.props.user}
-          authButtonMethod={this.props.authButtonMethod}
           message={this.props.message} />
       </Jumbotron>
     );

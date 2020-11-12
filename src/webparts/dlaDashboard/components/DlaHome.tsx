@@ -16,49 +16,55 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { sp } from "@pnp/sp";
 import "@pnp/sp/webs";
+import "@pnp/sp/site-users/web";
 import { Web } from "@pnp/sp/webs";
 import "@pnp/sp/clientside-pages/web";
 
 import withAuthProvider, { AuthComponentProps } from '../AuthProvider';
 
-const hideHeader = async () => {
-    
-    const page = await sp.web.loadClientsidePage("/sites/SPO_PEODashboard/SitePages/PEO-Dashboard.aspx");
-    const value = page.showTopicHeader;
-    page.showTopicHeader = false;
-    // page.layoutType = "Home";
-    await page.save();
-
-};
-
-export function DlaUser({user, props}){
+export function DlaUser(){
     // const userLoaded = useSelector(state => state.user);
     const userData = useSelector(state => state.user.data);
-    const userGroup = useSelector(state => state.user.data.Group);
     const [dlaUser, setUser] = React.useState(userData);
-    const [email, setEmail] = React.useState(userData);
+    const [email, setEmail] = React.useState('');
     const dispatch = useDispatch();
-    // hideHeader();
-    React.useEffect(() => {
-        dispatch(userActions.getUser(user.email)).then((response) => {
-            const checkEmail = user.email;
-            setUser(response);
-            setEmail(checkEmail.toLowerCase());
+    const hideHeader = async () => {
+    
+        const page = await sp.web.loadClientsidePage("/sites/Dashboard.aspx");
+        const value = page.showTopicHeader;
+        page.showTopicHeader = false;
+        // page.layoutType = "Home";
+        await page.save();
+    
+    };
+
+    const checkUser = async () => {
+        let user = await sp.web.currentUser.get();
+        console.log(user);
+        let userEmail = user.UserPrincipalName;
+        setEmail(userEmail.toLowerCase());
+        dispatch(userActions.getUser(userEmail)).then((response) => {
+            console.log(response);
+            setUser(email);
+            const checkEmail = email;
         }).catch((error) => {
             console.log(error);
         });
+    };
 
+    React.useEffect(() => {
+        checkUser();
+        // hideHeader();
     }, []);
+
     return (
         <div>
-            
-        {email == userData.Email ? 
+        {email && userData.Email === email? 
             <DLAManager user={dlaUser} /> :
-            <Welcome {...props}
-            isAuthenticated={props.isAuthenticated}
-            user={dlaUser}
-            message="Did Load DlaUser but userData not set"
-            authButtonMethod={props.login} />
+            <Welcome
+            isAuthenticated={true}
+            user={email}
+            message="Please check with the administrator for access" />
         }
         </div>
     );
@@ -78,24 +84,7 @@ class DlaHome extends React.Component<AuthComponentProps> {
         return (
           <HashRouter> 
             <div className={ styles.dlaDashboard }>
-                <NavBar
-                    isAuthenticated={this.props.isAuthenticated}
-                    authButtonMethod={this.props.isAuthenticated ? this.props.logout : this.props.login}
-                    user={this.props.user}/>
-                {this.props.isAuthenticated ? 
-                    <DlaUser user={this.props.user} props={this.props} /> :
-                    <Container className={ styles.container }>
-                        {error}
-                        <Route path="/"
-                        render={(props) =>
-                            <Welcome {...props}
-                            isAuthenticated={this.props.isAuthenticated}
-                            user={this.props.user}
-                            message="Did not Load DlaUser"
-                            authButtonMethod={this.props.login} />
-                        } />
-                    </Container>
-                }
+                <DlaUser />
                 <ToastContainer position="bottom-right" />
             </div>
           </HashRouter>
