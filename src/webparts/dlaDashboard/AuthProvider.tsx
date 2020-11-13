@@ -37,7 +37,7 @@ export default function withAuthProvider<T extends React.Component<AuthComponent
         this.userAgentApplication = new UserAgentApplication({
             auth: {
                 clientId: config.appId,
-                authority: "https://login.microsoftonline.us/6dee1d83-8de8-49bb-bc0d-fd8812473904",
+                // authority: "https://login.microsoftonline.us/6dee1d83-8de8-49bb-bc0d-fd8812473904",
                 redirectUri: config.redirectUri
             },
             cache: {

@@ -72,15 +72,8 @@ export function DlaUser(){
         
 }
 
-class DlaHome extends React.Component<AuthComponentProps> {
+class DlaHome extends React.Component {
     public render() {
-        let error = null;
-        if (this.props.error) {
-          error = <ErrorMessage
-            message={this.props.error.message}
-            debug={this.props.error.debug} />;
-        }
-    
         return (
           <HashRouter> 
             <div className={ styles.dlaDashboard }>
@@ -94,11 +87,9 @@ class DlaHome extends React.Component<AuthComponentProps> {
 
 
 function AppRouter({page, context}) {
-    const Component = withAuthProvider(DlaHome);
-
     return (
         <Provider store={store}>
-            <Component />
+            <DlaHome />
         </Provider>
       );
 }
