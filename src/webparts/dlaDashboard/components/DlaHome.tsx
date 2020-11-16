@@ -13,8 +13,8 @@ import { Provider } from 'react-redux';
 import store from '../models';
 import { actions as userActions } from '../models/user';
 import 'react-toastify/dist/ReactToastify.css';
-
-import { sp } from "@pnp/sp";
+import "@pnp/polyfill-ie11";
+import { sp } from "@pnp/sp/presets/all";
 import "@pnp/sp/webs";
 import "@pnp/sp/site-users/web";
 import { Web } from "@pnp/sp/webs";
