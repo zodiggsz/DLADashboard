@@ -18,7 +18,6 @@ import { sp } from "@pnp/sp/presets/all";
 import "@pnp/sp/webs";
 import "@pnp/sp/site-users/web";
 import { Web } from "@pnp/sp/webs";
-import "@pnp/sp/clientside-pages/web";
 
 import withAuthProvider, { AuthComponentProps } from '../AuthProvider';
 
@@ -28,15 +27,6 @@ export function DlaUser(){
     const [dlaUser, setUser] = React.useState(userData);
     const [email, setEmail] = React.useState('');
     const dispatch = useDispatch();
-    const hideHeader = async () => {
-    
-        const page = await sp.web.loadClientsidePage("/sites/Dashboard.aspx");
-        const value = page.showTopicHeader;
-        page.showTopicHeader = false;
-        // page.layoutType = "Home";
-        await page.save();
-    
-    };
 
     const checkUser = async () => {
         let user = await sp.web.currentUser.get();
@@ -54,7 +44,6 @@ export function DlaUser(){
 
     React.useEffect(() => {
         checkUser();
-        // hideHeader();
     }, []);
 
     return (
