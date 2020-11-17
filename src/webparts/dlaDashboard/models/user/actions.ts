@@ -1,12 +1,5 @@
-import { PageContext } from "@microsoft/sp-page-context";
-import {
-    SPHttpClient,
-    SPHttpClientResponse
-} from '@microsoft/sp-http';
-import "@pnp/polyfill-ie11";
-import { sp } from "@pnp/sp/presets/all";
+
 import { Web } from "@pnp/sp/webs";
-import { ConsoleListener, Logger, LogLevel } from "@pnp/logging";
 import "@pnp/sp/lists";
 import "@pnp/sp/items";
 import "@pnp/sp/files";
@@ -29,7 +22,7 @@ export function addAccount(account){
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
         try {
-            sp.web.lists.getByTitle("DLA_Users").items.add(account).then( result => {
+            web.lists.getByTitle("DLA_Users").items.add(account).then( result => {
                 console.log(result.data);
                 dispatch(slice.actions.updateAccounts(result.data));
             });
@@ -62,8 +55,13 @@ export function getAccounts(group){
 
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
-        let items = await sp.web.lists.getByTitle("DLA_Users").items.filter("Group eq '"+group+"'").getPaged();
+        let items = await web.lists.getByTitle("DLA_Users").items.filter("Group eq '"+group+"'").getPaged();
         dispatch(slice.actions.setAccounts(items.results));
+
+        if(items.hasNext){
+            dispatch(slice.actions.setNext(items.nextUrl));
+        }
+
         return items;
         
     };
@@ -74,7 +72,7 @@ export function getUser(email){
 
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
-        const result = sp.web.lists.getByTitle("DLA_Users").items.filter("Email eq '"+email+"'").get().then( user => {
+        const result = web.lists.getByTitle("DLA_Users").items.filter("Email eq '"+email+"'").get().then( user => {
             dispatch(slice.actions.setData(user[0]));
             return user[0];
         } );
@@ -89,7 +87,7 @@ export function getUserbyID(ID){
 
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
-        const result = sp.web.lists.getByTitle("DLA_Users").items.filter("ID eq '"+ID+"'").get().then( user => {
+        const result = web.lists.getByTitle("DLA_Users").items.filter("ID eq '"+ID+"'").get().then( user => {
             return user[0];
         } );
         
@@ -142,7 +140,7 @@ export function updateUser(id, user){
         dispatch(slice.actions.setLoading(true));
         try {
             console.log(user);
-            sp.web.lists.getByTitle("DLA_Users").items.getById(id).update(user);
+            web.lists.getByTitle("DLA_Users").items.getById(id).update(user);
             toast.success(`Successfully updated user "${user.First_Name} ${user.Last_Name}"`);
             dispatch(slice.actions.setLoading(false));
         } catch (e) {
@@ -158,7 +156,7 @@ export function removeAccount(account){
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
         try {
-            sp.web.lists.getByTitle("DLA_Users").items.getById(account.ID).delete();
+            web.lists.getByTitle("DLA_Users").items.getById(account.ID).delete();
             toast.success(`Successfully removed account "${account.First_Name} ${account.Last_Name}"`);
             dispatch(slice.actions.removeAccount(account.ID));
             dispatch(slice.actions.setLoading(false));

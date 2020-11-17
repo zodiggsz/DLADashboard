@@ -1,9 +1,3 @@
-import { PageContext } from "@microsoft/sp-page-context";
-import {
-    SPHttpClient,
-    SPHttpClientResponse
-} from '@microsoft/sp-http';
-import { sp } from "@pnp/sp";
 import { Web } from "@pnp/sp/webs";
 import "@pnp/sp/lists";
 import "@pnp/sp/items";
@@ -124,7 +118,7 @@ export function getUserPrograms(userID){
         dispatch(slice.actions.setLoading(true));
         let programIDs = [];
         let programs = web.lists.getByTitle("DLA_User_Programs").items.select("ProgramID").filter("UserID eq '"+userID+"' and Active eq 'Active'").top(50).orderBy("Created", false).get().then( items => {
-            const list = Object.values(items);
+            const list = Object.keys(items);
             list.map(item => {
                 const programID = `${item['ProgramID']}`;
                 programIDs.push(programID);

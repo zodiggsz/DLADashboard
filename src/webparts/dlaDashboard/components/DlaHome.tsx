@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, HashRouter } from 'react-router-dom';
-import { Container } from 'reactstrap';
-import NavBar from './NavBar';
-import ErrorMessage from './ErrorMessage';
 import Welcome from './Welcome';
 import DLAManager from './views/dlaManager';
 import styles from './DlaDashboard.module.scss';
@@ -13,13 +10,10 @@ import { Provider } from 'react-redux';
 import store from '../models';
 import { actions as userActions } from '../models/user';
 import 'react-toastify/dist/ReactToastify.css';
-import "@pnp/polyfill-ie11";
-import { sp } from "@pnp/sp/presets/all";
+import { sp } from "@pnp/sp";
 import "@pnp/sp/webs";
 import "@pnp/sp/site-users/web";
-import { Web } from "@pnp/sp/webs";
-
-import withAuthProvider, { AuthComponentProps } from '../AuthProvider';
+import "@pnp/sp/clientside-pages/web";
 
 export function DlaUser(){
     // const userLoaded = useSelector(state => state.user);

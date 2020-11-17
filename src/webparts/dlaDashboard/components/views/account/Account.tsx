@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory, useRouteMatch } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { actions } from '../../../models/user';
 import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
@@ -94,7 +94,7 @@ const userRoles = [
 
 export default function Account() {
     const dispatch = useDispatch();
-    const { params: { ID } } = useRouteMatch();
+    let { ID } = useParams();
     const isLoading = useSelector((state) => state.user.loading);
     const user = useSelector((state) => state.user.data);
 

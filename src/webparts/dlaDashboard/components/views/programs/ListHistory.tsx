@@ -24,11 +24,11 @@ import EqualizerIcon from '@material-ui/icons/Equalizer';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 
-const people =  require("../../../assets/images/lens_icons/people.png");
-const operations =  require("../../../assets/images/lens_icons/operations.png");
-const strategy =  require("../../../assets/images/lens_icons/strategy.png");
-const technology =  require("../../../assets/images/lens_icons/technology.png");
-const governance =  require("../../../assets/images/lens_icons/governance.png");
+const people: string =  require("../../../assets/images/lens_icons/people.png");
+const operations: string =  require("../../../assets/images/lens_icons/operations.png");
+const strategy: string =  require("../../../assets/images/lens_icons/strategy.png");
+const technology: string =  require("../../../assets/images/lens_icons/technology.png");
+const governance: string =  require("../../../assets/images/lens_icons/governance.png");
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

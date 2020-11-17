@@ -17,11 +17,11 @@ import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/s
 import scoreStyles from '../index.module.scss';
 let cx = classNames.bind(scoreStyles);
 
-const people =  require("../../../../assets/images/lens_icons/people.png");
-const operations =  require("../../../../assets/images/lens_icons/operations.png");
-const strategy =  require("../../../../assets/images/lens_icons/strategy.png");
-const technology =  require("../../../../assets/images/lens_icons/technology.png");
-const governance =  require("../../../../assets/images/lens_icons/governance.png");
+const people: string =  require("../../../../assets/images/lens_icons/people.png");
+const operations: string =  require("../../../../assets/images/lens_icons/operations.png");
+const strategy: string =  require("../../../../assets/images/lens_icons/strategy.png");
+const technology: string =  require("../../../../assets/images/lens_icons/technology.png");
+const governance: string =  require("../../../../assets/images/lens_icons/governance.png");
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
