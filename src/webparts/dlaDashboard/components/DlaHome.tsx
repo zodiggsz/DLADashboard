@@ -11,9 +11,21 @@ import store from '../models';
 import { actions as userActions } from '../models/user';
 import 'react-toastify/dist/ReactToastify.css';
 import { sp } from "@pnp/sp";
-import "@pnp/sp/webs";
+import { Web } from "@pnp/sp/webs";
+import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
+
 import "@pnp/sp/site-users/web";
 import "@pnp/sp/clientside-pages/web";
+
+let web;
+
+if (Environment.type === EnvironmentType.Local) {  
+    web = Web("https://localhost:4323");
+} else {
+    // web = Web("https://dlamil.dps.mil/sites/SPO_PEODashboard/SitePages/PEO-Dashboard.aspx");
+    web = Web("https://dlamil.dps.mil/sites/SPO_PEODashboard");
+    // web = Web("https://codicast1.sharepoint.com/");
+}
 
 export function DlaUser(){
     // const userLoaded = useSelector(state => state.user);
@@ -23,7 +35,7 @@ export function DlaUser(){
     const dispatch = useDispatch();
 
     const checkUser = async () => {
-        let user = await sp.web.currentUser.get();
+        let user = await web.currentUser.get();
         console.log(user);
         let userEmail = user.UserPrincipalName;
         setEmail(userEmail.toLowerCase());
