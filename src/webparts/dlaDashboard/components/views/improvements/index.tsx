@@ -195,7 +195,8 @@ export default function Improvements() {
                 Subject: improvement.Subject,
                 Description: improvement.Description
             };
-            let progImp = await dispatch(actions.setProgramImprovements(update));
+            console.log(update[index]);
+            await dispatch(actions.setProgramImprovements(update[index]));
         }
 
         //let imp = await dispatch(actions.addImprovement(improvement.ID, improvement));

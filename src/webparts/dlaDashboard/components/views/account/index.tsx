@@ -87,7 +87,7 @@ export default function PFAccount() {
                                 </Grid>
                                 <Grid item xs={6}>
                                     <div className="scoreCard">
-                                        {group === 'admin' && <ListAdminAccounts />}
+                                        {/* {group === 'admin' && <ListAdminAccounts />} */}
                                         {group === 'peo' && <ListHistory />}
                                     </div>
                                 </Grid>

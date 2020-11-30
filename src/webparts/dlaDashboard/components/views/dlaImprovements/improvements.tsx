@@ -61,8 +61,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     fab: {
         position: 'absolute',
-        bottom: -50,
-        right: theme.spacing(2),
+        width: 40,
+        height: 40,
+        bottom: -55,
+        right: theme.spacing(1),
     },
     button: {
         '& > *': {
@@ -174,29 +176,56 @@ export default function DLAImprovements() {
     const [alertMessage, setAlertMessage] = React.useState('');
     const [labelWidth, setLabelWidth] = React.useState(0);
     const inputLabel = React.useRef(null);
-
     const user = useSelector((state) => state.user.data);
     const programs = useSelector((state) => state.programs.list);
     const selectedProgram = useSelector(state => state.programs.program);
     const improvements = useSelector((state) => state.programs.programImprovements);
     const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
 
+    React.useEffect(() => {
+        
+        console.log(content);
 
+    }, [content]);
+    
     React.useEffect(() => {
         
         setLabelWidth(inputLabel.current.offsetWidth);
         if(selectedProgram){
             if(selectedProgram.ID && program.ID !== selectedProgram.ID){
                 setProgram(selectedProgram);
-                loadInsights();
+                loadImprovements();
                 setContent([defaultContent]);
             }
         }
 
     }, [programs, selectedProgram]);
 
-    async function loadInsights(){
-        const load = await dispatch(actions.getProgramInsights(selectedProgram.ID));
+    async function loadImprovements(){
+        const load = await dispatch(actions.getDLAImprovements(selectedProgram.ID));
+        console.log(load);
+        if (lens) {
+            switch (lens) {
+                case 'governance':
+                    setContent(load.governance);
+                    break;
+                case 'people':
+                    setContent(load.people);
+                    break;
+                case 'technology':
+                    setContent(load.technology);
+                    break;
+                case 'strategy':
+                    setContent(load.strategy);
+                    break;
+                case 'operations':
+                    setContent(load.operations);
+                    break;
+                default:
+                    setContent([]);
+                    break;
+            }
+        }
     }
 
     function addInsight(){
@@ -230,7 +259,6 @@ export default function DLAImprovements() {
                 [key]: estimatedDate,
             };
 
-            console.log(newArray[index]);
             setContent(newArray);
     };
 
@@ -246,7 +274,6 @@ export default function DLAImprovements() {
                 [key]: e.target.value,
             };
 
-            console.log(newArray[index]);
             setContent(newArray);
 
         };
@@ -256,7 +283,7 @@ export default function DLAImprovements() {
     async function deleteInput(index) {
         let newArray = [...content];
         let remove = newArray[index];
-        console.log(newArray);
+
         if (index > 0) {
             if(remove.ID > 0){
                 const removeInsight = await dispatch(actions.removeImprovement(remove.ID));
@@ -274,7 +301,7 @@ export default function DLAImprovements() {
                 case 'governance':
                     setContent(improvements.governance);
                     break;
-                case 'people_culture':
+                case 'people':
                     setContent(improvements.people);
                     break;
                 case 'technology':
@@ -312,7 +339,10 @@ export default function DLAImprovements() {
                 Estimated_Completion: item.Estimated_Completion,
                 Status: item.Status
             };
-            dispatch(actions.addDLAImprovement(item.ID, update));
+
+            dispatch(actions.addDLAImprovement(item.ID, update)).then((result) => {
+                loadImprovements();
+            });
             
         });
 
@@ -348,7 +378,7 @@ export default function DLAImprovements() {
                     </FormControl>
                     
                     {content.map( (item, key) => (
-                        <Grid container id={improvementStyle.improvementData} spacing={3}>
+                        <Grid container className={improvementStyle.improvementData} style={{backgroundColor: key % 2 === 0 ? '#E7ECF3' : '#ffffff'}} spacing={3}>
                             <Grid item xs={6}>
                                 <FormControl variant="outlined" style={{width:"100%", margin:5}} key={key} >
                                     <TextField

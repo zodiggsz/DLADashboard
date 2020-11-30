@@ -13,6 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import Tooltip from '@material-ui/core/Tooltip';
 import dashRoutes from '../routes/dashboard';
 import clsx from 'clsx';
 import drawerStyles from './index.module.scss';
@@ -145,14 +146,16 @@ function DrawerPanel({menu, collapse, setCollapse, drawerExpand = () => {}}){
   if(groupMenu){
     return (
         <List component="nav" aria-labelledby="nested-list-subheader" className={classes.listRoot}>
-            <ListItem button onClick={handleCollapse}>
-                    <ListItemIcon className={classes.panelIcons}>
-                        <Icon />
-                    </ListItemIcon>
-                    <ListItemText primary={menu.name} />
-                    {menu.views ? open ? <ExpandLess /> : <ExpandMore /> : ''}
-    
-            </ListItem>
+            <Tooltip title={menu.name} placement="right" arrow>
+                <ListItem button onClick={handleCollapse}>
+                        <ListItemIcon className={classes.panelIcons}>
+                            <Icon />
+                        </ListItemIcon>
+                        <ListItemText primary={menu.name} />
+                        {menu.views ? open ? <ExpandLess /> : <ExpandMore /> : ''}
+        
+                </ListItem>
+            </Tooltip>
             { menu.views && 
                 <Collapse in={open} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
