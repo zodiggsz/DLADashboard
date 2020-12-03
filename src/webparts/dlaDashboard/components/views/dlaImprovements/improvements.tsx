@@ -285,15 +285,9 @@ export default function DLAImprovements() {
     async function deleteInput(index) {
         let newArray = [...content];
         let remove = newArray[index];
-
-        if (index > 0) {
-            if(remove.ID > 0){
-                const removeInsight = await dispatch(actions.removeImprovement(remove.ID));
-            }
-            newArray.splice(index, 1);
-            setContent(newArray);
-        }
-
+        const removeInsight = await dispatch(actions.removeImprovement(remove.ID));
+        newArray.splice(index, 1);
+        setContent(newArray);
     }
 
     function changeImprovements(e){
