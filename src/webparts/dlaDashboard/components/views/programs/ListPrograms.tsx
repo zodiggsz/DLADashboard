@@ -287,6 +287,7 @@ export default function ListPrograms({userID, navigate = false}) {
     const account = useSelector((state) => state.user.data);
     const userAccounts = useSelector(state => state.user.accounts);
     const [selected, setSelected] = React.useState<string[]>(['0']);
+    const [programList, setProgramList] = React.useState([]);
     const [score, setScore] = React.useState([]);
     const [programFilter, setProgramFilter] = React.useState(false);
     const [user, setUser] = React.useState({
@@ -302,31 +303,30 @@ export default function ListPrograms({userID, navigate = false}) {
     
     React.useEffect(() => {
 
-        if(account.Group === 'operator'){
-            if(userPrograms.length < 1 && !programFilter){
-                dispatch(programActions.getUserPrograms(userID));
+        dispatch(programActions.getAllPrograms()).then((all) => {
+            filterPrograms();
+        });
+        // if(account.Group === 'operator'){
+        //     if(userPrograms.length < 1 && !programFilter){
+        //         dispatch(programActions.getUserPrograms(userID));
                
-            }
+        //     }
+        // }else{
+        //     if(userID){
 
-            if(!programFilter && userPrograms.length !== programs.length){
-                filterPrograms();
-            }
-        }else{
-            if(userID){
-
-                if(userPrograms.length < 1 && !programFilter){
-                    dispatch(programActions.getUserPrograms(userID));
+        //         if(userPrograms.length < 1 && !programFilter){
+        //             dispatch(programActions.getUserPrograms(userID));
                    
-                }
+        //         }
     
-                if(!programFilter && userPrograms.length !== programs.length){
-                    filterPrograms();
-                }
+        //         if(!programFilter && userPrograms.length !== programs.length){
+        //             filterPrograms();
+        //         }
 
-            }else{
-                dispatch(programActions.getAllPrograms());
-            }
-        }
+        //     }else{
+        //         dispatch(programActions.getAllPrograms());
+        //     }
+        // }
 
         if( selected.indexOf("0") == 0 && selectedProgram.ID){
             const id = `${selectedProgram.ID}`;
@@ -335,21 +335,34 @@ export default function ListPrograms({userID, navigate = false}) {
 
     }, [userAccounts, userPrograms, selected]);
 
+    React.useEffect(() => {
+        if(programs.length > 0){
+            console.log(programs);
+            filterPrograms();
+        }
+    }, [programs]);
+
     async function filterPrograms(){
-        
-        userPrograms.map( id => {
-            
-            dispatch(programActions.showProgramByID(id)).then(program => {
-                programActions.getCompositeScore(id).then(data => {
-                    const update = {
-                        ...program,
-                        Score: data.CompositeScore ? data.CompositeScore : 0.0
-                    };
-                    dispatch(programActions.addProgram(update));
-                });
+        const list = [];
+        const getPrograms = programs.map( async program => {
+
+            await programActions.getCompositeScore(program.ID).then(data => {
+                const update = {
+                    ...program,
+                    Score: data.CompositeScore ? data.CompositeScore : 0.0
+                };
+
+                list.push(update);
+                // dispatch(programActions.addProgram(update));
             });
 
         });
+
+        Promise.all(getPrograms).then((result) => {
+            console.log(list);
+            setProgramList(list);
+        });
+
         setProgramFilter(true);
         setPage(0);
     }
@@ -403,7 +416,7 @@ export default function ListPrograms({userID, navigate = false}) {
                     rowCount={programs.length}
                     />
                     <TableBody>
-                    {programs && stableSort(programs, getComparator(order, orderBy))
+                    {programList && stableSort(programList, getComparator(order, orderBy))
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row, index) => {
                             const isItemSelected = isSelected(`${row.ID}`);
@@ -452,7 +465,7 @@ export default function ListPrograms({userID, navigate = false}) {
                 <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={programs.length}
+                count={programList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}

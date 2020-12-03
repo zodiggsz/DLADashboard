@@ -294,8 +294,8 @@ export default function ListHistory() {
                         className={classes.tabs}
                     >
                         <Tab className={classes.tab} label="Scores" icon={setLensImage('scores')} {...a11yProps(0)} key={0} />
-                        <Tab className={classes.tab} label="Insights" icon={setLensImage('insights')} {...a11yProps(1)} key={1} />
-                        <Tab className={classes.tab} label="Improvements" icon={setLensImage('improvements')} {...a11yProps(2)} key={2} />
+                        {/* <Tab className={classes.tab} label="Insights" icon={setLensImage('insights')} {...a11yProps(1)} key={1} />
+                        <Tab className={classes.tab} label="Improvements" icon={setLensImage('improvements')} {...a11yProps(2)} key={2} /> */}
                     </Tabs>
                 </AppBar>
                 <ScoresHistoryPanel value={value} history={programHistory.score} index={0} />

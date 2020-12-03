@@ -79,7 +79,7 @@ var dashRoutes = [
         icon: AccountBalanceIcon,
         component: Programs,
         hidden: false,
-        group:["peo","portfolio","program"],
+        group:["portfolio","program"],
         exact:true,
         breadcrumb: null
     },
@@ -89,7 +89,7 @@ var dashRoutes = [
         icon: DescriptionIcon,
         component: Programs,
         hidden: false,
-        group:["peo","portfolio","program"],
+        group:["portfolio","program"],
         exact:true,
         breadcrumb: null
     },
@@ -99,7 +99,7 @@ var dashRoutes = [
         icon: FileCopyIcon,
         component: Programs,
         hidden: false,
-        group:["peo","portfolio","program"],
+        group:["portfolio","program"],
         exact:true,
         breadcrumb: null
     }

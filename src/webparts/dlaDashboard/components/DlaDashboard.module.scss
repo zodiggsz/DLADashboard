@@ -21,14 +21,15 @@
     div[class^='pageTitle_']{
     display: none;
     }
-    .CanvasZone {
+    .CanvasComponent.LCS .CanvasZone {
         background-color: transparent !important;
-        max-width: 100%;
+        max-width: none !important;
         padding: 0;
     }
     .CanvasZone:not(.CanvasZone--fullWidth) .ControlZone {
     padding: 0;
     margin-top: 0;
+    margin-left: auto;
     }
 }
 

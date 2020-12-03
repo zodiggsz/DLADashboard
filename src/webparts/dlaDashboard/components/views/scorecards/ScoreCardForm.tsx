@@ -59,6 +59,8 @@ export default function ScoreCardForm() {
     const [technology, setTechnology] = React.useState<ScoreData>(defaultData);
     const [strategy, setStrategy] = React.useState<ScoreData>(defaultData);
     const [operations, setOperations] = React.useState<ScoreData>(defaultData);
+    const [totalOriginal, setTotalOriginal] = React.useState('');
+    const [totalTarget, setTotalTarget] = React.useState('');
 
     React.useEffect(() => {
 
@@ -70,10 +72,20 @@ export default function ScoreCardForm() {
             setPeople(scores.people);
             setStrategy(scores.strategy);
             setTechnology(scores.technology);
+            actions.getCompositeScore(selectedProgram.ID).then(data => {
+                setTotalOriginal(data.CompositeScore);
+                setTotalTarget(data.TotalScore);
+            });
 
         }
 
     }, [scores]);
+
+    React.useEffect(() => {
+
+        console.log(totalOriginal);
+
+    }, [totalOriginal]);
 
     function governanceChange(key) {
         
@@ -140,7 +152,7 @@ export default function ScoreCardForm() {
         const prog = await dispatch(actions.getProgramByID(value));
         const calc = await dispatch(actions.getProgramScores(value, 'latest'));
 
-      };
+    };
 
     function calcAvgOrig() {
         return ((
@@ -162,13 +174,31 @@ export default function ScoreCardForm() {
         ).toFixed(2);
     }
 
+    function originalScoreInput() {
+
+        return (e) => {
+            console.log(e.target.value);
+            setTotalOriginal(e.target.value);
+        };
+
+    }
+
+    function targetScoreInput() {
+
+        return (e) => {
+            console.log(e.target.value);
+            setTotalTarget(e.target.value);
+        };
+
+    }
+
     async function onSubmit() {
     
         const composite_scores = {
             ProgramID: program.ID,
             Title: program.Acronym,
-            CompositeScore: calcAvgOrig(),
-            TotalScore: calcAvgTarget()
+            CompositeScore: totalOriginal,
+            TotalScore: totalTarget
         };
 
         const result = await dispatch(actions.addCompositeScore(composite_scores));
@@ -227,19 +257,6 @@ export default function ScoreCardForm() {
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
-                            label="Post-Improvement"
-                            type="number"
-                            value={people.OriginalScore}
-                            onChange={peopleChange('OriginalScore')}
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                            variant="outlined"
-                        />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            id="outlined-number"
                             label="Original"
                             type="number"
                             value={people.TargetScore}
@@ -250,21 +267,20 @@ export default function ScoreCardForm() {
                             variant="outlined"
                         />
                     </Grid>
-
-                    <Grid item xs={4}><span className={scoreStyles.label}>Strategy</span></Grid>
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
                             label="Post-Improvement"
                             type="number"
-                            value={strategy.OriginalScore}
-                            onChange={strategyChange('OriginalScore')}
+                            value={people.OriginalScore}
+                            onChange={peopleChange('OriginalScore')}
                             InputLabelProps={{
                             shrink: true,
                             }}
                             variant="outlined"
                         />
                     </Grid>
+                    <Grid item xs={4}><span className={scoreStyles.label}>Strategy</span></Grid>
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
@@ -278,21 +294,20 @@ export default function ScoreCardForm() {
                             variant="outlined"
                         />
                     </Grid>
-
-                    <Grid item xs={4}><span className={scoreStyles.label}>Operations</span></Grid>
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
                             label="Post-Improvement"
                             type="number"
-                            value={operations.OriginalScore}
-                            onChange={operationsChange('OriginalScore')}
+                            value={strategy.OriginalScore}
+                            onChange={strategyChange('OriginalScore')}
                             InputLabelProps={{
                             shrink: true,
                             }}
                             variant="outlined"
                         />
                     </Grid>
+                    <Grid item xs={4}><span className={scoreStyles.label}>Operations</span></Grid>
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
@@ -306,21 +321,20 @@ export default function ScoreCardForm() {
                             variant="outlined"
                         />
                     </Grid>
-
-                    <Grid item xs={4}><span className={scoreStyles.label}>Governance</span></Grid>
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
                             label="Post-Improvement"
                             type="number"
-                            value={governance.OriginalScore}
-                            onChange={governanceChange('OriginalScore')}
+                            value={operations.OriginalScore}
+                            onChange={operationsChange('OriginalScore')}
                             InputLabelProps={{
                             shrink: true,
                             }}
                             variant="outlined"
                         />
                     </Grid>
+                    <Grid item xs={4}><span className={scoreStyles.label}>Governance</span></Grid>
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
@@ -334,21 +348,20 @@ export default function ScoreCardForm() {
                             variant="outlined"
                         />
                     </Grid>
-
-                    <Grid item xs={4}><span className={scoreStyles.label}>Technology</span></Grid>
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
                             label="Post-Improvement"
                             type="number"
-                            value={technology.OriginalScore}
-                            onChange={technologyChange('OriginalScore')}
+                            value={governance.OriginalScore}
+                            onChange={governanceChange('OriginalScore')}
                             InputLabelProps={{
                             shrink: true,
                             }}
                             variant="outlined"
                         />
                     </Grid>
+                    <Grid item xs={4}><span className={scoreStyles.label}>Technology</span></Grid>
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-number"
@@ -362,27 +375,47 @@ export default function ScoreCardForm() {
                             variant="outlined"
                         />
                     </Grid>
-
+                    <Grid item xs={4}>
+                        <TextField
+                            id="outlined-number"
+                            label="Post-Improvement"
+                            type="number"
+                            value={technology.OriginalScore}
+                            onChange={technologyChange('OriginalScore')}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            variant="outlined"
+                        />
+                    </Grid>
                     <Grid item xs={4}><span className={scoreStyles.label}>Composite Score</span></Grid>
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-read-only-input"
-                            label="Post Total Score"
-                            value={calcAvgOrig()}
-                            InputProps={{
-                                readOnly: true,
+                            label="Total Original Score"
+                            onChange={targetScoreInput()}
+                            value={totalTarget}
+                            InputLabelProps={{
+                                shrink: true,
                             }}
+                            // InputProps={{
+                            //     readOnly: true,
+                            // }}
                             variant="outlined"
                         />
                     </Grid>
                     <Grid item xs={4}>
                         <TextField
                             id="outlined-read-only-input"
-                            label="Total Original Score"
-                            value={calcAvgTarget()}
-                            InputProps={{
-                                readOnly: true,
+                            label="Post Total Score"
+                            onChange={originalScoreInput()}
+                            value={totalOriginal}
+                            InputLabelProps={{
+                                shrink: true,
                             }}
+                            // InputProps={{
+                            //     readOnly: true,
+                            // }}
                             variant="outlined"
                         />
                     </Grid>

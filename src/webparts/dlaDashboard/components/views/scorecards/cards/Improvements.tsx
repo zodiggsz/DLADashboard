@@ -239,10 +239,10 @@ export default function Improvements() {
                         <Tab label="Technology" icon={setLensImage('technology')} {...a11yProps(4)} key={4} />
                     </Tabs>
                 </AppBar>
-                <TabPanel value={value} lens={improvements.governance} index={0} />
-                <TabPanel value={value} lens={improvements.operations} index={1} />
-                <TabPanel value={value} lens={improvements.strategy} index={2} />
                 <TabPanel value={value} lens={improvements.people} index={3} />
+                <TabPanel value={value} lens={improvements.strategy} index={2} />
+                <TabPanel value={value} lens={improvements.operations} index={1} />
+                <TabPanel value={value} lens={improvements.governance} index={0} />
                 <TabPanel value={value} lens={improvements.technology} index={4} />
             </div>
             

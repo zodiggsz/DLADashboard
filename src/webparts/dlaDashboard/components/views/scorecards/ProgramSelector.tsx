@@ -4,14 +4,16 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
+import { actions as programActions } from '../../../models/programs';
 import scoreStyles from './index.module.scss';
 
-export function ProgramSelector({ onChange=(event:React.ChangeEvent<{ value: unknown }>)=>{}, value }) {
+export function ProgramSelector({ onChange=(event:React.ChangeEvent<{ value: any }>)=>{}, value }) {
     const programs = useSelector((state) => state.programs.list);
     const [labelWidth, setLabelWidth] = React.useState(0);
     const inputLabel = React.useRef(null);
     
     React.useEffect(() => {
+        programActions.getAllPrograms();
         setLabelWidth(inputLabel.current.offsetWidth);
     }, []);
 

@@ -166,6 +166,8 @@ const defaultProgramData = {
     Acronym: 'Program'
 };
 
+const defaultLength: any = 100;
+
 export default function DLAImprovements() {
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -175,7 +177,7 @@ export default function DLAImprovements() {
     const [alert, setAlert] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState('');
     const [labelWidth, setLabelWidth] = React.useState(0);
-    const inputLabel = React.useRef(null);
+    const inputLabel = React.useRef(defaultLength);
     const user = useSelector((state) => state.user.data);
     const programs = useSelector((state) => state.programs.list);
     const selectedProgram = useSelector(state => state.programs.program);
@@ -240,8 +242,8 @@ export default function DLAImprovements() {
         };
         
         setContent([
+            newItem,
             ...content,
-            newItem
         ]);
 
     }

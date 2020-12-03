@@ -476,7 +476,6 @@ export function addDLAImprovement(id, improvement){
                 if (item) {
                     web.lists.getByTitle("DLA_Improvements").items.getById(id).update(improvement);
                     dispatch(slice.actions.setLoading(false));
-                    toast.success(`Successfully updated Improvement`);
                 }
             
             }else{

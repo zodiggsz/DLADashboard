@@ -69,8 +69,8 @@ function ScoreResult({ label, original=0, target=0, compositeResults=false }) {
     return (
         <StyledTableRow className={composite}>
             <StyledTableCell align="center" className={scoreStyles.labelCell}>{label}</StyledTableCell>
-            <StyledTableCell align="center" className={compositeResults ? originalResults : scoreStyles.originCell}>{original}</StyledTableCell>
             <StyledTableCell align="center" className={compositeResults ? targetResults : scoreStyles.targetCell}>{target}</StyledTableCell>
+            <StyledTableCell align="center" className={compositeResults ? originalResults : scoreStyles.originCell}>{original}</StyledTableCell>
         </StyledTableRow>
     );
 }
@@ -108,8 +108,8 @@ export default function Score(props: ScoreProps) {
                     <TableHead>
                         <TableRow>
                             <StyledTableCell align="center">LENS</StyledTableCell>
-                            <StyledTableCell align="center">POST-IMPROVEMENT</StyledTableCell>
                             <StyledTableCell align="center">ORIGINAL</StyledTableCell>
+                            <StyledTableCell align="center">POST-IMPROVEMENT</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
