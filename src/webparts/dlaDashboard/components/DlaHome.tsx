@@ -37,8 +37,8 @@ export function DlaUser(){
 
     const checkUser = async () => {
         let user = await web.currentUser.get();
-        let file = await budget.getFileByServerRelativeUrl("/teams/C36/N71/TestForDB/ALLPEOs.xlsx").getBlob();
-        console.log(file);
+        // let file = await budget.getFileByServerRelativeUrl("/teams/C36/N71/TestForDB/ALLPEOs.xlsx").getBlob();
+        // console.log(file);
         console.log(user);
         let userEmail = user.UserPrincipalName;
         setEmail(userEmail.toLowerCase());
