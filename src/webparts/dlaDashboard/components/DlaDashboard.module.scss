@@ -33,6 +33,9 @@
     }
 }
 
+div[data-automation-id='pageHeader'] {
+    display: none;
+}
 .pageContent{
     max-width: none;
     width: 100%;

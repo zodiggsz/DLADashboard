@@ -218,17 +218,17 @@ export default function ProgramInsights() {
                         textColor="primary"
                         aria-label="scrollable force tabs example"
                     >      
-                        <Tab label="People & Culture" icon={setLensImage('people')} {...a11yProps(3)} key={3} />                  
-                        <Tab label="Strategy" icon={setLensImage('strategy')} {...a11yProps(2)} key={2} />
-                        <Tab label="Operations" icon={setLensImage('operations')} {...a11yProps(1)} key={1} />
-                        <Tab label="Governance" icon={setLensImage('governance')} {...a11yProps(0)} key={0} />
+                        <Tab label="People & Culture" icon={setLensImage('people')} {...a11yProps(3)} key={0} />                  
+                        <Tab label="Strategy" icon={setLensImage('strategy')} {...a11yProps(2)} key={1} />
+                        <Tab label="Operations" icon={setLensImage('operations')} {...a11yProps(1)} key={2} />
+                        <Tab label="Governance" icon={setLensImage('governance')} {...a11yProps(0)} key={3} />
                         <Tab label="Technology" icon={setLensImage('technology')} {...a11yProps(4)} key={4} />
                     </Tabs>
                 </AppBar>
-                <TabPanel value={value} lens={insights.governance} index={0} />
-                <TabPanel value={value} lens={insights.operations} index={1} />
-                <TabPanel value={value} lens={insights.strategy} index={2} />
-                <TabPanel value={value} lens={insights.people} index={3} />
+                <TabPanel value={value} lens={insights.people} index={0} />
+                <TabPanel value={value} lens={insights.strategy} index={1} />
+                <TabPanel value={value} lens={insights.operations} index={2} />
+                <TabPanel value={value} lens={insights.governance} index={3} />
                 <TabPanel value={value} lens={insights.technology} index={4} />
             </div>
             

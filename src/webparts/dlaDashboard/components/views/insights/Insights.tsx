@@ -94,11 +94,11 @@ const defaultState = {
 };
 
 const defaultInsights = {
-    governance: 'Governance',
     people: 'People and Culture',
-    technology: 'Technology',
     strategy: 'Strategy',
-    operations: 'Operations'
+    operations: 'Operations',
+    governance: 'Governance',
+    technology: 'Technology'
 };
 
 const defaultInputs = {

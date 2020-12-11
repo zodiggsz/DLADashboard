@@ -4,14 +4,14 @@ import "@pnp/sp/items";
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { toast } from 'react-toastify';
 import { slice } from './index';
+import { config } from '../../../../config';
 
 let web;
 
 if (Environment.type === EnvironmentType.Local) {  
     web = Web("https://localhost:4323");
 } else {
-    web = Web("https://dlamil.dps.mil/sites/SPO_PEODashboard");
-    // web = Web("https://codicast1.sharepoint.com/");
+    web = Web(config.spURi);
 }
 
 export function getProgramImprovements(ID){

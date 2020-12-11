@@ -282,7 +282,7 @@ export default function ListHistory() {
         return (
             <div id="programInsights" className={classes.listRoot}>
                 <AppBar position="static" color="default">
-                    <h3 style={{width:"100%", textAlign:"center", padding:10}}>{program.Acronym} History</h3>
+                    <h3 style={{width:"100%", textAlign:"center", fontSize: "1.25rem", padding:10}}>{program.Acronym} History</h3>
                     <Tabs
                         value={value}
                         onChange={handleChange}

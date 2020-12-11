@@ -97,11 +97,11 @@ const defaultState = {
 };
 
 const defaultInsights = {
-    governance: 'Governance',
     people: 'People and Culture',
-    technology: 'Technology',
     strategy: 'Strategy',
-    operations: 'Operations'
+    operations: 'Operations',
+    governance: 'Governance',
+    technology: 'Technology'
 };
 
 const defaultInputs = {
@@ -192,7 +192,7 @@ export default function DLAImprovements() {
     
     React.useEffect(() => {
         
-        setLabelWidth(inputLabel.current.offsetWidth);
+        setLabelWidth(inputLabel.current ? inputLabel.current.offsetWidth: 100 );
         if(selectedProgram){
             if(selectedProgram.ID && program.ID !== selectedProgram.ID){
                 setProgram(selectedProgram);
@@ -372,7 +372,9 @@ export default function DLAImprovements() {
 
                         </Select>
                     </FormControl>
-                    
+                    <Fab color="primary" onClick={() => addInsight()} aria-label="add">
+                        <AddIcon />
+                    </Fab>
                     {content.map( (item, key) => (
                         <Grid container className={improvementStyle.improvementData} style={{backgroundColor: key % 2 === 0 ? '#E7ECF3' : '#ffffff'}} spacing={3}>
                             <Grid item xs={6}>
@@ -441,9 +443,6 @@ export default function DLAImprovements() {
                         </Grid>
                         
                     ))}
-                    <Fab color="primary" onClick={() => addInsight()} aria-label="add">
-                        <AddIcon />
-                    </Fab>
                     <div style={{padding:20}}>
                         <Button variant="contained" color="primary" onClick={() => saveImprovement()}>SAVE IMPROVEMENT</Button>
                     </div>

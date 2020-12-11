@@ -13,17 +13,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import { sp } from "@pnp/sp";
 import { Web } from "@pnp/sp/webs";
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
-
+import { config } from '../../../config';
 import "@pnp/sp/site-users/web";
 import "@pnp/sp/clientside-pages/web";
+import "@pnp/sp/files";
+import "@pnp/sp/folders";
 
 let web;
-
+let budget;
 if (Environment.type === EnvironmentType.Local) {  
     web = Web("https://localhost:4323");
 } else {
-    web = Web("https://dlamil.dps.mil/sites/SPO_PEODashboard");
-    // web = Web("https://codicast1.sharepoint.com/");
+    web = Web(config.spURi);
+    budget = Web(config.fileUri);
 }
 
 export function DlaUser(){
@@ -35,6 +37,8 @@ export function DlaUser(){
 
     const checkUser = async () => {
         let user = await web.currentUser.get();
+        let file = await budget.getFileByServerRelativeUrl("/teams/C36/N71/TestForDB/ALLPEOs.xlsx").getBlob();
+        console.log(file);
         console.log(user);
         let userEmail = user.UserPrincipalName;
         setEmail(userEmail.toLowerCase());
