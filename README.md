@@ -9,8 +9,10 @@ git clone the repo
 npm i
 npm i -g gulp
 gulp
-run gulp serve to run local deployment
+gulp serve
 ```
+running gulp serve runs local deployment
+
 With the local dev running go to:
 https://codicast1.sharepoint.com
 
