@@ -9,7 +9,12 @@ git clone the repo
 npm i
 npm i -g gulp
 gulp
+run gulp serve to run local deployment
 ```
+With the local dev running go to:
+https://codicast1.sharepoint.com
+
+Login with codicast creds to view running code
 
 This package produces the following:
 
