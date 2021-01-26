@@ -162,11 +162,15 @@ export default function ScoreCard() {
                     <li>
                         <a href="#" onClick={(event) => onSubmit(event,'Improvements')}>IMPROVEMENTS</a>
                     </li>
+                    <li>
+                        <a href="#" onClick={(event) => onSubmit(event,'Budgets')}>BUDGETS</a>
+                    </li>
                 </ul>
             </div>
             <div className={`${scoreStyles.programMain}`}>
                 {card == 'Scorecard' && <Score governance={scores.governance} technology={scores.technology} strategy={scores.strategy} people={scores.people} operations={scores.operations} total={score} />}
                 {card == 'Insights' && <Insights />}
+                {card == 'Budgets' && <Insights />}
                 {card == 'Improvements' && <Improvements />} 
             </div>
         </div>
