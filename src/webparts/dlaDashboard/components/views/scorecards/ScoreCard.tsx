@@ -10,6 +10,7 @@ import scoreStyles from './scorecard.module.scss';
 import classNames from 'classnames/bind';
 import { actions } from '../../../models/programs';
 import Score from './cards/Score';
+import Budgets from './cards/Budget';
 import Insights from './cards/Insights';
 import Improvements from './cards/Improvements';
 
@@ -170,7 +171,7 @@ export default function ScoreCard() {
             <div className={`${scoreStyles.programMain}`}>
                 {card == 'Scorecard' && <Score governance={scores.governance} technology={scores.technology} strategy={scores.strategy} people={scores.people} operations={scores.operations} total={score} />}
                 {card == 'Insights' && <Insights />}
-                {card == 'Budgets' && <Insights />}
+                {card == 'Budgets' && <Budgets />}
                 {card == 'Improvements' && <Improvements />} 
             </div>
         </div>

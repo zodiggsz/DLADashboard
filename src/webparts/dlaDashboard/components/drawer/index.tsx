@@ -122,13 +122,16 @@ function DrawerPanel({menu, collapse, setCollapse, drawerExpand = () => {}}){
   if(collapse === true && open === true){
     setOpen(false);
   }
-
   const goTo = path => {
-      if (path) return history.push(menu.path);
+      console.log('Going to path: ', path, path.startsWith('http'));
+      if (path.startsWith('http')) window.open(path, "_blank");
+      else if (path) return history.push(menu.path);
   };
 
 
   const handleCollapse = () => {
+
+    console.log('collapsing');
 
     if(collapse){
       drawerExpand();
@@ -137,7 +140,8 @@ function DrawerPanel({menu, collapse, setCollapse, drawerExpand = () => {}}){
     if(menu.views){
       setOpen(!open);
     }else{
-      return history.push(menu.path);
+        if (menu.path.startsWith('http')) window.open(menu.path, "_blank");
+        else if (menu.path) return history.push(menu.path);
     }
     
     
@@ -164,11 +168,15 @@ function DrawerPanel({menu, collapse, setCollapse, drawerExpand = () => {}}){
                       return (
                           
                         <ListItem button className={classes.nested} onClick={() => goTo(route.path)} key={key}>
-                          <ListItemText primary={route.name} />
+                          <ListItemText primary={"RANDOMTEXT"} />
                         </ListItem>
                           
                       );
                   })}
+
+                  <ListItem button className={classes.nested} onClick={() => goTo('http://uber.com')}>
+                        <ListItemText primary={"RANDOMTEXT33"} />
+                    </ListItem>
                   
                   </List>
                 </Collapse>
@@ -185,6 +193,17 @@ function DrawerPanel({menu, collapse, setCollapse, drawerExpand = () => {}}){
 export default function PlatformDrawer({ drawer = false }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+              const men = {
+                    path: "http://lyft.com",
+                    name: "Budgets",
+                    // icon: AccountBalanceIcon,
+                    // component: Programs,
+                    hidden: false,
+                    group:["admin","operator","peo"],
+                    // group:["portfolio","program"],
+                    // exact:true,
+                    breadcrumb: null
+                };
 
     React.useEffect(() => {
       setOpen(drawer);
@@ -221,6 +240,9 @@ export default function PlatformDrawer({ drawer = false }) {
                         <DrawerPanel menu={route} collapse={!open} setCollapse={setOpen} drawerExpand={toggleDrawer} key={key} />
                     );
                 })}
+
+                {/* <DrawerPanel menu={men} collapse={!open} setCollapse={setOpen} drawerExpand={toggleDrawer} /> */}
+
             </Drawer>
         </div>
     );
