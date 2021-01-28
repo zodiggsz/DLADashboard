@@ -74,7 +74,7 @@ var dashRoutes = [
         group:["admin","operator","portfolio","program"]
     },
     {
-        path: "http://lyft.com",
+        path: "https://dlamil.dps.mil/teams/C11/N40/ASOCONnect/BRP/SitePages/PEO.aspx",
         name: "Budgets",
         icon: AccountBalanceIcon,
         component: Programs,

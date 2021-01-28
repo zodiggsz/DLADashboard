@@ -26,6 +26,9 @@ export const slice = createSlice({
             governance: defaultScores,
             technology: defaultScores,
         },
+        programBudgets: {
+            reim: 0
+        },
         programInsights: {
             people: [],
             strategy: [],
@@ -64,6 +67,9 @@ export const slice = createSlice({
         },
         setProgramInsights(state, action) {
             state.programInsights = action.payload;
+        },
+        setProgramBudgets(state, action) {
+            state.programBudgets = action.payload;
         },
         setProgramInterests(state, action) {
             state.programInterests = action.payload;

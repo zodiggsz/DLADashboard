@@ -444,6 +444,26 @@ export function getProgramInsights(id){
 
 }
 
+export function getProgramBudgets(id){
+    
+    const select = ['ID','Lens', 'Content'];
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        
+        const reim = await web.lists.getByTitle("DLA_Budgets").items.select(select).filter(`ProgramID eq ${id} and Lens eq 'governance'`).orderBy("Created", false).getAll().then( data => {
+            return data ? data: [];
+        } );
+
+        const budgetData = {reim};
+
+        dispatch(slice.actions.setProgramBudgets(budgetData));
+        return budgetData;
+        
+    };
+
+}
+
 export function removeImprovement(id){
     
     return async (dispatch) => {

@@ -8,6 +8,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import classNames from 'classnames/bind';
+import { useSelector, useDispatch } from 'react-redux';
+import { actions } from '../../../../models/programs';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import scoreStyles from '../index.module.scss';
 let cx = classNames.bind(scoreStyles);
@@ -44,6 +46,14 @@ const useStyles = makeStyles((theme: Theme) =>
         position: "relative",
         textAlign: 'center',
         borderRadius:20
+    },
+    box : {
+        borderRadius: 3,
+        padding: 10,
+        textAlign: 'center',
+        cursor: 'pointer',
+        // color: 'white',
+        // fontWeight: 'bold'
     }
   }));
 
@@ -94,103 +104,85 @@ interface ScoreProps {
     total: Total;
 }
 
+
+interface ProgramData {
+    ID: number;
+    Acronym: string;
+}
+
+const defaultProgramData = {
+    ID: 0,
+    Acronym: 'Program'
+};
+
 export default function Budget() {
     // const { governance, people, technology, strategy, operations, total } = {};
+    const dispatch = useDispatch();
     const classes = useStyles();
+    const selectedProgram = useSelector(state => state.programs.program);
+    const insights = useSelector((state) => state.programs.programInsights);
+    const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
+    // const [insights, setInsights] = React.useState<InsightData>();
+    const [value, setValue] = React.useState(0);
+    
+    React.useEffect(() => {
+        if(selectedProgram){
+            if(selectedProgram.ID && program.ID !== selectedProgram.ID){
+                setProgram(selectedProgram);
+                loadBudgets();
+            }
+        }
+    }, [selectedProgram]);
+
+    async function loadBudgets(){
+        const load = await dispatch(actions.getProgramBudgets(selectedProgram.ID));
+    }
+
 
     return (    
         <Grid container id={scoreStyles.scorecard}>
 
-            <Grid item xs={12}>
-                <Paper className={classes.paper}>
-                <TableContainer>
-                    <Table className={classes.table} aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <StyledTableCell align="center">LENS</StyledTableCell>
-                            <StyledTableCell align="center">ORIGINAL</StyledTableCell>
-                            <StyledTableCell align="center">POST-IMPROVEMENT</StyledTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-
-                        {/* <ScoreResult
-                            label="People & Culture"
-                            original={people.OriginalScore}
-                            target={people.TargetScore}
-                        />
-                        
-                        <ScoreResult
-                            label="Strategy"
-                            original={strategy.OriginalScore}
-                            target={strategy.TargetScore}
-                        />
-                        
-                        <ScoreResult
-                            label="Operations"
-                            original={operations.OriginalScore}
-                            target={operations.TargetScore}
-                        />
-
-                        <ScoreResult
-                            label="Governance"
-                            original={governance.OriginalScore}
-                            target={governance.TargetScore}
-                        />
-                                                
-                        <ScoreResult
-                            label="Technology"
-                            original={technology.OriginalScore}
-                            target={technology.TargetScore}
-                        />
-                        
-                        <ScoreResult
-                            label="Composite Score"
-                            compositeResults={true}
-                            original={total.CompositeScore}
-                            target={total.TotalScore}
-                        /> */}
-                    </TableBody>
-                    </Table>
-                </TableContainer>
-                </Paper>
+            <Grid container spacing={2} style={{marginBottom: 10}}>
+                <Grid item xs>
+                    <Paper className={classes.box} style={{background: 'purple'}}>
+                        Revised Authority
+                        <h4>$0</h4>
+                    </Paper>
+                </Grid>
+                <Grid item xs>
+                    <Paper className={classes.box} style={{background: 'pink'}}>
+                        Anticipated Reim
+                        <h4>$0</h4>
+                    </Paper>
+                </Grid>
+                <Grid item xs>
+                    <Paper className={classes.box} style={{background: 'green'}}>
+                        Received Reim
+                        <h4>$0</h4>
+                    </Paper>
+                </Grid>
             </Grid>
-            <Grid item xs={12}>
-                <section className={scoreStyles.legendText}>
-                        The following scores are based on critical factors across the following 
-                        five lenses: Strategy, Operations, Technology, People & Culture and 
-                        Governance. Each lens and the composite are scored on a 5 point scale. 
-                        Further, each lens is weighted and those weights are included in the 
-                        calculation of the composite score. The scores are based on research, 
-                        analysis of data, and interviews with government and contract personnel 
-                        from the Functional Sponsor and Program Management Office, Customers, and 
-                        System Vendors and Integrators.
-                </section>
-                <div className={scoreStyles.legend}>
-
-                    <h1>LEGEND</h1>
-                    <Grid container>
-                        <Grid item xs={4}>
-                            <div className={scoreStyles.indicatorContainer}>
-                                <div className={`${scoreStyles.indicator} ${scoreStyles.red}`}></div>
-                                <h3 className={scoreStyles.text}>1 - 2.50</h3>
-                            </div>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <div className={scoreStyles.indicatorContainer}>
-                                <div className={`${scoreStyles.indicator} ${scoreStyles.yellow}`}></div>
-                                <h3 className={scoreStyles.text}>2.51 - 3.75</h3>
-                            </div>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <div className={scoreStyles.indicatorContainer}>
-                                <div className={`${scoreStyles.indicator} ${scoreStyles.green}`}></div>
-                                <h3 className={scoreStyles.text}>3.76 - 5</h3>
-                            </div>
-                        </Grid>
-                    </Grid>
-                </div>
+            <Grid container spacing={2}>
+                <Grid item xs>
+                    <Paper className={classes.box} style={{background: 'yellow'}}>
+                        UFR
+                        <h4>$0</h4>
+                    </Paper>
+                </Grid>
+                <Grid item xs>
+                    <Paper className={classes.box} style={{background: 'blue'}}>
+                        Committed
+                        <h4>$0</h4>
+                    </Paper>
+                </Grid>
+                <Grid item xs>
+                    <Paper className={classes.box} style={{background: 'grey'}}>
+                        Obligated
+                        <h4>$0</h4>
+                    </Paper>
+                </Grid>
             </Grid>
+
         </Grid>
             
     );
