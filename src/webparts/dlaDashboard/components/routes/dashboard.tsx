@@ -79,7 +79,7 @@ var dashRoutes = [
         icon: AccountBalanceIcon,
         component: Programs,
         hidden: false,
-        group:["admin","operator","peo"],
+        group:["peo"],
         // group:["portfolio","program"],
         // exact:true,
         breadcrumb: null
