@@ -193,17 +193,6 @@ function DrawerPanel({menu, collapse, setCollapse, drawerExpand = () => {}}){
 export default function PlatformDrawer({ drawer = false }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-              const men = {
-                    path: "http://lyft.com",
-                    name: "Budgets",
-                    // icon: AccountBalanceIcon,
-                    // component: Programs,
-                    hidden: false,
-                    group:["admin","operator","peo"],
-                    // group:["portfolio","program"],
-                    // exact:true,
-                    breadcrumb: null
-                };
 
     React.useEffect(() => {
       setOpen(drawer);

@@ -13,6 +13,7 @@ import ManageTeams from '../views/account/ManageTeams';
 import Account from '../views/account/Account';
 import EditScoreCard from '../views/scorecards/EditScoreCard';
 import Programs from '../views/programs/Programs';
+import Budgets from '../views/budgets/Budgets';
 import Insights from '../views/insights/Insights';
 import DLAImprovements from '../views/dlaImprovements/improvements';
 
@@ -85,6 +86,16 @@ var portfolioRoutes = [
         component: Insights,
         hidden: false,
         group:["admin","operator","peo","portfolio","program"]
+    },
+    {
+        path: "/budgets",
+        name: "Budgets",
+        icon: AssignmentTurnedInIcon,
+        component: Budgets,
+        hidden: false,
+        group:["peo"],
+        exact:true,
+        breadcrumb: null
     },
     {
         form: true,

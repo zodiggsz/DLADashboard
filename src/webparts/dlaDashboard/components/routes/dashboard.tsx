@@ -15,6 +15,7 @@ import ManageAccounts from '../views/account/ManageAccounts';
 import ManageTeams from '../views/account/ManageTeams';
 import EditScoreCard from '../views/scorecards/EditScoreCard';
 import Programs from '../views/programs/Programs';
+import Budgets from '../views/budgets/Budgets';
 import Insights from '../views/insights/Insights';
 import DLAImprovements from '../views/dlaImprovements/improvements';
 
@@ -74,14 +75,14 @@ var dashRoutes = [
         group:["admin","operator","portfolio","program"]
     },
     {
-        path: "https://dlamil.dps.mil/teams/C11/N40/ASOCONnect/BRP/SitePages/PEO.aspx",
+        // path: "https://dlamil.dps.mil/teams/C11/N40/ASOCONnect/BRP/SitePages/PEO.aspx",
+        path: '/budgets',
         name: "Budgets",
         icon: AccountBalanceIcon,
-        component: Programs,
+        component: Budgets,
         hidden: false,
         group:["peo"],
-        // group:["portfolio","program"],
-        // exact:true,
+        exact:true,
         breadcrumb: null
     },
     {
