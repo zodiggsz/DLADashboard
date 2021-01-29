@@ -116,15 +116,15 @@ const defaultProgramData = {
 };
 
 export default function Budget() {
-    // const { governance, people, technology, strategy, operations, total } = {};
     const dispatch = useDispatch();
     const classes = useStyles();
     const selectedProgram = useSelector(state => state.programs.program);
-    const insights = useSelector((state) => state.programs.programInsights);
     const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
-    // const [insights, setInsights] = React.useState<InsightData>();
-    const [value, setValue] = React.useState(0);
-    
+    const budgets = useSelector((state) => state.programs.programBudgets);
+
+
+    console.log("budgets: ", budgets);
+
     React.useEffect(() => {
         if(selectedProgram){
             if(selectedProgram.ID && program.ID !== selectedProgram.ID){
@@ -135,10 +135,10 @@ export default function Budget() {
     }, [selectedProgram]);
 
     async function loadBudgets(){
-        const load = await dispatch(actions.getProgramBudgets(selectedProgram.ID));
+        const load = await dispatch(actions.getProgramBudgets(selectedProgram.Acronym));
     }
 
-
+    let ifBudgets = budgets.budgets.length, b = budgets.budgets[0];
     return (    
         <Grid container id={scoreStyles.scorecard}>
 
@@ -146,19 +146,19 @@ export default function Budget() {
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'purple'}}>
                         Revised Authority
-                        <h4>$0</h4>
+                        <h4>{ifBudgets?'$'+0:'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'pink'}}>
                         Anticipated Reim
-                        <h4>$0</h4>
+                        <h4>{ifBudgets?'$'+b.Anticipated_x0020_Reimbursable_x:'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'green'}}>
                         Received Reim
-                        <h4>$0</h4>
+                        <h4>{ifBudgets?'$'+b.Reimbursable_x0020_Authority_x00:'N/A'}</h4>
                     </Paper>
                 </Grid>
             </Grid>
@@ -166,19 +166,19 @@ export default function Budget() {
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'yellow'}}>
                         UFR
-                        <h4>$0</h4>
+                        <h4>{ifBudgets?'$'+b.UFR_x0020_Amount:'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'blue'}}>
                         Committed
-                        <h4>$0</h4>
+                        <h4>{ifBudgets?'$'+b.Commitment_x0020_Amount:'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'grey'}}>
                         Obligated
-                        <h4>$0</h4>
+                        <h4>{ifBudgets?'$'+b.Actual_x0020_Obligation_x0020_To:'N/A'}</h4>
                     </Paper>
                 </Grid>
             </Grid>

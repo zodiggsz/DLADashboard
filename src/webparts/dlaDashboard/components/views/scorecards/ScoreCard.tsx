@@ -89,6 +89,7 @@ function Item({ label, score }) {
 
 export default function ScoreCard() {
     const dispatch = useDispatch();
+    const group = useSelector(state => state.user.data.Group);
     const classes = useStyles();
     const scores = useSelector(state => state.programs.programScores);
     const selectedProgram = useSelector(state => state.programs.program);
@@ -163,9 +164,11 @@ export default function ScoreCard() {
                     <li>
                         <a href="#" onClick={(event) => onSubmit(event,'Improvements')}>IMPROVEMENTS</a>
                     </li>
-                    <li>
-                        <a href="#" onClick={(event) => onSubmit(event,'Budgets')}>BUDGETS</a>
-                    </li>
+                    {group === 'peo' ? 
+                        <li>
+                            <a href="#" onClick={(event) => onSubmit(event,'Budgets')}>BUDGETS</a>
+                        </li>
+                    : null}
                 </ul>
             </div>
             <div className={`${scoreStyles.programMain}`}>

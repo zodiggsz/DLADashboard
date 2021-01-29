@@ -444,22 +444,21 @@ export function getProgramInsights(id){
 
 }
 
-export function getProgramBudgets(id){
-    
-    const select = ['ID','Lens', 'Content'];
+export function getProgramBudgets(acronym){
+    console.log("finding budgets for: ", acronym);
 
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
         
-        const reim = await web.lists.getByTitle("DLA_Budgets").items.select(select).filter(`ProgramID eq ${id} and Lens eq 'governance'`).orderBy("Created", false).getAll().then( data => {
+        // const budgets = await web.lists.getByTitle("DLA_Budgets").items.getAll().then( data => {
+        const budgets = await web.lists.getByTitle("DLA_Budgets").items.filter(`Program_x0020_Supported eq '${acronym}'`).get().then( data => {
             return data ? data: [];
         } );
 
-        const budgetData = {reim};
+        const budgetData = {budgets};
 
         dispatch(slice.actions.setProgramBudgets(budgetData));
         return budgetData;
-        
     };
 
 }

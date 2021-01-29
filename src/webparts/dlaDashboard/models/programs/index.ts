@@ -27,7 +27,7 @@ export const slice = createSlice({
             technology: defaultScores,
         },
         programBudgets: {
-            reim: 0
+            budgets: 0
         },
         programInsights: {
             people: [],
