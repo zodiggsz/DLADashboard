@@ -75,8 +75,8 @@ var dashRoutes = [
         group:["admin","operator","portfolio","program"]
     },
     {
-        // path: "https://dlamil.dps.mil/teams/C11/N40/ASOCONnect/BRP/SitePages/PEO.aspx",
-        path: '/budgets',
+        path: "https://dlamil.dps.mil/teams/C11/N40/ASOCONnect/BRP/SitePages/PEO.aspx",
+        //path: '/budgets',
         name: "Budgets",
         icon: AccountBalanceIcon,
         component: Budgets,
