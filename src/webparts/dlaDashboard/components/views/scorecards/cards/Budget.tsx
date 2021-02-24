@@ -125,6 +125,18 @@ export default function Budget() {
 
     console.log("budgets: ", budgets);
 
+    const commalize = n => {
+        let digits = n.toString().split('').reverse();
+        for (let i = 0, l = digits.length; i < l; i++) if (i>0&&i%3===0) digits[i]+=',';
+        return digits.reverse().join('');
+    };
+
+    const agregate = key => {
+        const BUDGETS = budgets.budgets;
+        if (BUDGETS.length === 1) return commalize(BUDGETS[0][key]);
+        return commalize(BUDGETS.reduce((a, b)=>(typeof a==='object'?a[key]:a)+b[key]));
+    };
+
     React.useEffect(() => {
         if(selectedProgram){
             if(selectedProgram.ID && program.ID !== selectedProgram.ID){
@@ -146,19 +158,19 @@ export default function Budget() {
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'purple'}}>
                         Revised Authority
-                        <h4>{ifBudgets?'$'+0:'N/A'}</h4>
+                        <h4>{ifBudgets?'$'+agregate('REVISED_AUTHORITY'):'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'pink'}}>
                         Anticipated Reim
-                        <h4>{ifBudgets?'$'+b.Anticipated_x0020_Reimbursable_x:'N/A'}</h4>
+                        <h4>{ifBudgets?'$'+agregate('ANTICIPATED_REIMB_AUTH'):'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'green'}}>
                         Received Reim
-                        <h4>{ifBudgets?'$'+b.Reimbursable_x0020_Authority_x00:'N/A'}</h4>
+                        <h4>{ifBudgets?'$'+agregate('REIMB_AUTH_RCVD'):'N/A'}</h4>
                     </Paper>
                 </Grid>
             </Grid>
@@ -166,19 +178,19 @@ export default function Budget() {
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'yellow'}}>
                         UFR
-                        <h4>{ifBudgets?'$'+b.UFR_x0020_Amount:'N/A'}</h4>
+                        <h4>{ifBudgets?'$'+agregate('UFR_AMT'):'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'blue'}}>
                         Committed
-                        <h4>{ifBudgets?'$'+b.Commitment_x0020_Amount:'N/A'}</h4>
+                        <h4>{ifBudgets?'$'+agregate('COMMITMENT_AMT'):'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'grey'}}>
                         Obligated
-                        <h4>{ifBudgets?'$'+b.Actual_x0020_Obligation_x0020_To:'N/A'}</h4>
+                        <h4>{ifBudgets?'$'+agregate('ACTUAL_OBL_AMT'):'N/A'}</h4>
                     </Paper>
                 </Grid>
             </Grid>

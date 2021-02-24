@@ -450,8 +450,8 @@ export function getProgramBudgets(acronym){
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
         
-        // const budgets = await web.lists.getByTitle("DLA_Budgets").items.getAll().then( data => {
-        const budgets = await web.lists.getByTitle("DLA_Budgets").items.filter(`Program_x0020_Supported eq '${acronym}'`).get().then( data => {
+        // const budgets = await web.lists.getByTitle("DLABudgets").items.getAll().then( data => {
+        const budgets = await web.lists.getByTitle("DLABudgets").items.filter(`PROGRAM eq '${acronym}'`).get().then( data => {
             return data ? data: [];
         } );
 

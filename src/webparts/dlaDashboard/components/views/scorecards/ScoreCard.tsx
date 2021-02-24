@@ -16,6 +16,11 @@ import Improvements from './cards/Improvements';
 
 let cx = classNames.bind(scoreStyles);
 
+const style = {
+    invertBg: { backgroundColor: '#fff' },
+    invertText: { color: '#04487b' },
+};
+
 const useStyles = makeStyles({
     table: {
       width: "100%",
@@ -155,18 +160,30 @@ export default function ScoreCard() {
                     <Item label="Technology" score={scores.technology.OriginalScore} />
                 </div>
                 <ul className={scoreStyles.programHeaderNav}>
-                    <li>
-                        <a href="#" onClick={(event) => onSubmit(event,'Scorecard')}>SCORECARD</a>
+                    <li style={card==='Scorecard'?style.invertBg:{}}>
+                        <a style={card==='Scorecard'?style.invertText:{}} href="#"
+                            onClick={(event) => onSubmit(event,'Scorecard')}>
+                            SCORECARD
+                        </a>
                     </li>
-                    <li>
-                        <a href="#" onClick={(event) => onSubmit(event,'Insights')}>INSIGHTS</a>
+                    <li style={card==='Insights'?style.invertBg:{}}>
+                        <a style={card==='Insights'?style.invertText:{}} href="#"
+                            onClick={(event) => onSubmit(event,'Insights')}>
+                            INSIGHTS
+                        </a>
                     </li>
-                    <li>
-                        <a href="#" onClick={(event) => onSubmit(event,'Improvements')}>IMPROVEMENTS</a>
+                    <li style={card==='Improvements'?style.invertBg:{}}>
+                        <a style={card==='Improvements'?style.invertText:{}} href="#"
+                            onClick={(event) => onSubmit(event,'Improvements')}>
+                            IMPROVEMENTS
+                        </a>
                     </li>
                     {group === 'peo' ? 
-                        <li>
-                            <a href="#" onClick={(event) => onSubmit(event,'Budgets')}>BUDGETS</a>
+                        <li style={card==='Budgets'?style.invertBg:{}}>
+                            <a style={card==='Budgets'?style.invertText:{}} href="#"
+                                onClick={(event) => onSubmit(event,'Budgets')}>
+                                BUDGETS
+                            </a>
                         </li>
                     : null}
                 </ul>

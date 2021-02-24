@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -111,6 +111,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function DrawerPanel({menu, collapse, setCollapse, drawerExpand = () => {}}){
   const group = useSelector(state => state.user.data.Group);
   const classes = useStyles();
+  const location = useLocation();
   const [] = React.useState(false);
   const [] = React.useState(0);
   const history = useHistory();
@@ -151,13 +152,12 @@ function DrawerPanel({menu, collapse, setCollapse, drawerExpand = () => {}}){
     return (
         <List component="nav" aria-labelledby="nested-list-subheader" className={classes.listRoot}>
             <Tooltip title={menu.name} placement="right" arrow>
-                <ListItem button onClick={handleCollapse}>
-                        <ListItemIcon className={classes.panelIcons}>
-                            <Icon />
-                        </ListItemIcon>
-                        <ListItemText primary={menu.name} />
-                        {menu.views ? open ? <ExpandLess /> : <ExpandMore /> : ''}
-        
+                <ListItem button selected={menu.path===location.pathname} onClick={handleCollapse}>
+                    <ListItemIcon className={classes.panelIcons}>
+                        <Icon />
+                    </ListItemIcon>
+                    <ListItemText primary={menu.name} />
+                    {menu.views ? open ? <ExpandLess /> : <ExpandMore /> : ''}
                 </ListItem>
             </Tooltip>
             { menu.views && 
@@ -166,18 +166,15 @@ function DrawerPanel({menu, collapse, setCollapse, drawerExpand = () => {}}){
                   
                   {menu.views.map((route, key) => {
                       return (
-                          
                         <ListItem button className={classes.nested} onClick={() => goTo(route.path)} key={key}>
                           <ListItemText primary={"RANDOMTEXT"} />
                         </ListItem>
-                          
                       );
                   })}
 
                   <ListItem button className={classes.nested} onClick={() => goTo('http://uber.com')}>
                         <ListItemText primary={"RANDOMTEXT33"} />
                     </ListItem>
-                  
                   </List>
                 </Collapse>
               }
