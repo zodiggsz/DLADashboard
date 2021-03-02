@@ -61,7 +61,7 @@ export default function MyAccount({ user }) {
     const userID = user.ID;
     const group = user.Group;
     const [loading, setLoader] = React.useState(false);
-    const [profile, setProfile] = React.useState(user.Image? user.Image : userImage);
+    const [profile, setProfile] = React.useState(user.Image?user.Image: (userImage || "https://s3.amazonaws.com/yams-give/default_profile_picture.png"));
 
     const [data, setData] = React.useState({
         First_Name: user.First_Name || "",
