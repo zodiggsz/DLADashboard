@@ -63,11 +63,13 @@ export default function Programs() {
     return(
         <Grid container spacing={2}>
             <Grid item xs={5}>
+                <h3 className={programStyles.listTitle}>Programs</h3>
                 {user.Group == 'admin' && <ListPrograms userID={ID ? ID : ''} />}
                 {user.Group == 'peo' && <ListPrograms userID={ID ? ID : ''} />}
                 {user.Group == 'operator' && <ListPrograms userID={user.ID} />}
             </Grid>
             <Grid item xs={7}>
+            <h3 className={programStyles.listTitle}>Overview</h3>
                 <ScoreCard />
             </Grid>
         </Grid>

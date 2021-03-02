@@ -82,13 +82,13 @@ export default function PFAccount() {
                                 <Grid item xs={6}>
                                     <div className="scoreCard">
                                         {programs && programs.list && group === 'admin' && <OverallCompositeScores etmTitle='Composite Scores' />}
-                                        {group === 'peo' && <div><h3 className={dlaStyles.listTitle}>Composite Scores</h3><ListPrograms userID={user.ID} navigate={false} /></div>}
+                                        {group === 'peo' && <div><h3 className={dlaStyles.listTitle}>Composite Scores</h3><ListPrograms userID={user.ID} navigate={true} /></div>}
                                     </div>
                                 </Grid>
                                 <Grid item xs={6}>
                                     <div className="scoreCard">
                                         {/* {group === 'admin' && <ListAdminAccounts />} */}
-                                        {group === 'peo' && <ListHistory />}
+                                        {group === 'peo' && <div><h3 className={dlaStyles.listTitle}>Program History</h3><ListHistory /></div>}
                                     </div>
                                 </Grid>
                             </Grid>
