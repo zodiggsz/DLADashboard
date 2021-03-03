@@ -1,4 +1,6 @@
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import HomeIcon from '@material-ui/icons/Home';
+
 import DescriptionIcon from '@material-ui/icons/Description';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
@@ -26,8 +28,8 @@ var dashRoutes = [
     {
         collapse: true,
         path: "/",
-        name: "Dashboard",
-        icon: AccountCircleIcon,
+        name: "Home",
+        icon: HomeIcon,
         component: Account,
         group:["admin","operator","peo","portfolio","program"],
     },{

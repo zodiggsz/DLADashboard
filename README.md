@@ -26,6 +26,8 @@ This package produces the following:
 
 ### Build options
 
+Change file src/config.ts by uncommenting   spURi: 'https://dlamil.dps.mil/sites/SPO_PEODashboard',
+
 gulp clean 
 gulp test 
 gulp serve 
