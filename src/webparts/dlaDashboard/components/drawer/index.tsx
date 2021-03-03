@@ -35,7 +35,9 @@ const useStyles = makeStyles((theme: Theme) =>
         listRoot: {
             color:'#ffffff',
             maxWidth: 360,
-        },
+            '& .Mui-selected': {
+                backgroundColor: "#07243E",
+            }},
         nested: {
             color:'#ffffff',
             backgroundColor:'#043057',
