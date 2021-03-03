@@ -90,9 +90,9 @@ function TabPanel(props) {
                 <TableHead>
                     <TableRow>
                         <TableCell style={{fontWeight:700}} align="left">Improvement</TableCell>
-                        <TableCell style={{fontWeight:700}} align="left">Responsibility</TableCell>
-                        <TableCell style={{fontWeight:700}} align="left">Estimated_Completion</TableCell>
-                        <TableCell style={{fontWeight:700}} align="left">Status</TableCell>
+                        {/* <TableCell style={{fontWeight:700}} align="left">Responsibility</TableCell> */}
+                        <TableCell style={{fontWeight:700,width:130}} align="left">Est Completion</TableCell>
+                        {/* <TableCell style={{fontWeight:700}} align="left">Status</TableCell> */}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -100,9 +100,9 @@ function TabPanel(props) {
                         
                     <TableRow key={key}>
                         <TableCell align="left">{item.Remediation}</TableCell>
-                        <TableCell align="left">{item.Responsibility}</TableCell>
-                        <TableCell align="left">{moment(item.Estimated_Completion).format('LL')}</TableCell>
-                        <TableCell align="left">{item.Status}</TableCell>
+                        {/* <TableCell align="left">{item.Responsibility}</TableCell> */}
+                        <TableCell align="left">{moment(item.Estimated_Completion).format('mm/DD/yy')}</TableCell>
+                        {/* <TableCell align="left">{item.Status}</TableCell> */}
                     </TableRow>
                     
                 ))}

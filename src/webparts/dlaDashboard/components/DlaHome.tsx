@@ -15,6 +15,7 @@ import { Web } from "@pnp/sp/webs";
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { config } from '../../../config';
 import "@pnp/sp/site-users/web";
+import "@pnp/sp/profiles";
 import "@pnp/sp/clientside-pages/web";
 import "@pnp/sp/files";
 import "@pnp/sp/folders";
@@ -34,12 +35,14 @@ export function DlaUser(){
     const [dlaUser, setUser] = React.useState(userData);
     const [email, setEmail] = React.useState('');
     const dispatch = useDispatch();
-
+    
     const checkUser = async () => {
         let user = await web.currentUser.get();
+        const profile = await sp.profiles.myProperties.get();
         // let file = await budget.getFileByServerRelativeUrl("/teams/C36/N71/TestForDB/ALLPEOs.xlsx").getBlob();
         // console.log(file);
-        console.log(user);
+        console.log('DLA user is: ', user);
+        console.log('DLA user profile is: ', profile);
         let userEmail = user.UserPrincipalName;
         setEmail(userEmail.toLowerCase());
         dispatch(userActions.getUser(userEmail)).then((response) => {

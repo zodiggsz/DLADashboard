@@ -373,14 +373,19 @@ export default function ListPrograms({userID, navigate = false}) {
         setOrderBy(property);
     };
 
+    const goToPrograms = (event: React.MouseEvent<unknown>) => {
+        event.preventDefault();
+        history.push('/programs');
+    };
+
     const handleClick = (event: React.MouseEvent<unknown>, program) => {
         const id = `${program.ID}`;
         dispatch(programActions.setProgram(program));
         setSelected([id]);
 
-        if(navigate){
-            history.push(`/programs`);
-        }
+        // if(navigate){
+        //     history.push(`/programs`);
+        // }
     };
 
     const handleChangePage = (event: unknown, newPage: number) => {
@@ -449,7 +454,7 @@ export default function ListPrograms({userID, navigate = false}) {
                                 />
                                 </TableCell>
                                 <TableCell className={scoreResults} align="left">{row.Score}</TableCell>
-                                <TableCell align="left">{row.Acronym}</TableCell>
+                                <TableCell align="left">{navigate?<a href="" onClick={goToPrograms}>{row.Acronym}</a>:row.Acronym}</TableCell>
                                 <TableCell align="left">{row.ProgramManager}</TableCell>
                             </StyledTableRow>
                         );
