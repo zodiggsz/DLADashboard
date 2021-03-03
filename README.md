@@ -24,10 +24,14 @@ This package produces the following:
 * dist/* - the bundled script, along with other resources
 * deploy/* - all resources which should be uploaded to a CDN.
 
-### Build options
+### Build for Production
+Merge into the master branch
 
-gulp clean - TODO
-gulp test - TODO
-gulp serve - TODO
-gulp bundle - TODO
-gulp package-solution - TODO
+Change file src/config.ts by uncommenting   spURi: 'https://dlamil.dps.mil/sites/SPO_PEODashboard',
+
+
+gulp clean 
+gulp test 
+gulp serve 
+gulp bundle 
+gulp package-solution 
