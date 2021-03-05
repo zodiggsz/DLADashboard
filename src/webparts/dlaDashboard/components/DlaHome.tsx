@@ -38,11 +38,11 @@ export function DlaUser(){
     
     const checkUser = async () => {
         let user = await web.currentUser.get();
-        const profile = await sp.profiles.myProperties.get();
+        // const profile = await sp.profiles.myProperties.get();
         // let file = await budget.getFileByServerRelativeUrl("/teams/C36/N71/TestForDB/ALLPEOs.xlsx").getBlob();
         // console.log(file);
         console.log('DLA user is: ', user);
-        console.log('DLA user profile is: ', profile);
+        // console.log('DLA user profile is: ', profile);
         let userEmail = user.UserPrincipalName;
         setEmail(userEmail.toLowerCase());
         dispatch(userActions.getUser(userEmail)).then((response) => {
