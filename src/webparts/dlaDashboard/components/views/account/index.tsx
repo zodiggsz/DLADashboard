@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
           },
     },
     deleteButton: {
-        padding: 7, background: 'blue', color: 'white', marginBottom: 20
+        padding: 7, background: '#0B497A', color: 'white', marginBottom: 20
         , cursor: 'pointer', borderRadius: 5, display: 'inline-block'
     },
     form: {
@@ -122,9 +122,9 @@ export default function PFAccount() {
                     return _ref[name] = dataParse, _ref;
                 });
                 const sheetData = sheetToJson(sheets[0]);
-                console.log('parsed xlsx data: ', sheetData);
                 const load = await dispatch(actions.replaceProgramBudgets(sheetData));
-                console.log("items replaced?", load);
+                console.log('parsed spreadsheet data: ', sheetData);
+                console.log("spreadsheet data replaced?", load);
             } else {
                 console.log('No spreadsheets found.');
             }

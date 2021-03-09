@@ -465,32 +465,32 @@ export function getProgramBudgets(acronym){
 
 export function replaceProgramBudgets(newData){
     console.log("replacing budgets.");
-
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
 
         let list = web.lists.getByTitle("DLABudgets"), batch = web.createBatch();
         const entityTypeFullName = await list.getListItemEntityTypeFullName();
 
-        const budgets = await list.items.getAll().then( data => {
-            return data ? data: [];
-        });
+        const budgets = await list.items.getAll().then(data => data ? data: []);
+        budgets.forEach(b => list.items.getById(b.ID).inBatch(batch).delete());
 
-        console.log('got old budgets: ', budgets);
-        console.log('got new budgets: ', newData);
+        let added = 0, total = newData.length - 1;
+        newData.filter(d => d.REQ_ID !== 'Total')
+        .map(d => {
+            d.Title = d.REQ_ID, delete d.REQ_ID;
+            for (const key in d) {
+                if (d[key]==="") d[key] = null;
+                if (key.includes(' '))
+                    d[key.replace(/\s/g, '_x0020_').substr(0, 32)] = d[key], delete d[key];
+            }
+            return d;
+        }).forEach(d => list.items.inBatch(batch).add(d, entityTypeFullName).then(r =>
+            console.log('budget item added successfully!', r, ++added, (added / total * 100).toFixed(2) + '%')));
 
-        budgets.forEach(b => {
-            list.items.getById(b.ID).inBatch(batch).delete();
-        });
-        
-        newData.map(d => (d.Title = d.REQ_ID, delete d.REQ_ID, d)).forEach(d => {
-            list.items.inBatch(batch).add(d, entityTypeFullName);
-        });
-
-        await batch.execute();
+        await batch.execute().then(() => console.log('budget update execution complete.'));
 
         dispatch(slice.actions.setProgramBudgets({budgets:newData}));
-        return 'yes it was deleted';
+        return true;
     };
 
 }
