@@ -463,6 +463,38 @@ export function getProgramBudgets(acronym){
 
 }
 
+export function replaceProgramBudgets(newData){
+    console.log("replacing budgets.");
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+
+        let list = web.lists.getByTitle("DLABudgets"), batch = web.createBatch();
+        const entityTypeFullName = await list.getListItemEntityTypeFullName();
+
+        const budgets = await list.items.getAll().then( data => {
+            return data ? data: [];
+        });
+
+        console.log('got old budgets: ', budgets);
+        console.log('got new budgets: ', newData);
+
+        budgets.forEach(b => {
+            list.items.getById(b.ID).inBatch(batch).delete();
+        });
+        
+        newData.map(d => (d.Title = d.REQ_ID, delete d.REQ_ID, d)).forEach(d => {
+            list.items.inBatch(batch).add(d, entityTypeFullName);
+        });
+
+        await batch.execute();
+
+        dispatch(slice.actions.setProgramBudgets({budgets:newData}));
+        return 'yes it was deleted';
+    };
+
+}
+
 export function removeImprovement(id){
     
     return async (dispatch) => {
