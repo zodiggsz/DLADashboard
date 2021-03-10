@@ -470,9 +470,7 @@ export function replaceProgramBudgets(newData){
 
         let list = web.lists.getByTitle("DLABudgets"), batch = web.createBatch();
         const entityTypeFullName = await list.getListItemEntityTypeFullName();
-
         const budgets = await list.items.getAll().then(data => data ? data: []);
-        budgets.forEach(b => list.items.getById(b.ID).inBatch(batch).delete());
 
         let added = 0, total = newData.length - 1;
         newData.filter(d => d.REQ_ID !== 'Total')
@@ -487,6 +485,7 @@ export function replaceProgramBudgets(newData){
         }).forEach(d => list.items.inBatch(batch).add(d, entityTypeFullName).then(r =>
             console.log('budget item added successfully!', r, ++added, (added / total * 100).toFixed(2) + '%')));
 
+        budgets.forEach(b => list.items.getById(b.ID).inBatch(batch).delete());
         await batch.execute().then(() => console.log('budget update execution complete.'));
 
         dispatch(slice.actions.setProgramBudgets({budgets:newData}));
