@@ -32,4 +32,4 @@ gulp clean
 gulp test 
 gulp serve 
 gulp bundle --ship 
-gulp package-solution --ship 
+gulp package-solution --ship
