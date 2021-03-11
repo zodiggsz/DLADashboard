@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as XLSX from 'xlsx';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,6 +12,8 @@ import classNames from 'classnames/bind';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../../../models/programs';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+// import { useToasts } from 'react-toast-notifications';
+import { toast } from 'react-toastify';
 import scoreStyles from '../index.module.scss';
 let cx = classNames.bind(scoreStyles);
 
@@ -39,6 +42,11 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
     table: {
       width: "100%",
+    },
+    deleteButton: {
+        padding: 7, background: '#0B497A', color: 'white', marginBottom: 20
+        , cursor: 'pointer', borderRadius: 5, display: 'inline-block',
+        '& a': { color: 'white' }
     },
     paper: {
         overflow:"hidden",
@@ -120,10 +128,70 @@ export default function Budget() {
     const classes = useStyles();
     const selectedProgram = useSelector(state => state.programs.program);
     const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
+    const [loading, setLoading] = React.useState(false);
     const budgets = useSelector((state) => state.programs.programBudgets);
 
-
     console.log("budgets: ", budgets);
+
+
+    async function replaceBudgets(event){
+        console.log('replacing budgets');
+        event.preventDefault();
+        setLoading(true);
+        convertBudgets();
+    }
+
+    const convertBudgets = () => {
+        // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/Budget%20Dummy%20Data.xlsx';
+        const URL = 'https://dlamil.dps.mil/teams/C36/N71/TestForDB/ALLPEOs.xlsx';
+
+        const loadXLSX = url => {
+            return new Promise((resolve, reject) => {
+                const req = new XMLHttpRequest();
+                req.open("GET", url, true);
+                req.responseType = "arraybuffer";
+                req.onload = _ => resolve(XLSX.read(new Uint8Array(req.response), {type:"array"}));
+                req.onerror = e => reject(e);
+                req.send();
+            });
+        };
+
+        const sheetToJson = sheet => {
+            const rows: any = Object.values(sheet)[0];
+            const keys = rows[0];
+            const result = [];
+            const loop = n =>
+                result.push((Object as any).fromEntries(keys.map((_, l) => [keys[l], rows[n][l]])));
+
+            for (var i = 1; i < rows.length; i++) loop(i);
+            return result;
+        };
+
+        const getSpreadSheetData = async spreadsheet => {
+            const sheetNames = spreadsheet.SheetNames;
+            if (sheetNames.length) {
+                const sheets = sheetNames.map(name => {
+                    const _ref = {};
+                    const ws = spreadsheet.Sheets[name];
+                    const dataParse = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+                    return _ref[name] = dataParse, _ref;
+                });
+                const sheetData = sheetToJson(sheets[0]);
+                const load = await dispatch(actions.replaceProgramBudgets(sheetData));
+                console.log('parsed spreadsheet data: ', sheetData);
+                console.log("spreadsheet data replaced?", load);
+                if (load) toast.success(`Budget Data updated successfully.`), setLoading(false);
+            } else {
+                console.log('No spreadsheets found.');
+            }
+        };
+
+        const handleDownload = () => loadXLSX(URL)
+            .then((spreadsheet) => (console.log('got spreadsheet data', spreadsheet), getSpreadSheetData(spreadsheet)))
+            .catch((error) => console.error('error loading spreadsheet: ', error));
+
+        handleDownload();
+    };
 
     const commalize = n => {
         let digits = n.toString().split('').reverse();
@@ -150,10 +218,9 @@ export default function Budget() {
         const load = await dispatch(actions.getProgramBudgets(selectedProgram.Acronym));
     }
 
-    let ifBudgets = budgets.budgets.length, b = budgets.budgets[0];
+    let ifBudgets = budgets.budgets.length;
     return (    
         <Grid container id={scoreStyles.scorecard}>
-
             <Grid container spacing={2} style={{marginBottom: 10}}>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'purple'}}>
@@ -194,7 +261,16 @@ export default function Budget() {
                     </Paper>
                 </Grid>
             </Grid>
-
+            <div style={{width:'100%', textAlign:'center', paddingTop: 25, opacity:loading?0.3:1}}>
+                <a className={classes.deleteButton} href="#"
+                    style={loading?{cursor:'default'}:{}}
+                    onClick={(event) => replaceBudgets(event)}>
+                    { loading? 'Refreshing...' : 'Refresh Budget Info' }
+                </a>
+            </div>
+            <div style={{width:'100%', textAlign:'center', paddingBottom: 15}}>
+                {loading ? <div className={scoreStyles.throbber}></div> :null }
+            </div>
         </Grid>
             
     );
