@@ -445,7 +445,7 @@ export function getProgramInsights(id){
 }
 
 export function getProgramBudgets(acronym){
-    console.log("finding budgets for: ", acronym);
+    console.log("finding budgets for: ", `"${acronym}"`);
 
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
@@ -487,8 +487,6 @@ export function replaceProgramBudgets(newData){
 
         budgets.forEach(b => list.items.getById(b.ID).inBatch(batch).delete());
         await batch.execute().then(() => console.log('budget update execution complete.'));
-
-        dispatch(slice.actions.setProgramBudgets({budgets:newData}));
         return true;
     };
 

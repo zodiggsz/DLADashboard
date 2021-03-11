@@ -101,7 +101,8 @@ function TabPanel(props) {
                     <TableRow key={key}>
                         <TableCell align="left">{item.Remediation}</TableCell>
                         {/* <TableCell align="left">{item.Responsibility}</TableCell> */}
-                        <TableCell align="left">{moment(item.Estimated_Completion).format('mm/DD/yy')}</TableCell>
+                        <TableCell align="left">{moment(item.Estimated_Completion).format('l')}</TableCell>
+                        {/* <TableCell align="left">{moment(item.Estimated_Completion).format('mm/DD/yyyy')}</TableCell> */}
                         {/* <TableCell align="left">{item.Status}</TableCell> */}
                     </TableRow>
                     

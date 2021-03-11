@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
     },
     deleteButton: {
-        padding: 7, background: '#0B497A', color: 'white', marginBottom: 20
+        padding: 7, background: 'white', color: '#0B497A', marginBottom: 20
         , cursor: 'pointer', borderRadius: 5, display: 'inline-block',
         '& a': { color: 'white' }
     },
@@ -137,12 +137,12 @@ export default function Budget() {
     async function replaceBudgets(event){
         console.log('replacing budgets');
         event.preventDefault();
-        setLoading(true);
-        convertBudgets();
+        if (!loading) setLoading(true), convertBudgets();
     }
 
     const convertBudgets = () => {
         // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/Budget%20Dummy%20Data.xlsx';
+        // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/budgets.xlsx';
         const URL = 'https://dlamil.dps.mil/teams/C36/N71/TestForDB/ALLPEOs.xlsx';
 
         const loadXLSX = url => {
@@ -180,7 +180,7 @@ export default function Budget() {
                 const load = await dispatch(actions.replaceProgramBudgets(sheetData));
                 console.log('parsed spreadsheet data: ', sheetData);
                 console.log("spreadsheet data replaced?", load);
-                if (load) toast.success(`Budget Data updated successfully.`), setLoading(false);
+                if (load) toast.success(`Budget Data updated successfully.`), setLoading(false), loadBudgets();
             } else {
                 console.log('No spreadsheets found.');
             }
@@ -265,7 +265,7 @@ export default function Budget() {
                 <a className={classes.deleteButton} href="#"
                     style={loading?{cursor:'default'}:{}}
                     onClick={(event) => replaceBudgets(event)}>
-                    { loading? 'Refreshing...' : 'Refresh Budget Info' }
+                    { loading? 'Refreshing...' : 'Refresh Budget Overview' }
                 </a>
             </div>
             <div style={{width:'100%', textAlign:'center', paddingBottom: 15}}>
