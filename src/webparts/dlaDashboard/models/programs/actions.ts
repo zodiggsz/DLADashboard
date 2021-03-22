@@ -483,11 +483,14 @@ export function replaceProgramBudgets(newData){
             }
             return d;
         }).forEach(d => list.items.inBatch(batch).add(d, entityTypeFullName).then(r =>
-            console.log('budget item added successfully!', r, ++added, (added / total * 100).toFixed(2) + '%')));
+            console.log('budget item added successfully!', r, ++added, (added / total * 100).toFixed(2) + '%'))
+            .catch(error => (success = false, console.log('Error adding budget item: ', error))));
 
         budgets.forEach(b => list.items.getById(b.ID).inBatch(batch).delete());
-        await batch.execute().then(() => console.log('budget update execution complete.'));
-        return true;
+        let success = true;
+        await batch.execute().then(() => console.log('budget update execution complete.'))
+            .catch(error => (success = false, console.log('Error replacing budgets: ', error)));
+        return success;
     };
 
 }

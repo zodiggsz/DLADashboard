@@ -143,6 +143,7 @@ export default function Budget() {
     const convertBudgets = () => {
         // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/Budget%20Dummy%20Data.xlsx';
         // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/budgets.xlsx';
+        // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/ALLPEOs.xlsx';
         const URL = 'https://dlamil.dps.mil/teams/C36/N71/TestForDB/ALLPEOs.xlsx';
 
         const loadXLSX = url => {
@@ -173,7 +174,7 @@ export default function Budget() {
                 const sheets = sheetNames.map(name => {
                     const _ref = {};
                     const ws = spreadsheet.Sheets[name];
-                    const dataParse = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+                    const dataParse = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '', raw: false });
                     return _ref[name] = dataParse, _ref;
                 });
                 const sheetData = sheetToJson(sheets[0]);
@@ -181,6 +182,7 @@ export default function Budget() {
                 console.log('parsed spreadsheet data: ', sheetData);
                 console.log("spreadsheet data replaced?", load);
                 if (load) toast.success(`Budget Data updated successfully.`), setLoading(false), loadBudgets();
+                else toast.error(`ERROR updating Budget Data.`), setLoading(false);
             } else {
                 console.log('No spreadsheets found.');
             }
@@ -202,7 +204,7 @@ export default function Budget() {
     const agregate = key => {
         const BUDGETS = budgets.budgets;
         if (BUDGETS.length === 1) return commalize(BUDGETS[0][key]);
-        return commalize(BUDGETS.reduce((a, b)=>(typeof a==='object'?a[key]:a)+b[key]));
+        return commalize(BUDGETS.reduce((a, b)=>(typeof a==='object'?Number(a[key]):a)+Number(b[key])));
     };
 
     React.useEffect(() => {
