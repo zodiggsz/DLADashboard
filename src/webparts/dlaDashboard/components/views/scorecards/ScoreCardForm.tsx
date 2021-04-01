@@ -246,7 +246,7 @@ export default function ScoreCardForm() {
     return (
         <Paper className={classes.paper}>
          <header>
-            <h1 className={scoreStyles.header}>Create ETM Scorecard</h1>
+            <h1 className={scoreStyles.header}>Create ECM Scorecard</h1>
         </header>
         <form onSubmit={onSubmit} className={scoreStyles.governanceInput}>
             <Grid container spacing={2}>

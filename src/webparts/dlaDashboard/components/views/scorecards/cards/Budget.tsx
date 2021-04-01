@@ -141,8 +141,6 @@ export default function Budget() {
     }
 
     const convertBudgets = () => {
-        // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/Budget%20Dummy%20Data.xlsx';
-        // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/budgets.xlsx';
         // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/ALLPEOs.xlsx';
         const URL = 'https://dlamil.dps.mil/teams/C36/N71/TestForDB/ALLPEOs.xlsx';
 
@@ -196,6 +194,7 @@ export default function Budget() {
     };
 
     const commalize = n => {
+        if (!n) return;
         let digits = n.toString().split('').reverse();
         for (let i = 0, l = digits.length; i < l; i++) if (i>0&&i%3===0) digits[i]+=',';
         return digits.reverse().join('');

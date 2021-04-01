@@ -94,7 +94,7 @@ function ScoresHistoryPanel(props) {
                 <TableHead>
                     <TableRow>
                         <TableCell align="left">Date</TableCell>
-                        <TableCell align="left">Updated By</TableCell>
+                        {/* <TableCell align="left">Updated By</TableCell> */}
                         <TableCell align="left">Composite Score</TableCell>
                     </TableRow>
                 </TableHead>
@@ -104,7 +104,7 @@ function ScoresHistoryPanel(props) {
                     <TableRow key={key}>
                         <TableCell align="left">
                             <Moment format="MM-DD-YYYY h:mm">{item.Created}</Moment></TableCell>
-                        <TableCell align="left">{item.Author.Title}</TableCell>
+                        {/* <TableCell align="left">{item.Author.Title}</TableCell> */}
                         <TableCell align="left">{item.CompositeScore}</TableCell>
                     </TableRow>
                     
@@ -129,7 +129,7 @@ function InsightHistoryPanel(props) {
                 <TableHead>
                     <TableRow>
                         <TableCell align="left">Date</TableCell>
-                        <TableCell align="left">Updated By</TableCell>
+                        {/* <TableCell align="left">Updated By</TableCell> */}
                         <TableCell align="left" style={{width:225}}>Content</TableCell>
                     </TableRow>
                 </TableHead>
@@ -138,7 +138,7 @@ function InsightHistoryPanel(props) {
                         
                     <TableRow key={key}>
                         <TableCell align="left"><Moment format="MM-DD-YYYY h:mm">{item.Created}</Moment></TableCell>
-                        <TableCell align="left">{item.Author.Title}</TableCell>
+                        {/* <TableCell align="left">{item.Author.Title}</TableCell> */}
                         <TableCell align="left"><b>{item.Lens}:</b><br />{item.Content}</TableCell>
                     </TableRow>
                     
@@ -163,7 +163,7 @@ function ImprovementsHistoryPanel(props) {
                 <TableHead>
                     <TableRow>
                         <TableCell align="left">Date</TableCell>
-                        <TableCell align="left">Updated By</TableCell>
+                        {/* <TableCell align="left">Updated By</TableCell> */}
                         <TableCell align="left" style={{width:225}}>Content</TableCell>
                     </TableRow>
                 </TableHead>
@@ -172,7 +172,7 @@ function ImprovementsHistoryPanel(props) {
                         
                     <TableRow key={key}>
                         <TableCell align="left"><Moment format="MM-DD-YYYY h:mm">{item.Created}</Moment></TableCell>
-                        <TableCell align="left">{item.Author.Title}</TableCell>
+                        {/* <TableCell align="left">{item.Author.Title}</TableCell> */}
                         <TableCell align="left"><b>{item.Subject}:</b><br />{item.Description}</TableCell>
                     </TableRow>
                     
