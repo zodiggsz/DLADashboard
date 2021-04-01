@@ -13,7 +13,7 @@
         "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
         "group": { "default": "Other" },
         "title": { "default": "DLA Dashboard" },
-        "description": { "default": "DLA Dashboard for ETM users" },
+        "description": { "default": "DLA Dashboard for ECM users" },
         "officeFabricIconFontName": "Page",
         "properties": {
             "description": "DLA Dashboard",

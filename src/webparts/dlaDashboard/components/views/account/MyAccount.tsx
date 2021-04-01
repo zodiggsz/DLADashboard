@@ -51,10 +51,16 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     profileInput: {
         fontSize: "6rem"
+    },
+    avatar : {
+        marginLeft: 50,
+        marginRight: 15,
+        height: 50,
+        borderRadius: '50%'
     }
 }));
 
-export default function MyAccount({ user }) {
+export default function MyAccount({ user, card }) {
     const dispatch = useDispatch();
     const classes = useStyles();
     const userImage = useSelector(state => state.user.image);
@@ -110,90 +116,96 @@ export default function MyAccount({ user }) {
 
     }
 
-    return(
-        <Paper className={classes.paper}>
-            <AppLoader isLoading={loading} />
-            <Grid container className={dlaStyles.myAccount}>
-                <Grid item xs={5} style={{alignItems:'center', justifyContent:'center', display:'flex'}}>
-                    <input accept="image/*" className={classes.fileInput} id="icon-button-file" type="file" onChange={(e) => uploadProfileImage(e.target.files)}/>
-                    <label htmlFor="icon-button-file">
-                        <IconButton className={dlaStyles.profile_image_container}  color="primary" aria-label="upload picture" component="span">
-                        {(profile) ? 
-                            <div className={dlaStyles.profile_image_container} style={{ backgroundImage: `url("${profile}")`, backgroundSize:"cover" }}>
-                            </div>
-                            : 
-                            <AccountCircleIcon className={classes.profileInput} />
-                        }
-                        </IconButton>
-                    </label> 
-                </Grid>
-                <Grid className={dlaStyles.user_info} item xs={7}>
-                    {group === 'dlaAdmin' && <h1> ETM ADMIN </h1>}
-                    {group === 'etmAdmin' && <h1> ETM ADMIN </h1>}
-                    {group === 'program' && <h1> PROGRAM MANAGER </h1>}
-                    {group === 'peo' && <h1> PEO </h1>}
-                    {group === 'portfolio' && <h1> PORTFOLIO MANAGER </h1>}
-                    <h2> {data.First_Name + ' ' + data.Last_Name} </h2>
-                </Grid>
-                <Grid item xs={12}>
-                    <form className={classes.form} noValidate autoComplete="off">
-                        <TextField
-                            id="filled-full-width"
-                            label="First Name"
-                            style={{ marginBottom: 8 }}
-                            defaultValue={data.First_Name}
-                            fullWidth
-                            onChange={setState('First_Name')}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="filled"
-                        />
-                        <TextField
-                            id="filled-full-width"
-                            label="Last Name"
-                            style={{ marginBottom: 8 }}
-                            defaultValue={data.Last_Name}
-                            fullWidth
-                            onChange={setState('Last_Name')}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="filled"
-                        />
-                        <TextField
-                            id="filled-full-width"
-                            label="Email"
-                            style={{ marginBottom: 8 }}
-                            defaultValue={data.Email}
-                            fullWidth
-                            onChange={setState('Email')}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="filled"
-                        />
-                        <TextField
-                            id="filled-full-width"
-                            label="JCODE"
-                            style={{ marginBottom: 8 }}
-                            defaultValue={data.JCODE}
-                            fullWidth
-                            onChange={setState('JCODE')}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="filled"
-                        />
-                        <Fab className={classes.submit} variant="extended" onClick={onSubmit}>
-                            UPDATE
-                        </Fab>
+    return card == true ? (
+            <Paper className={classes.paper}>
+                <AppLoader isLoading={loading} />
+                <Grid container className={dlaStyles.myAccount}>
+                    <Grid item xs={5} style={{alignItems:'center', justifyContent:'center', display:'flex'}}>
+                        <input accept="image/*" className={classes.fileInput} id="icon-button-file" type="file" onChange={(e) => uploadProfileImage(e.target.files)}/>
+                        <label htmlFor="icon-button-file">
+                            <IconButton className={dlaStyles.profile_image_container}  color="primary" aria-label="upload picture" component="span">
+                            {(profile) ? 
+                                <div className={dlaStyles.profile_image_container} style={{ backgroundImage: `url("${profile}")`, backgroundSize:"cover" }}>
+                                </div>
+                                : 
+                                <AccountCircleIcon className={classes.profileInput} />
+                            }
+                            </IconButton>
+                        </label> 
+                    </Grid>
+                    <Grid className={dlaStyles.user_info} item xs={7}>
+                        {group === 'dlaAdmin' && <h1> ECM ADMIN </h1>}
+                        {group === 'etmAdmin' && <h1> ECM ADMIN </h1>}
+                        {group === 'program' && <h1> PROGRAM MANAGER </h1>}
+                        {group === 'peo' && <h1> PEO </h1>}
+                        {group === 'portfolio' && <h1> PORTFOLIO MANAGER </h1>}
+                        <h2> {data.First_Name + ' ' + data.Last_Name} </h2>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <form className={classes.form} noValidate autoComplete="off">
+                            <TextField
+                                id="filled-full-width"
+                                label="First Name"
+                                style={{ marginBottom: 8 }}
+                                defaultValue={data.First_Name}
+                                fullWidth
+                                onChange={setState('First_Name')}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                variant="filled"
+                            />
+                            <TextField
+                                id="filled-full-width"
+                                label="Last Name"
+                                style={{ marginBottom: 8 }}
+                                defaultValue={data.Last_Name}
+                                fullWidth
+                                onChange={setState('Last_Name')}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                variant="filled"
+                            />
+                            <TextField
+                                id="filled-full-width"
+                                label="Email"
+                                style={{ marginBottom: 8 }}
+                                defaultValue={data.Email}
+                                fullWidth
+                                onChange={setState('Email')}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                variant="filled"
+                            />
+                            <TextField
+                                id="filled-full-width"
+                                label="JCODE"
+                                style={{ marginBottom: 8 }}
+                                defaultValue={data.JCODE}
+                                fullWidth
+                                onChange={setState('JCODE')}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                variant="filled"
+                            />
+                            <Fab className={classes.submit} variant="extended" onClick={onSubmit}>
+                                UPDATE
+                            </Fab>
 
-                    </form>
+                        </form>
+                    </Grid>
                 </Grid>
-            </Grid>
-            
 
-        </Paper>
-    );
+            </Paper>
+            )
+            : <div>
+                <h5>
+                    Welcome to your dashboard! 
+                    <img className={classes.avatar} src={profile} alt=""/>
+                    <span>{data.First_Name + ' ' + data.Last_Name}</span>
+                </h5>
+            </div>;
 }

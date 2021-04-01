@@ -76,12 +76,12 @@ export default function PFAccount() {
         <div id={dlaStyles.pfAccount}>
             {user.ID ? (
                 <div>
-                    <h5>Welcome to your dashboard!</h5>
+                    {/* <h5>Welcome to your dashboard!</h5> */}
+                    <MyAccount user={user} card={false} />
                     <Grid container spacing={5}>
             
-                        <Grid item sm={12} md={3}>
-                            <MyAccount user={user} />
-                        </Grid>
+                        {/* <Grid item sm={12} md={3}>
+                        </Grid> */}
                         <Grid item sm={12} md={9}>
                             
                             <Grid container spacing={2}>

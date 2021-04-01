@@ -82,7 +82,7 @@ function AuthNavItem(props: NavBarProps) {
 export default function Header({drawer = () => {}, user}) {
     // const user = useSelector(state => state.user.data);
     // const group = useSelector(state => state.user.group[0]);
-    // const title = (group === 'etmAdmin') ? 'ETM Admin' : 
+    // const title = (group === 'etmAdmin') ? 'ECM Admin' : 
     //     (group === 'peo') ? 'PEO' : 'Portfolio Manager';
 
     const toggleDrawer = () => {

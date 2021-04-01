@@ -26,12 +26,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const userRoles = [
     {
-        name: "ETM Admin Operator",
+        name: "ECM Admin Operator",
         value: "admin",
         group:["admin"]
     },
     {
-        name: "ETM Operator",
+        name: "ECM Operator",
         value: "operator",
         group:["admin"]
     },

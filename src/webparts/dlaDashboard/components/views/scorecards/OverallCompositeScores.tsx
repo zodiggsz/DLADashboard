@@ -82,7 +82,7 @@ export default function OverallCompositeScores(props) {
     const classes = useStyles();
     const programs = useSelector((state) => state.programs.list);
     const [score, setScore] = React.useState({});
-    const { etmTitle="ETM Scorecard Results" } = props;
+    const { etmTitle="ECM Scorecard Results" } = props;
 
     React.useEffect(() => {
         
