@@ -468,13 +468,12 @@ export function replaceProgramBudgets(newData){
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
 
-        let list = web.lists.getByTitle("DLABudgets"), batch = web.createBatch();
+        let bi = 0, count = 0, list = web.lists.getByTitle("DLABudgets"), batches = [web.createBatch()];
         const entityTypeFullName = await list.getListItemEntityTypeFullName();
         const budgets = await list.items.getAll().then(data => data ? data: []);
 
         let added = 0, total = newData.length - 1;
-        newData.filter(d => d.REQ_ID !== 'Total')
-        .map(d => {
+        newData.map(d => {
             d.Title = d.REQ_ID, delete d.REQ_ID;
             for (const key in d) {
                 if (d[key]==="") d[key] = null;
@@ -482,14 +481,24 @@ export function replaceProgramBudgets(newData){
                     d[key.replace(/\s/g, '_x0020_').substr(0, 32)] = d[key], delete d[key];
             }
             return d;
-        }).forEach(d => list.items.inBatch(batch).add(d, entityTypeFullName).then(r =>
-            console.log('budget item added successfully!', r, ++added, (added / total * 100).toFixed(2) + '%'))
-            .catch(error => (success = false, console.log('Error adding budget item: ', error))));
+        }).forEach(d => {
+            list.items.inBatch(batches[bi]).add(d, entityTypeFullName).then(r =>
+            console.log('budget item added successfully!', d, r, ++added, (added / total * 100).toFixed(2) + '%'))
+            .catch(error => (success = false, console.log('Error adding budget item: ', error, "item: ", d)));
+            if (count++ === 399) batches.push(web.createBatch()), bi++, count = 0;
+        });
 
-        budgets.forEach(b => list.items.getById(b.ID).inBatch(batch).delete());
+        budgets.forEach(b => {
+            list.items.getById(b.ID).inBatch(batches[bi]).delete();
+            if (count++ === 399) batches.push(web.createBatch()), bi++, count = 0;
+        });
+
         let success = true;
-        await batch.execute().then(() => console.log('budget update execution complete.'))
-            .catch(error => (success = false, console.log('Error replacing budgets: ', error)));
+        batches.forEach(async batch => {
+            console.log("Updating batch: ", batch);
+            await batch.execute().then(() => console.log('budget update execution complete.'))
+                .catch(error => (success = false, console.log('Error replacing budgets: ', error)));
+        });
         return success;
     };
 
