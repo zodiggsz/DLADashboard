@@ -146,7 +146,8 @@ export default function Budget() {
         // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/DFWB.xlsx';
         // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/ALLPEOs.xlsx';
         // const URL = 'https://dlamil.dps.mil/teams/C36/N71/TestForDB/ALLPEOs.xlsx';
-        const URL = 'https://dlamil.dps.mil/sites/SPO_PEODashboard/Shared%20Documents/FY21%20DFW%20Requirements.xlsx';
+        // const URL = 'https://dlamil.dps.mil/sites/SPO_PEODashboard/Shared%20Documents/FY21%20DFW%20Requirements.xlsx';
+        const URL = 'https://dlamil.dps.mil/sites/STAGE_PEODashboard/Shared%20Documents/FY21%20DFW%20Requirements.xlsx';
 
         const loadXLSX = url => {
             return new Promise((resolve, reject) => {
@@ -200,9 +201,9 @@ export default function Budget() {
 
     const commalize = n => {
         if (!n) return;
-        let digits = n.toString().split('').reverse();
+        let digits = Number(n).toFixed(2).split('').reverse(), decimals = digits.splice(0, 3);
         for (let i = 0, l = digits.length; i < l; i++) if (i>0&&i%3===0) digits[i]+=',';
-        return digits.reverse().join('');
+        return decimals.concat(digits).reverse().join('');
     };
 
     const agregate = key => {
@@ -231,19 +232,19 @@ export default function Budget() {
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'purple'}}>
                         Revised Authority
-                        <h4>{ifBudgets?'$'+agregate('REVISED_AUTHORITY'):'N/A'}</h4>
+                        <h4>{ifBudgets&&agregate('REVISED_AUTHORITY')?'$'+agregate('REVISED_AUTHORITY'):'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'pink'}}>
                         Anticipated Reim
-                        <h4>{ifBudgets?'$'+agregate('ANTICIPATED_REIMB_AUTH'):'N/A'}</h4>
+                        <h4>{ifBudgets&&agregate('ANTICIPATED_REIMB_AUTH')?'$'+agregate('ANTICIPATED_REIMB_AUTH'):'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'green'}}>
                         Received Reim
-                        <h4>{ifBudgets?'$'+agregate('REIMB_AUTH_RCVD'):'N/A'}</h4>
+                        <h4>{ifBudgets&&agregate('REIMB_AUTH_RCVD')?'$'+agregate('REIMB_AUTH_RCVD'):'N/A'}</h4>
                     </Paper>
                 </Grid>
             </Grid>
@@ -251,19 +252,19 @@ export default function Budget() {
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'yellow'}}>
                         UFR
-                        <h4>{ifBudgets?'$'+agregate('UFR_AMT'):'N/A'}</h4>
+                        <h4>{ifBudgets&&agregate('UFR_AMT')?'$'+agregate('UFR_AMT'):'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'blue'}}>
                         Committed
-                        <h4>{ifBudgets?'$'+agregate('COMMITMENT_AMT'):'N/A'}</h4>
+                        <h4>{ifBudgets&&agregate('COMMITMENT_AMT')?'$'+agregate('COMMITMENT_AMT'):'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'grey'}}>
                         Obligated
-                        <h4>{ifBudgets?'$'+agregate('ACTUAL_OBL_AMT'):'N/A'}</h4>
+                        <h4>{ifBudgets&&agregate('ACTUAL_OBL_AMT')?'$'+agregate('ACTUAL_OBL_AMT'):'N/A'}</h4>
                     </Paper>
                 </Grid>
             </Grid>
