@@ -300,6 +300,8 @@ export default function ListPrograms({userID, navigate = false}) {
         JCODE:"",
         Group:""
     });
+
+    console.log("Listing programs: ", programs);
     
     React.useEffect(() => {
 

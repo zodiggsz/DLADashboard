@@ -123,6 +123,8 @@ const defaultProgramData = {
     Acronym: 'Program'
 };
 
+(window as any).budgets = [];
+
 export default function Budget() {
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -146,8 +148,8 @@ export default function Budget() {
         // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/DFWB.xlsx';
         // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/ALLPEOs.xlsx';
         // const URL = 'https://dlamil.dps.mil/teams/C36/N71/TestForDB/ALLPEOs.xlsx';
-        // const URL = 'https://dlamil.dps.mil/sites/SPO_PEODashboard/Shared%20Documents/FY21%20DFW%20Requirements.xlsx';
-        const URL = 'https://dlamil.dps.mil/sites/STAGE_PEODashboard/Shared%20Documents/FY21%20DFW%20Requirements.xlsx';
+        const URL = 'https://dlamil.dps.mil/sites/SPO_PEODashboard/Shared%20Documents/FY21%20DFW%20Requirements.xlsx';
+        // const URL = 'https://dlamil.dps.mil/sites/STAGE_PEODashboard/Shared%20Documents/FY21%20DFW%20Requirements.xlsx';
 
         const loadXLSX = url => {
             return new Promise((resolve, reject) => {
@@ -200,7 +202,7 @@ export default function Budget() {
     };
 
     const commalize = n => {
-        if (!n) return;
+        if (!n) return '0.00';
         let digits = Number(n).toFixed(2).split('').reverse(), decimals = digits.splice(0, 3);
         for (let i = 0, l = digits.length; i < l; i++) if (i>0&&i%3===0) digits[i]+=',';
         return decimals.concat(digits).reverse().join('');
@@ -209,7 +211,9 @@ export default function Budget() {
     const agregate = key => {
         const BUDGETS = budgets.budgets;
         if (BUDGETS.length === 1) return commalize(BUDGETS[0][key]);
-        return commalize(BUDGETS.reduce((a, b)=>(typeof a==='object'?Number(a[key]):a)+Number(b[key])));
+        const commas = commalize(BUDGETS.map(b=>b[key].toString().replace(/,/g, ''))
+            .reduce((a, b)=>(Number(a)||0)+(Number(b)||0)));
+        return commas;
     };
 
     React.useEffect(() => {
