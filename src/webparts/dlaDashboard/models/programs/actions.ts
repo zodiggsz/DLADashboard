@@ -472,6 +472,8 @@ export function replaceProgramBudgets(newData){
         const entityTypeFullName = await list.getListItemEntityTypeFullName();
         const budgets = await list.items.getAll().then(data => data ? data: []);
 
+        let success = true;
+
         let added = 0, total = newData.length - 1;
         newData.map(d => {
             d.Title = d.REQ_ID, delete d.REQ_ID;
@@ -493,7 +495,6 @@ export function replaceProgramBudgets(newData){
             if (count++ === 399) batches.push(web.createBatch()), bi++, count = 0;
         });
 
-        let success = true;
         batches.forEach(async batch => {
             console.log("Updating batch: ", batch);
             await batch.execute().then(() => console.log('budget update execution complete.'))

@@ -135,13 +135,6 @@ export default function Budget() {
 
     console.log("budgets: ", budgets);
 
-
-    async function replaceBudgets(event){
-        console.log('replacing budgets');
-        event.preventDefault();
-        if (!loading) setLoading(true), convertBudgets();
-    }
-
     const convertBudgets = () => {
         // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/ALLPEOs-1.xlsx';
         // const URL = 'https://codicast1.sharepoint.com/Shared%20Documents/PEODBTEST.xlsx';
@@ -200,6 +193,12 @@ export default function Budget() {
 
         handleDownload();
     };
+
+    async function replaceBudgets(event){
+        console.log('replacing budgets');
+        event.preventDefault();
+        if (!loading) setLoading(true), convertBudgets();
+    }
 
     const commalize = n => {
         if (!n) return '0.00';
