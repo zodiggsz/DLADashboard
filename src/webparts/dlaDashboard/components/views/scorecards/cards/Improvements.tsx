@@ -166,24 +166,24 @@ const defaultProgramData = {
 };
 
 function statusClass(classes, status) {
-    let className = ''
+    let className = '';
 
     switch (true) {
         case (status === 'To Do'):
-            className = classes.blue
+            className = classes.blue;
             break;
         case (status === 'Work In Progress'):
-            className = classes.yellow
+            className = classes.yellow;
             break;
         case (status === 'Completed'):
-            className = classes.green
+            className = classes.green;
             break;
         default:
             break;
 
     }
 
-    return className
+    return className;
 
 }
 
