@@ -65,6 +65,16 @@ const useStyles = makeStyles((theme: Theme) =>
         borderRadius:20
         // boxShadow: '0 6px 15px 1px rgba(0, 0, 0, .2)'
     },
+    blue: {
+        backgroundColor: '#033dfc'
+    },
+    yellow: {
+        backgroundColor: '#e8fc03'
+    },
+    green: {
+        backgroundColor: '#0e9925'
+    },
+
 }));
 
 
@@ -88,9 +98,10 @@ function TabPanel(props) {
         >
             <Table>
                 <TableHead>
-                    <TableRow>
+                    <TableRow >
                         <TableCell style={{fontWeight:700}} align="left">Improvement</TableCell>
                         {/* <TableCell style={{fontWeight:700}} align="left">Responsibility</TableCell> */}
+                        <TableCell style={{fontWeight:700,width:130}} align="left">Status</TableCell>
                         <TableCell style={{fontWeight:700,width:130}} align="left">Est Completion</TableCell>
                         {/* <TableCell style={{fontWeight:700}} align="left">Status</TableCell> */}
                     </TableRow>
@@ -101,6 +112,7 @@ function TabPanel(props) {
                     <TableRow key={key}>
                         <TableCell align="left">{item.Remediation}</TableCell>
                         {/* <TableCell align="left">{item.Responsibility}</TableCell> */}
+                        <TableCell align="left" className={statusClass(classes, item.Status)}>{item.Status}</TableCell>
                         <TableCell align="left">{moment(item.Estimated_Completion).format('l')}</TableCell>
                         {/* <TableCell align="left">{moment(item.Estimated_Completion).format('mm/DD/yyyy')}</TableCell> */}
                         {/* <TableCell align="left">{item.Status}</TableCell> */}
@@ -153,6 +165,28 @@ const defaultProgramData = {
     Acronym: 'Program'
 };
 
+function statusClass(classes, status) {
+    let className = ''
+
+    switch (true) {
+        case (status === 'To Do'):
+            className = classes.blue
+            break;
+        case (status === 'Work In Progress'):
+            className = classes.yellow
+            break;
+        case (status === 'Completed'):
+            className = classes.green
+            break;
+        default:
+            break;
+
+    }
+
+    return className
+
+}
+
 export default function Improvements() {
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -179,6 +213,8 @@ export default function Improvements() {
         console.log(newValue);
         setValue(newValue);
     };
+
+    
     
     function setLensLabel(label){
         switch (label) {
