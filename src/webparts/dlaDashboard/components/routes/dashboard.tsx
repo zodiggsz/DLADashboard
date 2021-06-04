@@ -77,8 +77,8 @@ var dashRoutes = [
         group:["admin","operator","portfolio","program"]
     },
     {
-        path: 'https://dlamil.dps.mil/:x:/t/C11/N40/ASOCONnect/BRP/EX-vDIq7o3ZLsf9ckxCW8-MBhiP2qVf29YmWr7SOAdkR6Q?e=ztz52T',
-        // path: "https://dlamil.dps.mil/teams/C11/N40/ASOCONnect/BRP/SitePages/PEO.aspx",
+        //path: 'https://dlamil.dps.mil/:x:/t/C11/N40/ASOCONnect/BRP/EX-vDIq7o3ZLsf9ckxCW8-MBhiP2qVf29YmWr7SOAdkR6Q?e=ztz52T',
+        path: "https://dlamil.dps.mil/teams/C11/N40/ASOCONnect/BRP/SitePages/PEO.aspx",
         //path: '/budgets',
         name: "Budgets",
         icon: AccountBalanceIcon,
