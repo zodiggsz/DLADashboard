@@ -96,28 +96,46 @@ function TabPanel(props) {
             aria-labelledby={`scrollable-force-tab-${index}`}
             {...other}
         >
+          <div className={scoreStyles.lensLegend}>
+            <strong>Status: </strong>
+            <span className={`${scoreStyles.legendScore} ${scoreStyles.lensBlue}`}></span> To Do &nbsp;&nbsp;
+            <span className={`${scoreStyles.legendScore} ${scoreStyles.lensYellow}`}></span> Work In Progress &nbsp;&nbsp;
+            <span className={`${scoreStyles.legendScore} ${scoreStyles.lensGreen}`}></span> Completed
+          </div>
             <Table>
                 <TableHead>
                     <TableRow >
                         <TableCell style={{fontWeight:700}} align="left">Improvement</TableCell>
                         {/* <TableCell style={{fontWeight:700}} align="left">Responsibility</TableCell> */}
+<<<<<<< HEAD
                         <TableCell style={{fontWeight:700,width:130}} align="left">Status</TableCell>
+=======
+                        <TableCell style={{fontWeight:700,width:40}} align="left">Status</TableCell>
+>>>>>>> b56bab1 (Updates: Budgets, Improvements)
                         <TableCell style={{fontWeight:700,width:130}} align="left">Est Completion</TableCell>
-                        {/* <TableCell style={{fontWeight:700}} align="left">Status</TableCell> */}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                 { lens && lens.map( (item, key) => (
-                        
+
                     <TableRow key={key}>
                         <TableCell align="left">{item.Remediation}</TableCell>
                         {/* <TableCell align="left">{item.Responsibility}</TableCell> */}
+<<<<<<< HEAD
                         <TableCell align="left" className={statusClass(classes, item.Status)}>{item.Status}</TableCell>
+=======
+                        <TableCell align="left" style={{ textAlign: 'center' }}>
+                          <span className={`${scoreStyles.lensStatus} ${
+                            item.Status === 'Work In Progress' ? scoreStyles.lensYellow :
+                            item.Status === 'Completed' ? scoreStyles.lensGreen :
+                            item.Status === 'To Do' ? scoreStyles.lensBlue : ''
+                          }`}></span>
+                        </TableCell>
+>>>>>>> b56bab1 (Updates: Budgets, Improvements)
                         <TableCell align="left">{moment(item.Estimated_Completion).format('l')}</TableCell>
                         {/* <TableCell align="left">{moment(item.Estimated_Completion).format('mm/DD/yyyy')}</TableCell> */}
-                        {/* <TableCell align="left">{item.Status}</TableCell> */}
                     </TableRow>
-                    
+
                 ))}
                 </TableBody>
             </Table>
@@ -195,7 +213,7 @@ export default function Improvements() {
     const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
     // const [improvements, setInsights] = React.useState<InsightData>();
     const [value, setValue] = React.useState(0);
-    
+
     React.useEffect(() => {
         if(selectedProgram){
             if(selectedProgram.ID && program.ID !== selectedProgram.ID){
@@ -214,8 +232,11 @@ export default function Improvements() {
         setValue(newValue);
     };
 
+<<<<<<< HEAD
     
     
+=======
+>>>>>>> b56bab1 (Updates: Budgets, Improvements)
     function setLensLabel(label){
         switch (label) {
             case 'governance':
@@ -229,7 +250,7 @@ export default function Improvements() {
 
             case 'strategy':
                 return 'Strategy';
-            
+
             case 'operations':
                 return 'Operations';
             default:
@@ -250,14 +271,14 @@ export default function Improvements() {
 
             case 'strategy':
                 return <img className="insightIcon" src={strategy} width="50px" height="50px" />;
-            
+
             case 'operations':
                 return <img className="insightIcon" src={operations} width="50px" height="50px" />;
             default:
                 return <img className="insightIcon" src={governance} width="50px" height="50px" />;
         }
     }
-    
+
         return (
             <div id="programInsights" className={classes.listRoot}>
                 <AppBar position="static" color="default">
@@ -269,8 +290,8 @@ export default function Improvements() {
                         indicatorColor="primary"
                         textColor="primary"
                         aria-label="scrollable force tabs example"
-                    >      
-                        <Tab label="People & Culture" icon={setLensImage('people')} {...a11yProps(3)} key={0} />                  
+                    >
+                        <Tab label="People & Culture" icon={setLensImage('people')} {...a11yProps(3)} key={0} />
                         <Tab label="Strategy" icon={setLensImage('strategy')} {...a11yProps(2)} key={1} />
                         <Tab label="Operations" icon={setLensImage('operations')} {...a11yProps(1)} key={2} />
                         <Tab label="Governance" icon={setLensImage('governance')} {...a11yProps(0)} key={3} />
@@ -283,6 +304,6 @@ export default function Improvements() {
                 <TabPanel value={value} lens={improvements.governance} index={3} />
                 <TabPanel value={value} lens={improvements.technology} index={4} />
             </div>
-            
+
         );
 }

@@ -20,6 +20,27 @@
         text-align: left;
         font-size: 1rem;
     }
+
+}
+.lensLegend {
+  width: 100%;
+  padding: 10px 10px 0;
+  .legendScore {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 4px;
+    margin-left: 5px;
+  }
+}
+.lensBlue { background-color: #5271fc; }
+.lensYellow { background-color: yellow; }
+.lensGreen { background-color: green; }
+.lensStatus {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-block;
 }
 #scoreCardContainer{
     padding: 20px;
@@ -30,6 +51,7 @@
     h1.header{
         color: #2d69ae;
         font-size: 2rem;
+        color: #5271fc;
         font-weight: 700;
     }
     .cardContainer{
@@ -247,8 +269,8 @@
             text-align: center;
             color: #E7ECF3;
             border-bottom: thin solid #E7ECF3;
-        }  
-        
+        }
+
         .indicatorContainer{
             padding: 5px;
             text-align: center;
@@ -261,7 +283,7 @@
                 height: 30px;
                 border-radius: 50%;
                 margin: auto;
-                
+
                 &.red {
                     background-color: #FF0200;
                 }
@@ -278,10 +300,10 @@
 
             h3{
                 margin: 5px;
-                font-size: 12px; 
+                font-size: 12px;
             }
         }
-        
+
 
     }
 
