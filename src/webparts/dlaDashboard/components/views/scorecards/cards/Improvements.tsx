@@ -107,11 +107,7 @@ function TabPanel(props) {
                     <TableRow >
                         <TableCell style={{fontWeight:700}} align="left">Improvement</TableCell>
                         {/* <TableCell style={{fontWeight:700}} align="left">Responsibility</TableCell> */}
-<<<<<<< HEAD
-                        <TableCell style={{fontWeight:700,width:130}} align="left">Status</TableCell>
-=======
                         <TableCell style={{fontWeight:700,width:40}} align="left">Status</TableCell>
->>>>>>> b56bab1 (Updates: Budgets, Improvements)
                         <TableCell style={{fontWeight:700,width:130}} align="left">Est Completion</TableCell>
                     </TableRow>
                 </TableHead>
@@ -121,9 +117,6 @@ function TabPanel(props) {
                     <TableRow key={key}>
                         <TableCell align="left">{item.Remediation}</TableCell>
                         {/* <TableCell align="left">{item.Responsibility}</TableCell> */}
-<<<<<<< HEAD
-                        <TableCell align="left" className={statusClass(classes, item.Status)}>{item.Status}</TableCell>
-=======
                         <TableCell align="left" style={{ textAlign: 'center' }}>
                           <span className={`${scoreStyles.lensStatus} ${
                             item.Status === 'Work In Progress' ? scoreStyles.lensYellow :
@@ -131,7 +124,6 @@ function TabPanel(props) {
                             item.Status === 'To Do' ? scoreStyles.lensBlue : ''
                           }`}></span>
                         </TableCell>
->>>>>>> b56bab1 (Updates: Budgets, Improvements)
                         <TableCell align="left">{moment(item.Estimated_Completion).format('l')}</TableCell>
                         {/* <TableCell align="left">{moment(item.Estimated_Completion).format('mm/DD/yyyy')}</TableCell> */}
                     </TableRow>
@@ -232,11 +224,6 @@ export default function Improvements() {
         setValue(newValue);
     };
 
-<<<<<<< HEAD
-    
-    
-=======
->>>>>>> b56bab1 (Updates: Budgets, Improvements)
     function setLensLabel(label){
         switch (label) {
             case 'governance':
