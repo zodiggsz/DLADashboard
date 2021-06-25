@@ -18,6 +18,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
+import { portfolioData } from './../budgets/graphql/data.js';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -94,7 +95,7 @@ return (
     <TableHead>
     <TableRow>
         <TableCell padding="checkbox">
-        
+
         </TableCell>
         {headCells.map((headCell) => (
         <TableCell
@@ -206,7 +207,7 @@ return (
         <h2>Programs</h2>
         </Typography>
     )}
-    
+
     </Toolbar>
 );
 };
@@ -230,7 +231,7 @@ createStyles({
     width: '100%',
     marginBottom: theme.spacing(2),
     },
-    selected:{ 
+    selected:{
 
     },
     table: {
@@ -302,7 +303,8 @@ export default function ListPrograms({userID, navigate = false}) {
     });
 
     console.log("Listing programs: ", programs);
-    
+    console.log('got porfolio data: ', portfolioData.map(d => d.portfolio));
+
     React.useEffect(() => {
 
         dispatch(programActions.getAllPrograms()).then((all) => {
@@ -311,16 +313,16 @@ export default function ListPrograms({userID, navigate = false}) {
         // if(account.Group === 'operator'){
         //     if(userPrograms.length < 1 && !programFilter){
         //         dispatch(programActions.getUserPrograms(userID));
-               
+
         //     }
         // }else{
         //     if(userID){
 
         //         if(userPrograms.length < 1 && !programFilter){
         //             dispatch(programActions.getUserPrograms(userID));
-                   
+
         //         }
-    
+
         //         if(!programFilter && userPrograms.length !== programs.length){
         //             filterPrograms();
         //         }
@@ -402,6 +404,8 @@ export default function ListPrograms({userID, navigate = false}) {
     const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, programs.length - page * rowsPerPage);
+
+
 
     return (
         <div className={classes.root}>
