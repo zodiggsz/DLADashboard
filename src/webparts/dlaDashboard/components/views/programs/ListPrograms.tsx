@@ -19,6 +19,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
 import { portfolioData } from './../budgets/graphql/data.js';
+import Select from 'react-select';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -283,6 +284,7 @@ export default function ListPrograms({userID, navigate = false}) {
     const history = useHistory();
     const isLoading = useSelector((state) => state.user.loading);
     const programs = useSelector((state) => state.programs.list);
+    const ditmr = useSelector((state) => state.programs.ditmr);
     const selectedProgram = useSelector((state) => state.programs.program);
     const userPrograms = useSelector((state) => state.programs.userPrograms);
     const account = useSelector((state) => state.user.data);
@@ -302,13 +304,46 @@ export default function ListPrograms({userID, navigate = false}) {
         Group:""
     });
 
+    // const options = portfolioData.map(d => ({ value: d.portfolio.toLowerCase(), label: d.portfolio }));
+    const selectStyles = {
+      control: styles => ({ ...styles, backgroundColor: 'white', marginBottom: 15 }),
+      // input: styles => ({ ...styles, marginBottom: 10 }),
+    }
+
+    // handleChange = (selectedOption) => {
+    //   this.setState({ selectedOption }, () =>
+    //     console.log(`Option selected:`, this.state.selectedOption)
+    //   );
+    // };
+
+
     console.log("Listing programs: ", programs);
-    console.log('got porfolio data: ', portfolioData.map(d => d.portfolio));
+    console.log('got portfolio data: ', portfolioData.map(d => d.portfolio));
+    console.log('got portfolio ditmr data: ', ditmr);
+
+    const acronyms = [];
+    const portfolios = [];
+
+    ditmr.forEach(d => {
+      let a = d.DLA_x0020_Acronym;
+      let b = d.Managing_x0020_Group_x0020__x002;
+      if (a && !acronyms.includes(a)) acronyms.push(a);
+      if (b && !portfolios.includes(b)) portfolios.push(b);
+    });
+
+    console.log('got acros:  ', acronyms);
+    console.log('got portfolios:  ', portfolios);
+
+    const options = portfolios.map(d => ({ value: d.toLowerCase(), label: d }));
 
     React.useEffect(() => {
 
         dispatch(programActions.getAllPrograms()).then((all) => {
             filterPrograms();
+        });
+
+        dispatch(programActions.getDITMR()).then((all) => {
+          console.log("got ditmr data: ", all);
         });
         // if(account.Group === 'operator'){
         //     if(userPrograms.length < 1 && !programFilter){
@@ -346,9 +381,9 @@ export default function ListPrograms({userID, navigate = false}) {
         }
     }, [programs]);
 
-    async function filterPrograms(){
+    async function filterPrograms(P = programs){
         const list = [];
-        const getPrograms = programs.map( async program => {
+        const getPrograms = P.map( async program => {
 
             await programActions.getCompositeScore(program.ID).then(data => {
                 const update = {
@@ -396,6 +431,12 @@ export default function ListPrograms({userID, navigate = false}) {
         setPage(newPage);
     };
 
+    const selectPortfolio = (event: any) => {
+      console.log('new porfolio selected: ', event);
+      if (event) filterPrograms(programs.filter(p => p.Managing_x0020_Group_x0020__x002 === event.label));
+      else filterPrograms();
+    };
+
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
@@ -410,6 +451,16 @@ export default function ListPrograms({userID, navigate = false}) {
     return (
         <div className={classes.root}>
             <ThemeProvider theme={programTheme}>
+            <Select
+              isClearable
+              isSearchable
+              // value={selectedOption}
+              onChange={selectPortfolio}
+              // getOptionValue={option => option['label']}
+              placeholder="Select Portfolio..."
+              options={options}
+              styles={selectStyles}
+            />
             <Paper className={classes.paper}>
                 <TableContainer>
                 <Table

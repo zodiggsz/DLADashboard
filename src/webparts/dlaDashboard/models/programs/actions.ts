@@ -8,7 +8,7 @@ import { config } from '../../../../config';
 
 let web;
 
-if (Environment.type === EnvironmentType.Local) {  
+if (Environment.type === EnvironmentType.Local) {
     web = Web("https://localhost:4323");
 } else {
     web = Web(config.spURi);
@@ -24,7 +24,7 @@ export function getProgramImprovements(ID){
             }
 
         });
-        
+
     };
 
 }
@@ -44,15 +44,15 @@ export function getUserProgram(ID){
         const result = web.lists.getByTitle("DLA_User_Programs").items.filter("ProgramID eq '"+ID+"'").get().then( user => {
             return user[0];
         } );
-        
+
         return result;
-        
+
     };
 
 }
 
 export function addUserProgram(program){
-    
+
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
         try {
@@ -67,17 +67,17 @@ export function addUserProgram(program){
                 });
                 toast.success(`Successfully added "${program.Title}"`);
             }
-            
+
         } catch (e) {
             toast.error("Error adding Program");
             return e;
         }
-        
-    }; 
+
+    };
 }
 
 export function removeUserProgram(program){
-    
+
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
         try {
@@ -87,12 +87,12 @@ export function removeUserProgram(program){
             toast.error("Error creating user");
             return e;
         }
-        
-    }; 
+
+    };
 }
 
 export function updateUserProgram(program){
-    
+
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
         try {
@@ -102,14 +102,14 @@ export function updateUserProgram(program){
                 const update = await web.lists.getByTitle("DLA_User_Programs").items.getById(items[0].ID).update(program);
                 toast.success(`Successfully updated Program "${program.Title}"`);
             }
-            
+
             dispatch(slice.actions.setLoading(false));
         } catch (e) {
             toast.error("Error updating program");
             return e;
         }
-        
-    }; 
+
+    };
 }
 
 export function getUserPrograms(userID){
@@ -128,10 +128,10 @@ export function getUserPrograms(userID){
 
             if(items.hasNext){
                 dispatch(slice.actions.setNext(items.nextUrl));
-            }   
+            }
 
         });
-        
+
     };
 
 }
@@ -141,7 +141,7 @@ export function setUserPrograms(programs){
     return async (dispatch) => {
 
         dispatch(slice.actions.setUserPrograms(programs));
-        
+
     };
 
 }
@@ -155,10 +155,28 @@ export function getAllPrograms(){
 
             if(items.hasNext){
                 dispatch(slice.actions.setNext(items.nextUrl));
-            }   
+            }
 
         });
-        
+
+    };
+
+}
+
+export function getDITMR(){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        let programs = web.lists.getByTitle("DITMR_Data").items.getAll().then( items => {
+          console.log("got items: ", items)
+            dispatch(slice.actions.setDITMR(items));
+
+            if(items.hasNext){
+                dispatch(slice.actions.setNext(items.nextUrl));
+            }
+
+        });
+
     };
 
 }
@@ -171,9 +189,9 @@ export function getProgram(email){
             dispatch(slice.actions.setProgram(user[0]));
             return user[0];
         } );
-        
+
         return result;
-        
+
     };
 
 }
@@ -184,7 +202,7 @@ export function getProgramByID(id){
         dispatch(slice.actions.setLoading(true));
         const program = await web.lists.getByTitle("DLA_Programs").items.select("ID", "Acronym").top(100).orderBy("Created", false).getById(id).get();
         dispatch(slice.actions.setProgram(program));
-        
+
     };
 
 }
@@ -203,7 +221,7 @@ export function showProgramByID(id){
         dispatch(slice.actions.setLoading(true));
         const program = await web.lists.getByTitle("DLA_Programs").items.select("ID", "Acronym").top(100).orderBy("Created", false).getById(id).get();
         return program;
-        
+
     };
 
 }
@@ -219,11 +237,11 @@ export function getScoreHistory(program){
             }else{
                 return false;
             }
-            
+
         } );
-        
+
     };
-    
+
 }
 
 export async function getCompositeScore(id){
@@ -234,15 +252,15 @@ export async function getCompositeScore(id){
         }else{
             return 0.0;
         }
-        
+
     } );
 
     return score;
-    
+
 }
 
 export function addCompositeScore(score){
-    
+
     return async (dispatch) => {
         try {
 
@@ -250,36 +268,36 @@ export function addCompositeScore(score){
             const result = await web.lists.getByTitle("Total_Program_Scores").items.add(score);
             toast.success(`Successfully add Score for "${score.Title}"`);
             return result;
-            
+
         } catch (e) {
             toast.error("Error adding Composite Score");
             return e;
         }
-        
 
-    }; 
+
+    };
 }
 
 export function addScore(score, type){
-    
+
     return async (dispatch) => {
         try {
 
             dispatch(slice.actions.setLoading(true));
             const result = await web.lists.getByTitle(type).items.add(score);
             return result;
-            
+
         } catch (e) {
             toast.error("Error adding score for " + type);
             console.log(e);
             return e;
         }
-    }; 
+    };
 }
 
 export function getProgramScores(id, type){
-    
-    
+
+
     const select = ['ProgramID', 'Title', 'OriginalScore', 'TargetScore', 'TotalScoreID'];
     const defaultScore = {
         OriginalScore: 0,
@@ -296,7 +314,7 @@ export function getProgramScores(id, type){
 
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
-        
+
         const governance = await web.lists.getByTitle("Program_Governance").items.select(select).filter(filter).top(1).orderBy("Created", false).get().then( data => {
             return data[0] ? data[0]: defaultScore;
         } );
@@ -320,21 +338,21 @@ export function getProgramScores(id, type){
         const scoreData = {governance, operations, people, strategy, technology};
 
         dispatch(slice.actions.setProgramScores(scoreData));
-        
+
     };
 
 }
 
 export function getProgramHistory(id){
-    
-    
+
+
     const select = ["*", "Author/ID", "Author/Title"];
     let includeFields = ['ID', 'Title', 'Modified', 'Modified By', 'Created', 'Created By'];
     let filter = `ProgramID eq ${id}`;
 
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
-        
+
         const score = await web.lists.getByTitle("Total_Program_Scores").items.filter(filter).top(5).select(select).expand("Author").orderBy("Created", false).get().then( data => {
             return data[0] ? data: [];
         } );
@@ -350,7 +368,7 @@ export function getProgramHistory(id){
         const historyData = {improvements, insights, score};
 
         dispatch(slice.actions.setProgramHistory(historyData));
-        
+
     };
 
 }
@@ -358,7 +376,7 @@ export function getProgramHistory(id){
 
 
 export function removeInsight(id){
-    
+
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
         try {
@@ -366,21 +384,21 @@ export function removeInsight(id){
             if (items) {
                 web.lists.getByTitle("Insights").items.getById(id).delete();
                 dispatch(slice.actions.setLoading(false));
-                
+
             }
 
             toast.success(`Successfully removed Insight`);
-            
+
         } catch (e) {
             toast.error("Error removing insight");
             return e;
         }
-        
-    }; 
+
+    };
 }
 
 export function addInsight(id, insight){
-    
+
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
         try {
@@ -391,30 +409,30 @@ export function addInsight(id, insight){
                     dispatch(slice.actions.setLoading(false));
                     toast.success(`Successfully updated Insight`);
                 }
-            
+
             }else{
 
                 web.lists.getByTitle("Insights").items.add(insight);
                 dispatch(slice.actions.setLoading(false));
                 toast.success(`Successfully added Insight`);
 
-            }   
+            }
         } catch (e) {
             toast.error("Error adding insight");
             console.log(e);
             return e;
         }
-        
-    }; 
+
+    };
 }
 
 export function getProgramInsights(id){
-    
+
     const select = ['ID','Lens', 'Content'];
 
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
-        
+
         const governance = await web.lists.getByTitle("Insights").items.select(select).filter(`ProgramID eq ${id} and Lens eq 'governance'`).orderBy("Created", false).getAll().then( data => {
             return data ? data: [];
         } );
@@ -439,7 +457,7 @@ export function getProgramInsights(id){
 
         dispatch(slice.actions.setProgramInsights(insightData));
         return insightData;
-        
+
     };
 
 }
@@ -449,7 +467,7 @@ export function getProgramBudgets(acronym){
 
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
-        
+
         // const budgets = await web.lists.getByTitle("DLABudgets").items.getAll().then( data => {
         const budgets = await web.lists.getByTitle("DLABudgets").items.filter(`PROGRAM eq '${acronym}'`).get().then( data => {
             return data ? data: [];
@@ -506,7 +524,7 @@ export function replaceProgramBudgets(newData){
 }
 
 export function removeImprovement(id){
-    
+
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
         try {
@@ -514,21 +532,21 @@ export function removeImprovement(id){
             if (items) {
                 web.lists.getByTitle("DLA_Improvements").items.getById(id).delete();
                 dispatch(slice.actions.setLoading(false));
-                
+
             }
 
             toast.success(`Successfully removed Improvement`);
-            
+
         } catch (e) {
             toast.error("Error removing improvement");
             return e;
         }
-        
-    }; 
+
+    };
 }
 
 export function addDLAImprovement(id, improvement){
-    
+
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
         try {
@@ -538,30 +556,30 @@ export function addDLAImprovement(id, improvement){
                     web.lists.getByTitle("DLA_Improvements").items.getById(id).update(improvement);
                     dispatch(slice.actions.setLoading(false));
                 }
-            
+
             }else{
                 console.log(improvement);
                 web.lists.getByTitle("DLA_Improvements").items.add(improvement);
                 dispatch(slice.actions.setLoading(false));
                 toast.success(`Successfully added Improvement`);
 
-            }   
+            }
         } catch (e) {
             toast.error("Error adding Improvement");
             console.log(e);
             return e;
         }
-        
-    }; 
+
+    };
 }
 
 export function getDLAImprovements(id){
-    
+
     const select = ['ID','Remediation', 'Responsibility', 'Estimated_Completion', 'Status'];
 
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
-        
+
         const governance = await web.lists.getByTitle("DLA_Improvements").items.select(select).filter(`ProgramID eq ${id} and Lens eq 'governance'`).orderBy("Created", false).getAll().then( data => {
             return data ? data: [];
         } );
@@ -586,7 +604,7 @@ export function getDLAImprovements(id){
 
         dispatch(slice.actions.setProgramImprovements(improvementData));
         return improvementData;
-        
+
     };
 
 }
@@ -599,9 +617,9 @@ export function getProgramAccomplishments(id){
             dispatch(slice.actions.setProgram(user[0]));
             return user[0];
         } );
-        
+
         return result;
-        
+
     };
 
 }

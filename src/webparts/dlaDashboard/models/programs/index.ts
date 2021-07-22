@@ -18,6 +18,7 @@ export const slice = createSlice({
         loading: false,
         list: [],
         userPrograms: [],
+        ditmr: [],
         program: {},
         programScores: {
             people: defaultScores,
@@ -61,6 +62,9 @@ export const slice = createSlice({
         },
         setPrograms(state, action) {
             state.list = action.payload;
+        },
+        setDITMR(state, action) {
+            state.ditmr = action.payload;
         },
         setProgramScores(state, action) {
             state.programScores = action.payload;
@@ -119,7 +123,7 @@ export const slice = createSlice({
         fetchAverageScoresSuccess(state, action) {
             state.averageScores = action.payload;
         },
-        
+
     }
 });
 
