@@ -18,11 +18,15 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
+import { portfolioData } from './../budgets/graphql/data.js';
+import Select from 'react-select';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { actions as userActions } from '../../../models/user';
 import { actions as programActions } from '../../../models/programs';
+
+import { portfolios as Portfolios } from '../../../models/programs/constants.js';
 
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -94,7 +98,7 @@ return (
     <TableHead>
     <TableRow>
         <TableCell padding="checkbox">
-        
+
         </TableCell>
         {headCells.map((headCell) => (
         <TableCell
@@ -206,7 +210,7 @@ return (
         <h2>Programs</h2>
         </Typography>
     )}
-    
+
     </Toolbar>
 );
 };
@@ -230,7 +234,7 @@ createStyles({
     width: '100%',
     marginBottom: theme.spacing(2),
     },
-    selected:{ 
+    selected:{
 
     },
     table: {
@@ -282,6 +286,7 @@ export default function ListPrograms({userID, navigate = false}) {
     const history = useHistory();
     const isLoading = useSelector((state) => state.user.loading);
     const programs = useSelector((state) => state.programs.list);
+    const ditmr = useSelector((state) => state.programs.ditmr);
     const selectedProgram = useSelector((state) => state.programs.program);
     const userPrograms = useSelector((state) => state.programs.userPrograms);
     const account = useSelector((state) => state.user.data);
@@ -301,26 +306,59 @@ export default function ListPrograms({userID, navigate = false}) {
         Group:""
     });
 
-    console.log("Listing programs: ", programs);
-    
+    // const options = portfolioData.map(d => ({ value: d.portfolio.toLowerCase(), label: d.portfolio }));
+    const selectStyles = {
+      control: styles => ({ ...styles, backgroundColor: 'white', marginBottom: 15 }),
+      // input: styles => ({ ...styles, marginBottom: 10 }),
+    }
+
+    console.log("Listing programs: ", programs, programList);
+    console.log('got portfolio data: ', portfolioData.map(d => d.portfolio));
+    console.log('got portfolio ditmr data: ', ditmr);
+
+    const acronyms = [];
+    const portfolios = [];
+
+    ditmr.forEach(d => {
+      let a = d.DLA_x0020_Acronym;
+      let b = d.Managing_x0020_Group_x0020__x002;
+      if (a && !acronyms.find(A => A.acronym === a)) acronyms.push({ acronym: a, portfolio: b });
+      if (b && !portfolios.includes(b)) portfolios.push(b);
+    });
+
+    console.log('got acros:  ', acronyms);
+    console.log('got portfolios:  ', portfolios);
+
+    // if (acronyms.length) filterPrograms();
+    // setTimeout(() => {
+    //     if (acronyms.length) setProgramList(acronyms);
+    // }, 1000);
+
+
+    const options = portfolios.map(d => ({ value: d.toLowerCase(), label: d }));
+
     React.useEffect(() => {
 
         dispatch(programActions.getAllPrograms()).then((all) => {
             filterPrograms();
         });
+
+        dispatch(programActions.getDITMR()).then((all) => {
+          console.log("got ditmr data: ", all);
+        });
         // if(account.Group === 'operator'){
         //     if(userPrograms.length < 1 && !programFilter){
         //         dispatch(programActions.getUserPrograms(userID));
-               
+
         //     }
         // }else{
         //     if(userID){
 
         //         if(userPrograms.length < 1 && !programFilter){
         //             dispatch(programActions.getUserPrograms(userID));
-                   
+
         //         }
-    
+
         //         if(!programFilter && userPrograms.length !== programs.length){
         //             filterPrograms();
         //         }
@@ -337,6 +375,12 @@ export default function ListPrograms({userID, navigate = false}) {
 
     }, [userAccounts, userPrograms, selected]);
 
+    // React.useEffect(() => {
+    //     if(acronyms.length > 0){
+    //         filterPrograms();
+    //         // setProgramList(acronyms);
+    //     }
+    // }, [acronyms]);
     React.useEffect(() => {
         if(programs.length > 0){
             console.log(programs);
@@ -344,11 +388,13 @@ export default function ListPrograms({userID, navigate = false}) {
         }
     }, [programs]);
 
-    async function filterPrograms(){
+    async function filterPrograms(P = programs){
+    // async function filterPrograms(P = acronyms){
+      console.log("filtering programs..........");
         const list = [];
-        const getPrograms = programs.map( async program => {
+        const getPrograms = P.map( async program => {
 
-            await programActions.getCompositeScore(program.ID).then(data => {
+          await programActions.getCompositeScore(program.ID).then(data => {
                 const update = {
                     ...program,
                     Score: data.CompositeScore ? data.CompositeScore : 0.0
@@ -356,12 +402,15 @@ export default function ListPrograms({userID, navigate = false}) {
 
                 list.push(update);
                 // dispatch(programActions.addProgram(update));
+            }).catch(error => {
+              console.log("error getting score: ", error);
             });
 
         });
 
         Promise.all(getPrograms).then((result) => {
-            console.log(list);
+          console.log("the list", list, acronyms);
+          // setProgramList(acronyms);
             setProgramList(list);
         });
 
@@ -394,6 +443,17 @@ export default function ListPrograms({userID, navigate = false}) {
         setPage(newPage);
     };
 
+    const selectPortfolio = (event: any) => {
+      console.log('new porfolio selected: ', event, Portfolios);
+      // if (event) filterPrograms(programs.filter(p => p.Managing_x0020_Group_x0020__x002 === event.label));
+      if (event) filterPrograms(programs.filter(p => {
+        const portfolio = Portfolios.find(f => f.id === event.label.replace(/\s/g, ''))
+        console.log('got portfolio: ', portfolio)
+        return portfolio && portfolio.programs.includes(p.Acronym)
+      }));
+      else filterPrograms();
+    };
+
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
@@ -403,9 +463,21 @@ export default function ListPrograms({userID, navigate = false}) {
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, programs.length - page * rowsPerPage);
 
+
+
     return (
         <div className={classes.root}>
             <ThemeProvider theme={programTheme}>
+            <Select
+              isClearable
+              isSearchable
+              // value={selectedOption}
+              onChange={selectPortfolio}
+              // getOptionValue={option => option['label']}
+              placeholder="Select Portfolio..."
+              options={options}
+              styles={selectStyles}
+            />
             <Paper className={classes.paper}>
                 <TableContainer>
                 <Table
