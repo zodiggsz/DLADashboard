@@ -57,7 +57,7 @@ var dashRoutes = [
         icon: TableChartIcon,
         component: EditScoreCard,
         hidden: false,
-        group:["operator","portfolio","program"]
+        group:["portfolio","program"]
     },
     {
         path: "/insights",
@@ -65,7 +65,7 @@ var dashRoutes = [
         icon: EqualizerIcon,
         component: Insights,
         hidden: false,
-        group:["operator","portfolio","program"]
+        group:["portfolio","program"]
     },
     {
         form: true,
@@ -74,7 +74,7 @@ var dashRoutes = [
         icon: ShowChartIcon,
         component: DLAImprovements,
         hidden: true,
-        group:["operator","portfolio","program"]
+        group:["portfolio","program"]
     },
     {
         path: "/scores",
@@ -82,7 +82,7 @@ var dashRoutes = [
         icon: TableChartIcon,
         component: EditScoreCard,
         hidden: false,
-        group:["admin"]
+        group:["admin", "operator"]
     },
     {
         path: "/insights",
@@ -90,7 +90,7 @@ var dashRoutes = [
         icon: EqualizerIcon,
         component: Insights,
         hidden: false,
-        group:["admin"]
+        group:["admin", "operator"]
     },
     {
         form: true,
@@ -99,7 +99,7 @@ var dashRoutes = [
         icon: ShowChartIcon,
         component: DLAImprovements,
         hidden: true,
-        group:["admin"]
+        group:["admin", "operator"]
     },
     {
         //path: 'https://dlamil.dps.mil/:x:/t/C11/N40/ASOCONnect/BRP/EX-vDIq7o3ZLsf9ckxCW8-MBhiP2qVf29YmWr7SOAdkR6Q?e=ztz52T',
