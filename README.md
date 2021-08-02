@@ -33,3 +33,9 @@ gulp test
 gulp serve 
 gulp bundle --ship 
 gulp package-solution --ship
+
+NVM: 
+1. curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+2. export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+3. nvm use 10.24.0
