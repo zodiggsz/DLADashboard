@@ -469,7 +469,7 @@ export function getProgramBudgets(acronym){
         dispatch(slice.actions.setLoading(true));
 
         // const budgets = await web.lists.getByTitle("DLABudgets").items.getAll().then( data => {
-        const budgets = await web.lists.getByTitle("DLABudgets").items.filter(`PROGRAM eq '${acronym}'`).get().then( data => {
+        const budgets = await web.lists.getByTitle("DLA_BudgetData").items.filter(`program eq '${acronym}'`).get().then( data => {
             return data ? data: [];
         } );
 
@@ -486,7 +486,7 @@ export function replaceProgramBudgets(newData){
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
 
-        let bi = 0, count = 0, list = web.lists.getByTitle("DLABudgets"), batches = [web.createBatch()];
+        let bi = 0, count = 0, list = web.lists.getByTitle("DLA_BudgetData"), batches = [web.createBatch()];
         const entityTypeFullName = await list.getListItemEntityTypeFullName();
         const budgets = await list.items.getAll().then(data => data ? data: []);
 

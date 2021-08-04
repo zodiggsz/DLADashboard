@@ -177,7 +177,16 @@ export default function Budget() {
                     return _ref[name] = dataParse, _ref;
                 });
                 console.log('got sheets: ', sheets);
-                const sheetData = sheetToJson(sheets[0]).filter(d => d.MANAGING_ESA === "PEO - J62");
+                const sheetData = sheetToJson(sheets[0]).filter(d => d.MANAGING_ESA === "PEO - J62")
+                  .map(d => ({
+                    program: d.PROGRAM,
+                    revisedAuthority: d.REVISED_AUTHORITY,
+                    anticipatedReimbursibleAuthority: d.ANTICIPATED_REIMB_AUTH,
+                    reimbursibleAuthorityReceived: d.REIMB_AUTH_RCVD,
+                    ufrAmount: d.UFR_AMT,
+                    commitmentAmount: d.COMMITMENT_AMT,
+                    actualObligationAmount: d.ACTUAL_OBL_AMT,
+                  }));
                 const load = await dispatch(actions.replaceProgramBudgets(sheetData));
                 console.log('parsed spreadsheet data: ', sheetData);
                 console.log("spreadsheet data replaced?", load);
@@ -212,7 +221,7 @@ export default function Budget() {
         const BUDGETS = budgets.budgets;
         if (BUDGETS.length === 1) return commalize(BUDGETS[0][key]);
         const commas = commalize(BUDGETS.map(b=>b[key].toString().replace(/,/g, ''))
-            .reduce((a, b)=>(Number(a)||0)+(Number(b)||0)));
+          .reduce((a, b)=>(Number(a)||0)+(Number(b)||0)));
         return commas;
     };
 
@@ -236,19 +245,19 @@ export default function Budget() {
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'purple'}}>
                         Revised Authority
-                        <h4>{ifBudgets&&agregate('REVISED_AUTHORITY')?'$'+agregate('REVISED_AUTHORITY'):'N/A'}</h4>
+                        <h4>{ifBudgets&&agregate('revisedAuthority')?'$'+agregate('revisedAuthority'):'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'pink'}}>
                         Anticipated Reim
-                        <h4>{ifBudgets&&agregate('ANTICIPATED_REIMB_AUTH')?'$'+agregate('ANTICIPATED_REIMB_AUTH'):'N/A'}</h4>
+                        <h4>{ifBudgets&&agregate('anticipatedReimbursibleAuthority')?'$'+agregate('anticipatedReimbursibleAuthority'):'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'green'}}>
                         Received Reim
-                        <h4>{ifBudgets&&agregate('REIMB_AUTH_RCVD')?'$'+agregate('REIMB_AUTH_RCVD'):'N/A'}</h4>
+                        <h4>{ifBudgets&&agregate('reimbursibleAuthorityReceived')?'$'+agregate('reimbursibleAuthorityReceived'):'N/A'}</h4>
                     </Paper>
                 </Grid>
             </Grid>
@@ -256,19 +265,19 @@ export default function Budget() {
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'yellow'}}>
                         UFR
-                        <h4>{ifBudgets&&agregate('UFR_AMT')?'$'+agregate('UFR_AMT'):'N/A'}</h4>
+                        <h4>{ifBudgets&&agregate('ufrAmount')?'$'+agregate('ufrAmount'):'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'blue'}}>
                         Committed
-                        <h4>{ifBudgets&&agregate('COMMITMENT_AMT')?'$'+agregate('COMMITMENT_AMT'):'N/A'}</h4>
+                        <h4>{ifBudgets&&agregate('commitmentAmount')?'$'+agregate('commitmentAmount'):'N/A'}</h4>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.box} style={{background: 'grey'}}>
                         Obligated
-                        <h4>{ifBudgets&&agregate('ACTUAL_OBL_AMT')?'$'+agregate('ACTUAL_OBL_AMT'):'N/A'}</h4>
+                        <h4>{ifBudgets&&agregate('actualObligationAmount')?'$'+agregate('actualObligationAmount'):'N/A'}</h4>
                     </Paper>
                 </Grid>
             </Grid>
