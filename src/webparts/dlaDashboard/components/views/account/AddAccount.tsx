@@ -75,11 +75,11 @@ const userRoles = [
         value: "operator",
         group:["admin"]
     },
-    {
-        name: "PEO",
-        value: "peo",
-        group:["admin","operator"]
-    },
+    // {
+    //     name: "PEO",
+    //     value: "peo",
+    //     group:["operator"]
+    // },
     {
         name: "Portfolio Manager",
         value: "portfolio",

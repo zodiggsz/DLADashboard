@@ -66,13 +66,13 @@ const useStyles = makeStyles((theme: Theme) =>
         // boxShadow: '0 6px 15px 1px rgba(0, 0, 0, .2)'
     },
     blue: {
-        backgroundColor: '#033dfc'
+        backgroundColor: '#73B5EF'
     },
     yellow: {
-        backgroundColor: '#e8fc03'
+        backgroundColor: '#FFCC3F'
     },
     green: {
-        backgroundColor: '#0e9925'
+        backgroundColor: '#00FF00'
     },
 
 }));
