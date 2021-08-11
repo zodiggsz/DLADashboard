@@ -26,7 +26,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { actions as userActions } from '../../../models/user';
 import { actions as programActions } from '../../../models/programs';
 
-import { portfolios as Portfolios } from '../../../models/programs/constants.js';
+// import { portfolios as Portfolios } from '../../../models/programs/constants.js';
 
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -287,6 +287,7 @@ export default function ListPrograms({userID, navigate = false}) {
     const isLoading = useSelector((state) => state.user.loading);
     const programs = useSelector((state) => state.programs.list);
     const ditmr = useSelector((state) => state.programs.ditmr);
+    const Portfolios = useSelector((state) => state.programs.portfolios);
     const selectedProgram = useSelector((state) => state.programs.program);
     const userPrograms = useSelector((state) => state.programs.userPrograms);
     const account = useSelector((state) => state.user.data);
@@ -328,6 +329,7 @@ export default function ListPrograms({userID, navigate = false}) {
 
     console.log('got acros:  ', acronyms);
     console.log('got portfolios:  ', portfolios);
+    console.log('Portfolios:  ', Portfolios);
 
     // if (acronyms.length) filterPrograms();
     // setTimeout(() => {
@@ -335,7 +337,16 @@ export default function ListPrograms({userID, navigate = false}) {
     // }, 1000);
 
 
-    const options = portfolios.map(d => ({ value: d.toLowerCase(), label: d }));
+    const options = [];
+
+    for (const key in Portfolios) {
+      if (Object.prototype.hasOwnProperty.call(Portfolios, key)) {
+        const d = Portfolios[key];
+        options.push({ value: d.Title.toUpperCase(), label: d.Title })
+      }
+    }
+
+    // Portfolios.map(d => ({ value: d.Title.toUpperCase(), label: d.Title }));
 
     React.useEffect(() => {
 
@@ -345,6 +356,10 @@ export default function ListPrograms({userID, navigate = false}) {
 
         dispatch(programActions.getDITMR()).then((all) => {
           console.log("got ditmr data: ", all);
+        });
+
+        dispatch(programActions.getPortfolios()).then((all) => {
+          console.log("got portfolios data: ", all);
         });
         // if(account.Group === 'operator'){
         //     if(userPrograms.length < 1 && !programFilter){
@@ -447,9 +462,9 @@ export default function ListPrograms({userID, navigate = false}) {
       console.log('new porfolio selected: ', event, Portfolios);
       // if (event) filterPrograms(programs.filter(p => p.Managing_x0020_Group_x0020__x002 === event.label));
       if (event) filterPrograms(programs.filter(p => {
-        const portfolio = Portfolios.find(f => f.id === event.label.replace(/\s/g, ''))
-        console.log('got portfolio: ', portfolio)
-        return portfolio && portfolio.programs.includes(p.Acronym)
+        const portfolio: any = Object.values(Portfolios).find((f: any) => f.Title === event.label.replace(/\s/g, ''))
+        // console.log('got portfolio: ', portfolio)
+        return portfolio && portfolio.Acronyms.includes(p.Acronym)
       }));
       else filterPrograms();
     };

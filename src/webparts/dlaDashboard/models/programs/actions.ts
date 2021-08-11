@@ -181,6 +181,23 @@ export function getDITMR(){
 
 }
 
+export function getPortfolios(){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        let programs = web.lists.getByTitle("DLA_Portfolios").items.getAll().then( items => {
+            dispatch(slice.actions.setPortfolios(items));
+
+            if(items.hasNext){
+                dispatch(slice.actions.setNext(items.nextUrl));
+            }
+
+        });
+
+    };
+
+}
+
 export function getProgram(email){
 
     return async (dispatch) => {
