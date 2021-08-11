@@ -1,3 +1,4 @@
+import { portfolios } from './constants';
 import { createSlice } from '@reduxjs/toolkit';
 import * as programActions from './actions';
 // import * as selectors from './selectors';
@@ -47,6 +48,7 @@ export const slice = createSlice({
         },
         programHistory: [],
         budgets: {},
+        portfolios: {},
         hasNext: false,
         nextItems: [],
         contracts: [],
@@ -65,6 +67,9 @@ export const slice = createSlice({
         },
         setDITMR(state, action) {
             state.ditmr = action.payload;
+        },
+        setPortfolios(state, action) {
+            state.portfolios = action.payload;
         },
         setProgramScores(state, action) {
             state.programScores = action.payload;
