@@ -230,7 +230,7 @@ export default function DLAImprovements() {
         }
     }
 
-    function addInsight(){
+    function addImprovements(){
         
         const newItem = {
             ID: 0,
@@ -372,7 +372,7 @@ export default function DLAImprovements() {
 
                         </Select>
                     </FormControl>
-                    <Fab color="primary" onClick={() => addInsight()} aria-label="add">
+                    <Fab color="primary" onClick={() => addImprovements()} aria-label="add">
                         <AddIcon />
                     </Fab>
                     {content.map( (item, key) => (
