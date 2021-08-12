@@ -157,7 +157,7 @@ const defaultContent = {
     Lens: '',
     Remediation: '',
     Responsibility: '',
-    Estimated_Completion: date,
+    Estimated_Completion: null,
     Status: '',
 };
 
@@ -237,7 +237,7 @@ export default function DLAImprovements() {
             Lens: '',
             Remediation: '',
             Responsibility: '',
-            Estimated_Completion: date,
+            Estimated_Completion: null,
             Status: '',
         };
         
