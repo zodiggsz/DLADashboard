@@ -18,7 +18,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
-import { portfolioData } from './../budgets/graphql/data.js';
+// import { portfolioData } from './../budgets/graphql/data.js';
 import Select from 'react-select';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -286,7 +286,7 @@ export default function ListPrograms({userID, navigate = false}) {
     const history = useHistory();
     const isLoading = useSelector((state) => state.user.loading);
     const programs = useSelector((state) => state.programs.list);
-    const ditmr = useSelector((state) => state.programs.ditmr);
+    // const ditmr = useSelector((state) => state.programs.ditmr);
     const Portfolios = useSelector((state) => state.programs.portfolios);
     const selectedProgram = useSelector((state) => state.programs.program);
     const userPrograms = useSelector((state) => state.programs.userPrograms);
@@ -313,22 +313,24 @@ export default function ListPrograms({userID, navigate = false}) {
       // input: styles => ({ ...styles, marginBottom: 10 }),
     }
 
+    console.log("user data: ", user, account, userAccounts, account.Group === 'portfolio');
+
     console.log("Listing programs: ", programs, programList);
-    console.log('got portfolio data: ', portfolioData.map(d => d.portfolio));
-    console.log('got portfolio ditmr data: ', ditmr);
+    // console.log('got portfolio data: ', portfolioData.map(d => d.portfolio));
+    // console.log('got portfolio ditmr data: ', ditmr);
 
-    const acronyms = [];
-    const portfolios = [];
+    // const acronyms = [];
+    // const portfolios = [];
 
-    ditmr.forEach(d => {
-      let a = d.DLA_x0020_Acronym;
-      let b = d.Managing_x0020_Group_x0020__x002;
-      if (a && !acronyms.find(A => A.acronym === a)) acronyms.push({ acronym: a, portfolio: b });
-      if (b && !portfolios.includes(b)) portfolios.push(b);
-    });
+    // ditmr.forEach(d => {
+    //   let a = d.DLA_x0020_Acronym;
+    //   let b = d.Managing_x0020_Group_x0020__x002;
+    //   if (a && !acronyms.find(A => A.acronym === a)) acronyms.push({ acronym: a, portfolio: b });
+    //   if (b && !portfolios.includes(b)) portfolios.push(b);
+    // });
 
-    console.log('got acros:  ', acronyms);
-    console.log('got portfolios:  ', portfolios);
+    // console.log('got acros:  ', acronyms);
+    // console.log('got portfolios:  ', portfolios);
     console.log('Portfolios:  ', Portfolios);
 
     // if (acronyms.length) filterPrograms();
@@ -405,7 +407,21 @@ export default function ListPrograms({userID, navigate = false}) {
 
     async function filterPrograms(P = programs){
     // async function filterPrograms(P = acronyms){
-      console.log("filtering programs..........");
+      console.log("filtering programs..........", P, account.Group, account.Group === 'program');
+        if (account.Group === 'program') {
+          console.log("filtering programs for PM");
+          P = P.filter(program => {
+            const mgr: string = program.ProgramManager.toLowerCase();
+            return mgr.includes(account.First_Name.toLowerCase()) && mgr.includes(account.Last_Name.toLowerCase())
+          })
+        }
+        if (account.Group === 'portfolio') {
+          console.log("filtering programs for PfM");
+          P = P.filter(program => {
+            const mgr: string = program.PortfolioManager.toLowerCase();
+            return mgr.includes(account.First_Name.toLowerCase()) && mgr.includes(account.Last_Name.toLowerCase())
+          })
+        }
         const list = [];
         const getPrograms = P.map( async program => {
 
@@ -424,7 +440,7 @@ export default function ListPrograms({userID, navigate = false}) {
         });
 
         Promise.all(getPrograms).then((result) => {
-          console.log("the list", list, acronyms);
+          // console.log("the list", list, acronyms);
           // setProgramList(acronyms);
             setProgramList(list);
         });
@@ -483,16 +499,18 @@ export default function ListPrograms({userID, navigate = false}) {
     return (
         <div className={classes.root}>
             <ThemeProvider theme={programTheme}>
-            <Select
-              isClearable
-              isSearchable
-              // value={selectedOption}
-              onChange={selectPortfolio}
-              // getOptionValue={option => option['label']}
-              placeholder="Select Portfolio..."
-              options={options}
-              styles={selectStyles}
-            />
+            { (account.Group === 'peo' || account.Group === 'portfolio') &&
+              <Select
+                isClearable
+                isSearchable
+                // value={selectedOption}
+                onChange={selectPortfolio}
+                // getOptionValue={option => option['label']}
+                placeholder="Select Portfolio..."
+                options={options}
+                styles={selectStyles}
+              />
+            }
             <Paper className={classes.paper}>
                 <TableContainer>
                 <Table

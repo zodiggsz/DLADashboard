@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
         '& > *': {
             padding: theme.spacing(0),
         },
-    }, 
+    },
     paper: {
         overflow:"hidden",
         padding: '20px',
@@ -79,35 +79,35 @@ export default function PFAccount() {
                     {/* <h5>Welcome to your dashboard!</h5> */}
                     <MyAccount user={user} card={false} />
                     <Grid container spacing={5}>
-            
+
                         {/* <Grid item sm={12} md={3}>
                         </Grid> */}
                         <Grid item sm={12} md={9}>
-                            
+
                             <Grid container spacing={2}>
                                 <Grid item xs={6}>
                                     <div className="scoreCard">
                                         {programs && programs.list && group === 'admin' && <OverallCompositeScores etmTitle='Composite Scores' />}
-                                        {group === 'peo' && <div><h3 className={dlaStyles.listTitle}>Composite Scores</h3><ListPrograms userID={user.ID} navigate={true} /></div>}
+                                        {(group === 'peo' || group === 'portfolio' || group === 'program') && <div><h3 className={dlaStyles.listTitle}>Composite Scores</h3><ListPrograms userID={user.ID} navigate={true} /></div>}
                                     </div>
                                 </Grid>
                                 <Grid item xs={6}>
                                     <div className="scoreCard">
                                         {/* {group === 'admin' && <ListAdminAccounts />} */}
-                                        {group === 'peo' && <div>
+                                        {(group === 'peo' || group === 'portfolio' || group === 'program') && <div>
                                             {/* <h3 className={dlaStyles.listTitle}>Program History</h3> */}
                                         <ListHistory /></div>}
                                     </div>
                                 </Grid>
                             </Grid>
-                            
+
                         </Grid>
-                        
+
                     </Grid>
                 </div>
-                    
+
                 ) : null}
-                
+
         </div>
     );
 }

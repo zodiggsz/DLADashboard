@@ -66,6 +66,8 @@ export default function Programs() {
                 <h3 className={programStyles.listTitle}>Programs</h3>
                 {user.Group == 'admin' && <ListPrograms userID={ID ? ID : ''} />}
                 {user.Group == 'peo' && <ListPrograms userID={ID ? ID : ''} />}
+                {user.Group == 'portfolio' && <ListPrograms userID={ID ? ID : ''} />}
+                {user.Group == 'program' && <ListPrograms userID={ID ? ID : ''} />}
                 {user.Group == 'operator' && <ListPrograms userID={user.ID} />}
             </Grid>
             <Grid item xs={7}>
