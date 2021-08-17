@@ -105,7 +105,7 @@ function ScoresHistoryPanel(props) {
                         <TableCell align="left">
                             <Moment format="MM-DD-YYYY h:mm">{item.Created}</Moment></TableCell>
                         {/* <TableCell align="left">{item.Author.Title}</TableCell> */}
-                        <TableCell align="left">{item.CompositeScore}</TableCell>
+                        <TableCell align="left">{item.CompositeScore === 0 ? 'N/A' : item.CompositeScore}</TableCell>
                     </TableRow>
                     
                 ))}
