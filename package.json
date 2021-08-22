@@ -7,6 +7,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
+    "start": "gulp serve",
     "serve": "concurrently --kill-others \"npm run proxy\" \"gulp serve\"",
     "build": "gulp bundle",
     "clean": "gulp clean",
