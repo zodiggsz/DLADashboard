@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
         '& > *': {
             padding: theme.spacing(0),
         },
-    }, 
+    },
     paper: {
         overflow:"hidden",
         padding: '20px',
@@ -79,7 +79,7 @@ const userRoles = [
         value: "program",
         group:["admin","operator","peo","portfolio"]
     },
-    
+
   ];
 
 export default function EditScoreCard() {
@@ -90,19 +90,19 @@ export default function EditScoreCard() {
 
     return(
         <Grid id={scoreStyles.scoreCardContainer} container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={7}>
                 <ScoreCardForm />
             </Grid>
-            <Grid item xs={6} id={scoreStyles.scorecard}>
+            <Grid item xs={5} id={scoreStyles.scorecard}>
                 <Grid item xs={12}>
                     <section className={scoreStyles.legendTextDark}>
-                            The following scores are based on critical factors across the following 
-                            five lenses: Strategy, Operations, Technology, People & Culture and 
-                            Governance. Each lens and the composite are scored on a 5 point scale. 
-                            Further, each lens is weighted and those weights are included in the 
-                            calculation of the composite score. The scores are based on research, 
-                            analysis of data, and interviews with government and contract personnel 
-                            from the Functional Sponsor and Program Management Office, Customers, and 
+                            The following scores are based on critical factors across the following
+                            five lenses: Strategy, Operations, Technology, People & Culture and
+                            Governance. Each lens and the composite are scored on a 5 point scale.
+                            Further, each lens is weighted and those weights are included in the
+                            calculation of the composite score. The scores are based on research,
+                            analysis of data, and interviews with government and contract personnel
+                            from the Functional Sponsor and Program Management Office, Customers, and
                             System Vendors and Integrators.
                     </section>
                     <div className={scoreStyles.legend}>
