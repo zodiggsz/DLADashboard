@@ -115,7 +115,7 @@ function TabPanel(props) {
                 { lens && lens.map( (item, key) => (
 
                     <TableRow key={key}>
-                        <TableCell align="left">{item.Remediation}</TableCell>
+                        <TableCell align="left" style={{whiteSpace: 'pre-wrap'}}>{item.Remediation}</TableCell>
                         {/* <TableCell align="left">{item.Responsibility}</TableCell> */}
                         <TableCell align="left" style={{ textAlign: 'center' }}>
                           <span className={`${scoreStyles.lensStatus} ${
@@ -124,7 +124,7 @@ function TabPanel(props) {
                             item.Status === 'To Do' ? scoreStyles.lensBlue : ''
                           }`}></span>
                         </TableCell>
-                        <TableCell align="left">{item.Estimated_Completion !== null ? moment(item.Estimated_Completion).format('l') : null}</TableCell>
+                        <TableCell align="left">{item.Estimated_Completion !== null ? moment(item.Estimated_Completion).format('l') : 'N/A'}</TableCell>
                         {/* <TableCell align="left">{moment(item.Estimated_Completion).format('mm/DD/yyyy')}</TableCell> */}
                     </TableRow>
 
