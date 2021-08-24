@@ -505,7 +505,7 @@ export default function ScoreCardForm() {
                     <Grid item xs={3}>
                         <TextField
                             id="outlined-read-only-input"
-                            label="Goal Total"
+                            label="Goal Total Score"
                             onChange={originalScoreInput()}
                             value={totalGoal}
                             InputLabelProps={{
