@@ -74,7 +74,7 @@ var dashRoutes = [
         icon: ShowChartIcon,
         component: DLAImprovements,
         hidden: true,
-        group:[]
+        group:["portfolio","program"]
     },
     {
         path: "/scores",
