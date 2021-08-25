@@ -96,6 +96,7 @@ export default function ScoreCard() {
     const dispatch = useDispatch();
     const group = useSelector(state => state.user.data.Group);
     const classes = useStyles();
+    const [goalShown, setGoalShown] = React.useState(false);
     const scores = useSelector(state => state.programs.programScores);
     const selectedProgram = useSelector(state => state.programs.program);
     const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
@@ -120,13 +121,13 @@ export default function ScoreCard() {
     async function loadScores(){
         const load = await dispatch(actions.getProgramScores(selectedProgram.ID, 'latest'));
         actions.getCompositeScore(selectedProgram.ID).then(data => {
-            
+
             if(data){
                 setComposite(data);
             }else{
                 setComposite(defaultComposite);
             }
-            
+
         });
     }
 
@@ -135,7 +136,8 @@ export default function ScoreCard() {
         setCard(item);
 
     };
-        
+
+
     return (
         <div className={scoreStyles.scoreCard}>
             <div className={scoreStyles.scoreCardHeader}>
@@ -150,8 +152,24 @@ export default function ScoreCard() {
                     </div>
                     <span className={scoreStyles.label}>COMPOSITE SCORE</span>
                 </div>
+                <div className={scoreStyles.goalScores}>
+                  <span
+                    onMouseEnter={() => setGoalShown(true)}
+                    onMouseLeave={() => setGoalShown(false)}>
+                    Show Goal Scores
+                  </span>
+                </div>
             </div>
             <div className={scoreStyles.programHead}>
+              {
+                goalShown ?
+                <div className={scoreStyles.lens}>
+                    <Item label="People & Culture" score={scores.people.GoalScore || 0} />
+                    <Item label="Strategy" score={scores.strategy.GoalScore || 0} />
+                    <Item label="Operations" score={scores.operations.GoalScore || 0} />
+                    <Item label="Governance" score={scores.governance.GoalScore || 0} />
+                    <Item label="Technology" score={scores.technology.GoalScore || 0} />
+                </div> :
                 <div className={scoreStyles.lens}>
                     <Item label="People & Culture" score={scores.people.OriginalScore} />
                     <Item label="Strategy" score={scores.strategy.OriginalScore} />
@@ -159,6 +177,7 @@ export default function ScoreCard() {
                     <Item label="Governance" score={scores.governance.OriginalScore} />
                     <Item label="Technology" score={scores.technology.OriginalScore} />
                 </div>
+              }
                 <ul className={scoreStyles.programHeaderNav}>
                     <li style={card==='Scorecard'?style.invertBg:{}}>
                         <a style={card==='Scorecard'?style.invertText:{}} href="#"
@@ -178,7 +197,7 @@ export default function ScoreCard() {
                             IMPROVEMENTS
                         </a>
                     </li>
-                    {group === 'peo' ? 
+                    {group === 'peo' ?
                         <li style={card==='Budgets'?style.invertBg:{}}>
                             <a style={card==='Budgets'?style.invertText:{}} href="#"
                                 onClick={(event) => onSubmit(event,'Budgets')}>
@@ -192,7 +211,7 @@ export default function ScoreCard() {
                 {card == 'Scorecard' && <Score governance={scores.governance} technology={scores.technology} strategy={scores.strategy} people={scores.people} operations={scores.operations} total={score} />}
                 {card == 'Insights' && <Insights />}
                 {card == 'Budgets' && <Budgets />}
-                {card == 'Improvements' && <Improvements />} 
+                {card == 'Improvements' && <Improvements />}
             </div>
         </div>
     );

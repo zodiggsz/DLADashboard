@@ -3,7 +3,7 @@
     flex-direction: column;
     flex: 1;
     border-radius: 20px;
-    
+
     .programMain {
         flex-direction: column;
         flex: 1;
@@ -19,13 +19,13 @@
             border-bottom-right-radius: 15px;
             height: 100%;
             background-color: whitesmoke;
-        } 
+        }
     }
 
     .program_slider_container{
       width: 100%;
       position: relative;
-      
+
       button.program_slider_prev {
         position: absolute;
         top: 50%;
@@ -106,7 +106,7 @@
             display: flex;
             flex-direction: row;
 
-            
+
         }
     }
 
@@ -207,7 +207,22 @@
                 background-color: red;
             }
         }
-    }
+
+      }
+      .goalScores {
+        display: flex;
+        align-items: center;
+        color: white;
+        padding: 12px;
+        font-size: 16px;
+        max-width: 100px;
+        text-align: center;
+        span {
+          cursor: none;
+          border-radius: 5px;
+          background-color: goldenrod;
+        }
+      }
 }
 
 .programHead {
@@ -248,7 +263,7 @@
             display: flex;
             flex-direction: row;
 
-            
+
         }
     }
 
@@ -354,7 +369,7 @@
         overflow: auto;
         padding: 10px;
         margin: 0px;
-    
+
         li {
             display: flex;
             align-items: center;
@@ -370,7 +385,7 @@
             overflow: hidden;
             font-size: 12px;
             text-transform: uppercase;
-    
+
             a {
                 display: flex;
                 align-self: stretch;
@@ -390,12 +405,12 @@
                     font-weight: bold;
                 }
             }
-    
+
             &:last-child {
                 margin-right: 0;
             }
         }
-    
+
         li.active{
             background-color: #71B6EF;
             color: #04487B;

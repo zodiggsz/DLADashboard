@@ -315,10 +315,11 @@ export function addScore(score, type){
 export function getProgramScores(id, type){
 
 
-    const select = ['ProgramID', 'Title', 'OriginalScore', 'TargetScore', 'TotalScoreID'];
+    const select = ['ProgramID', 'Title', 'OriginalScore', 'TargetScore', 'GoalScore', 'TotalScoreID'];
     const defaultScore = {
         OriginalScore: 0,
-        TargetScore:0
+        TargetScore: 0,
+        GoalScore: 0
     };
 
     let filter = '';

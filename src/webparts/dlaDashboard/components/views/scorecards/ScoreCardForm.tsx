@@ -27,7 +27,7 @@ interface ScoreData {
     Title: string;
     OriginalScore: number;
     TargetScore: number;
-    Goal: number;
+    GoalScore: number;
     TotalScoreID: number;
 }
 
@@ -42,7 +42,7 @@ const defaultData = {
     OriginalScore: 0,
     TargetScore: 0,
     TotalScoreID: 0,
-    Goal: 0
+    GoalScore: 0
 };
 
 const defaultProgramData = {
@@ -226,31 +226,31 @@ export default function ScoreCardForm() {
             ...update,
             OriginalScore: governance.OriginalScore,
             TargetScore: governance.TargetScore,
-            Goal: governance.Goal
+            GoalScore: governance.GoalScore
         };
         const updatePeople = {
             ...update,
             OriginalScore: people.OriginalScore,
             TargetScore: people.TargetScore,
-            Goal: people.Goal
+            GoalScore: people.GoalScore
         };
         const updateStrategy = {
             ...update,
             OriginalScore: strategy.OriginalScore,
             TargetScore: strategy.TargetScore,
-            Goal: strategy.Goal
+            GoalScore: strategy.GoalScore
         };
         const updateTechnology = {
             ...update,
             OriginalScore: technology.OriginalScore,
             TargetScore: technology.TargetScore,
-            Goal: technology.Goal
+            GoalScore: technology.GoalScore
         };
         const updateOperations = {
             ...update,
             OriginalScore: operations.OriginalScore,
             TargetScore: operations.TargetScore,
-            Goal: operations.Goal
+            GoalScore: operations.GoalScore
         };
 
         dispatch(actions.addScore(updateGovernance, 'Program_Governance'));
@@ -303,7 +303,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Goal"
                             type="number"
-                            value={people.Goal}
+                            value={people.GoalScore}
                             onChange={peopleChange('Goal')}
                             InputLabelProps={{
                             shrink: true,
@@ -343,7 +343,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Goal"
                             type="number"
-                            value={people.Goal}
+                            value={people.GoalScore}
                             onChange={peopleChange('Goal')}
                             InputLabelProps={{
                             shrink: true,
@@ -383,7 +383,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Goal"
                             type="number"
-                            value={operations.Goal}
+                            value={operations.GoalScore}
                             onChange={operationsChange('Goal')}
                             InputLabelProps={{
                             shrink: true,
@@ -423,7 +423,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Goal"
                             type="number"
-                            value={governance.Goal}
+                            value={governance.GoalScore}
                             onChange={governanceChange('Goal')}
                             InputLabelProps={{
                             shrink: true,
@@ -437,7 +437,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Original"
                             type="number"
-                            value={technology.Goal}
+                            value={technology.GoalScore}
                             onChange={technologyChange('Goal')}
                             InputLabelProps={{
                             shrink: true,
@@ -463,7 +463,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Goal"
                             type="number"
-                            value={technology.Goal}
+                            value={technology.GoalScore}
                             onChange={technologyChange('Goal')}
                             InputLabelProps={{
                             shrink: true,
