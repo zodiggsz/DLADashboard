@@ -148,7 +148,7 @@ export default function ScoreCard() {
                 </div>
                 <div className={scoreStyles.score}>
                     <div className={`${scoreStyles.display} ${scoreResults}`}>
-                        <span>{score.CompositeScore}</span>
+                        <span>{score.CompositeScore === 0 ? 'N/A' : score.CompositeScore}</span>
                     </div>
                     <span className={scoreStyles.label}>COMPOSITE SCORE</span>
                 </div>
@@ -171,11 +171,11 @@ export default function ScoreCard() {
                     <Item label="Technology" score={scores.technology.GoalScore || 0} />
                 </div> :
                 <div className={scoreStyles.lens}>
-                    <Item label="People & Culture" score={scores.people.OriginalScore} />
-                    <Item label="Strategy" score={scores.strategy.OriginalScore} />
-                    <Item label="Operations" score={scores.operations.OriginalScore} />
-                    <Item label="Governance" score={scores.governance.OriginalScore} />
-                    <Item label="Technology" score={scores.technology.OriginalScore} />
+                    <Item label="People & Culture" score={scores.people.OriginalScore === 0 ? 'N/A' : scores.people.OriginalScore} />
+                    <Item label="Strategy" score={scores.strategy.OriginalScore === 0 ? 'N/A' : scores.strategy.OriginalScore} />
+                    <Item label="Operations" score={scores.operations.OriginalScore === 0 ? 'N/A' : scores.operations.OriginalScore} />
+                    <Item label="Governance" score={scores.governance.OriginalScore === 0 ? 'N/A' : scores.governance.OriginalScore} />
+                    <Item label="Technology" score={scores.technology.OriginalScore === 0 ? 'N/A' : scores.technology.OriginalScore} />
                 </div>
               }
                 <ul className={scoreStyles.programHeaderNav}>

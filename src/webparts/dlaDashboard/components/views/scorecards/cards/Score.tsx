@@ -69,20 +69,20 @@ function ScoreResult({ label, original=0, target=0, compositeResults=false }) {
     return (
         <StyledTableRow className={composite}>
             <StyledTableCell align="center" className={scoreStyles.labelCell}>{label}</StyledTableCell>
-            <StyledTableCell align="center" className={compositeResults ? targetResults : scoreStyles.targetCell}>{target}</StyledTableCell>
-            <StyledTableCell align="center" className={compositeResults ? originalResults : scoreStyles.originCell}>{original}</StyledTableCell>
+            <StyledTableCell align="center" className={compositeResults ? targetResults : scoreStyles.targetCell}>{target === 0 ? 'N/A' : target}</StyledTableCell>
+            <StyledTableCell align="center" className={compositeResults ? originalResults : scoreStyles.originCell}>{original === 0 ? 'N/A' : original}</StyledTableCell>
         </StyledTableRow>
     );
 }
 
 interface Results {
-    OriginalScore: number;
-    TargetScore: number;
+    OriginalScore: any;
+    TargetScore: any;
 }
 
 interface Total {
-    CompositeScore: number;
-    TotalScore: number;
+    CompositeScore: any;
+    TotalScore: any;
 }
 
 interface ScoreProps {
@@ -116,39 +116,39 @@ export default function Score(props: ScoreProps) {
 
                         <ScoreResult
                             label="People & Culture"
-                            original={people.OriginalScore}
-                            target={people.TargetScore}
+                            original={people.OriginalScore === 0 ? 'N/A' : people.OriginalScore}
+                            target={people.TargetScore === 0 ? 'N/A' : people.TargetScore}
                         />
                         
                         <ScoreResult
                             label="Strategy"
-                            original={strategy.OriginalScore}
-                            target={strategy.TargetScore}
+                            original={strategy.OriginalScore === 0 ? 'N/A' : strategy.OriginalScore}
+                            target={strategy.TargetScore === 0 ? 'N/A' : strategy.TargetScore}
                         />
                         
                         <ScoreResult
                             label="Operations"
-                            original={operations.OriginalScore}
-                            target={operations.TargetScore}
+                            original={operations.OriginalScore === 0 ? 'N/A' : operations.OriginalScore}
+                            target={operations.TargetScore === 0 ? 'N/A' : operations.TargetScore}
                         />
 
                         <ScoreResult
                             label="Governance"
-                            original={governance.OriginalScore}
-                            target={governance.TargetScore}
+                            original={governance.OriginalScore === 0 ? 'N/A' : governance.OriginalScore}
+                            target={governance.TargetScore === 0 ? 'N/A' : governance.TargetScore}
                         />
                                                 
                         <ScoreResult
                             label="Technology"
-                            original={technology.OriginalScore}
-                            target={technology.TargetScore}
+                            original={technology.OriginalScore === 0 ? 'N/A' : technology.OriginalScore}
+                            target={technology.TargetScore === 0 ? 'N/A' : technology.TargetScore}
                         />
                         
                         <ScoreResult
                             label="Composite Score"
                             compositeResults={true}
-                            original={total.CompositeScore}
-                            target={total.TotalScore}
+                            original={total.CompositeScore === 0 ? 'N/A' : total.CompositeScore}
+                            target={total.TotalScore === 0 ? 'N/A' : total.TotalScore}
                         />
                     </TableBody>
                     </Table>
