@@ -199,7 +199,7 @@ export default function ScoreCardForm() {
 
         return (e) => {
             console.log(e.target.value);
-            setTotalTarget(e.target.value);
+            setTotalGoal(e.target.value);
         };
 
     }
@@ -506,7 +506,7 @@ export default function ScoreCardForm() {
                         <TextField
                             id="outlined-read-only-input"
                             label="Goal Total Score"
-                            onChange={originalScoreInput()}
+                            onChange={goalInput()}
                             value={totalGoal}
                             InputLabelProps={{
                                 shrink: true,
