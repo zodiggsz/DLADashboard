@@ -94,7 +94,7 @@ export default function PFAccount() {
                                 <Grid item xs={6}>
                                     <div className="scoreCard">
                                         {/* {group === 'admin' && <ListAdminAccounts />} */}
-                                        {(group === 'peo' || group === 'portfolio' || group === 'program') && <div>
+                                        {(group === 'admin' || group === 'peo' || group === 'portfolio' || group === 'program') && <div>
                                             {/* <h3 className={dlaStyles.listTitle}>Program History</h3> */}
                                         <ListHistory /></div>}
                                     </div>

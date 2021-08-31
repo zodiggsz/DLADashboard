@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
         '& > *': {
             padding: theme.spacing(0),
         },
-    }, 
+    },
     modal: {
         display: 'flex',
         alignItems: 'center',
@@ -116,7 +116,7 @@ export default function ManageTeams() {
             dispatch(actions.getAccounts('operator'));
             setAccounts(userAccounts);
         }
-        
+
     }, [accounts, userAccounts]);
 
     const handleOpen = () => {
@@ -138,7 +138,7 @@ export default function ManageTeams() {
 
     return (
         <Grid container className={dlaStyles.manageAccounts}>
-            
+
             <Grid item xs={12}>
                 <header className={dlaStyles.header}>
                     <h3>MANAGE OPERATORS</h3>
@@ -172,14 +172,14 @@ export default function ManageTeams() {
                                             <Button onClick={handleAccountClick(account.ID)}>Edit</Button>
                                             <Button onClick={removeAccount(account)}>Remove</Button>
                                         </ButtonGroup>
-                                        
+
                                     </StyledTableCell>
                                 </StyledTableRow>
                             ))}
                         </TableBody>
                         </Table>
                     </TableContainer>
-                    <Button onClick={handleOpen}> 
+                    <Button onClick={handleOpen} style={{ marginTop: '1em' }}>
                         ADD OPERATORS
                     </Button>
                 </Paper>
@@ -202,9 +202,9 @@ export default function ManageTeams() {
                     </Fade>
                 </Modal>
             </Grid>
-            
+
         </Grid>
 
-                        
+
     );
 }
