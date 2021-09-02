@@ -57,6 +57,7 @@
     "node-sass": "^4.14.1",
     "office-ui-fabric-react": "6.189.2",
     "pure-react-carousel": "^1.24.1",
+    "quill": "^1.3.6",
     "react-animation": "^1.2.2",
     "react-breadcrumbs-dynamic": "^1.2.1",
     "react-google-charts": "^3.0.15",

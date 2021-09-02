@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import classNames from 'classnames/bind';
 import scoreStyle from './index.module.scss';
 import { actions } from '../../../models/programs';
+import { actions as programActions } from '../../../models/programs';
 
 let cx = classNames.bind(scoreStyle);
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -51,7 +52,7 @@ const useStyles = makeStyles({
     },
   });
 
-function EtmResult({ label, name, original, result=false }) {
+function EtmResult({ label, name, original, result=false, showProgram }) {
     let data = original ? Number(original).toFixed(2) : 0.00;
     let scoreResults = cx({
         score: true,
@@ -66,9 +67,9 @@ function EtmResult({ label, name, original, result=false }) {
     });
 
     return (
-        <StyledTableRow className={showResult}>
+        <StyledTableRow className={showResult} onClick={() => showProgram()}>
             <StyledTableCell align="center" className={scoreStyle.labelCell}>{label}</StyledTableCell>
-            <StyledTableCell align="center" 
+            <StyledTableCell align="center"
                 style={{width:80}}
                 className={scoreResults}>
                 {original === 0 ? 'N/A' : original}
@@ -84,8 +85,14 @@ export default function OverallCompositeScores(props) {
     const [score, setScore] = React.useState({});
     const { etmTitle="ECM Scorecard Results" } = props;
 
+
+    const handleClick = (program) => {
+      console.log("clicking program: ", program);
+      dispatch(programActions.setProgram(program));
+    };
+
     React.useEffect(() => {
-        
+
         if(programs.length > 0){
             collectScores();
         }else{
@@ -98,27 +105,27 @@ export default function OverallCompositeScores(props) {
 
         programs.map((item) => {
             actions.getCompositeScore(item.ID).then(data => {
-                
+
                 if(data){
                     setScore( scores => ({
                         ...scores,
                         [item.Acronym]:data['CompositeScore'],
                     }));
-                    
+
                 }else{
                     setScore( scores => ({
                         ...scores,
                         [item.Acronym]:0,
                     }));
                 }
-                
-                
+
+
             });
-            
+
         });
     }
-    
-    return (    
+
+    return (
         <Grid container id={scoreStyle.scorecard}>
 
             <Grid item xs={12}>
@@ -135,20 +142,21 @@ export default function OverallCompositeScores(props) {
                                 label={item.Acronym}
                                 result={true}
                                 original={score[item.Acronym]}
+                                showProgram={() => handleClick(item)}
                             />
                         );
 
                     })}
-                        
+
                     </TableBody>
                     </Table>
                 </TableContainer>
-                    
+
                 </Paper>
-                
+
             </Grid>
-            
+
         </Grid>
-            
+
     );
 }

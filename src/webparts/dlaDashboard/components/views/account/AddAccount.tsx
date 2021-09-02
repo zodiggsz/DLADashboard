@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
         '& > *': {
             padding: theme.spacing(0),
         },
-    }, 
+    },
     paper: {
         overflow:"hidden",
         padding: '20px',
@@ -90,7 +90,7 @@ const userRoles = [
         value: "program",
         group:["admin","operator","peo","portfolio"]
     },
-    
+
   ];
 
 export default function AddAccount({ admin, closeModal = () => {} }) {
@@ -109,10 +109,10 @@ export default function AddAccount({ admin, closeModal = () => {} }) {
     });
 
     React.useEffect(() => {
-        
+
         setLabelWidth(inputLabel.current.offsetWidth);
-        
-        
+
+
     }, []);
 
     function setState(key) {
@@ -134,14 +134,14 @@ export default function AddAccount({ admin, closeModal = () => {} }) {
             dispatch(actions.addAccount(updatedUser));
             closeModal();
         }
-       
+
     }
 
     return(
         <Paper className={classes.paper}>
             <AppLoader isLoading={loading} />
             <Grid container className={dlaStyles.myAccount}>
-                
+
                 <Grid item xs={12}>
                     <form className={classes.form} noValidate autoComplete="off">
                         <FormControl className={classes.select} variant="filled" >
@@ -157,21 +157,36 @@ export default function AddAccount({ admin, closeModal = () => {} }) {
                                 <MenuItem value="">
                                     <em>None</em>
                                 </MenuItem>
-                                {userRoles.map((role, index) => ( 
-                                     
+                                {userRoles.map((role, index) => (
+
                                      role.group.includes(admin.Group) && <MenuItem value={role.value} key={index}>{role.name}</MenuItem>
                                 ))}
-                                
+
                             </Select>
                         </FormControl>
-                        {   
-                            user.Group == 'portfolio' || user.Group == 'program' || user.Group == 'admin'  ?
+                        {
+                            user.Group == 'admin' ||
+                            user.Group == 'portfolio'  ?
                                 <TextField
                                     id="filled-full-width"
                                     label="JCODE"
                                     style={{ marginBottom: 8 }}
                                     fullWidth
                                     onChange={setState('JCODE')}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    variant="filled"
+                                /> : ""
+                            }
+                            {
+                            user.Group == 'program'  ?
+                                <TextField
+                                    id="filled-full-width"
+                                    label="Program Acronymn"
+                                    style={{ marginBottom: 8 }}
+                                    fullWidth
+                                    onChange={setState('Programs')}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -222,7 +237,7 @@ export default function AddAccount({ admin, closeModal = () => {} }) {
                             }}
                             variant="filled"
                         />
-                       
+
                         <Fab className={classes.submit} variant="extended" onClick={onSubmit}>
                             ADD ACCOUNT
                         </Fab>
@@ -230,7 +245,7 @@ export default function AddAccount({ admin, closeModal = () => {} }) {
                     </form>
                 </Grid>
             </Grid>
-            
+
 
         </Paper>
     );
