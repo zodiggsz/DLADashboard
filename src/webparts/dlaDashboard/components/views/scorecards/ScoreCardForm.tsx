@@ -277,7 +277,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Original"
                             type="number"
-                            value={people.TargetScore || 0}
+                            value={people.TargetScore || (people.TargetScore == 0 ? 0 : '')}
                             onChange={peopleChange('TargetScore')}
                             InputLabelProps={{
                             shrink: true,
@@ -290,7 +290,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Post-Improvement"
                             type="number"
-                            value={people.OriginalScore || 0}
+                            value={people.OriginalScore || (people.OriginalScore == 0 ? 0 : '')}
                             onChange={peopleChange('OriginalScore')}
                             InputLabelProps={{
                             shrink: true,
@@ -303,7 +303,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Goal"
                             type="number"
-                            value={people.GoalScore || 0}
+                            value={people.GoalScore || (people.GoalScore == 0 ? 0 : '')}
                             onChange={peopleChange('GoalScore')}
                             InputLabelProps={{
                             shrink: true,
@@ -317,7 +317,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Original"
                             type="number"
-                            value={strategy.TargetScore || 0}
+                            value={strategy.TargetScore || (strategy.TargetScore == 0 ? 0 : '')}
                             onChange={strategyChange('TargetScore')}
                             InputLabelProps={{
                             shrink: true,
@@ -330,7 +330,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Post-Improvement"
                             type="number"
-                            value={strategy.OriginalScore || 0}
+                            value={strategy.OriginalScore || (strategy.OriginalScore == 0 ? 0 : '')}
                             onChange={strategyChange('OriginalScore')}
                             InputLabelProps={{
                             shrink: true,
@@ -343,8 +343,8 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Goal"
                             type="number"
-                            value={people.GoalScore || 0}
-                            onChange={peopleChange('GoalScore')}
+                            value={strategy.GoalScore || (strategy.GoalScore == 0 ? 0 : '')}
+                            onChange={strategyChange('GoalScore')}
                             InputLabelProps={{
                             shrink: true,
                             }}
@@ -357,7 +357,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Original"
                             type="number"
-                            value={operations.TargetScore || 0}
+                            value={operations.TargetScore || (operations.TargetScore == 0 ? 0 : '')}
                             onChange={operationsChange('TargetScore')}
                             InputLabelProps={{
                             shrink: true,
@@ -370,7 +370,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Post-Improvement"
                             type="number"
-                            value={operations.OriginalScore || 0}
+                            value={operations.OriginalScore || (operations.OriginalScore == 0 ? 0 : '')}
                             onChange={operationsChange('OriginalScore')}
                             InputLabelProps={{
                             shrink: true,
@@ -383,7 +383,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Goal"
                             type="number"
-                            value={operations.GoalScore || 0}
+                            value={operations.GoalScore || (operations.GoalScore == 0 ? 0 : '')}
                             onChange={operationsChange('GoalScore')}
                             InputLabelProps={{
                             shrink: true,
@@ -397,7 +397,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Original"
                             type="number"
-                            value={governance.TargetScore || 0}
+                            value={governance.TargetScore || (governance.TargetScore == 0 ? 0 : '')}
                             onChange={governanceChange('TargetScore')}
                             InputLabelProps={{
                             shrink: true,
@@ -410,7 +410,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Post-Improvement"
                             type="number"
-                            value={governance.OriginalScore || 0}
+                            value={governance.OriginalScore || (governance.OriginalScore == 0 ? 0 : '')}
                             onChange={governanceChange('OriginalScore')}
                             InputLabelProps={{
                             shrink: true,
@@ -423,7 +423,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Goal"
                             type="number"
-                            value={governance.GoalScore || 0}
+                            value={governance.GoalScore || (governance.GoalScore == 0 ? 0 : '')}
                             onChange={governanceChange('GoalScore')}
                             InputLabelProps={{
                             shrink: true,
@@ -437,7 +437,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Original"
                             type="number"
-                            value={technology.TargetScore || 0}
+                            value={technology.TargetScore || (technology.TargetScore == 0 ? 0 : '')}
                             onChange={technologyChange('TargetScore')}
                             InputLabelProps={{
                             shrink: true,
@@ -450,7 +450,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Post-Improvement"
                             type="number"
-                            value={technology.OriginalScore || 0}
+                            value={technology.OriginalScore || (technology.OriginalScore == 0 ? 0 : '')}
                             onChange={technologyChange('OriginalScore')}
                             InputLabelProps={{
                             shrink: true,
@@ -463,7 +463,7 @@ export default function ScoreCardForm() {
                             id="outlined-number"
                             label="Goal"
                             type="number"
-                            value={technology.GoalScore || 0}
+                            value={technology.GoalScore || (technology.GoalScore == 0 ? 0 : '')}
                             onChange={technologyChange('GoalScore')}
                             InputLabelProps={{
                             shrink: true,
