@@ -11,7 +11,7 @@ export function ProgramSelector({ onChange=(event:React.ChangeEvent<{ value: any
     const programs = useSelector((state) => state.programs.list);
     const [labelWidth, setLabelWidth] = React.useState(0);
     const inputLabel = React.useRef(null);
-    
+
     React.useEffect(() => {
         programActions.getAllPrograms();
         setLabelWidth(inputLabel.current.offsetWidth);
