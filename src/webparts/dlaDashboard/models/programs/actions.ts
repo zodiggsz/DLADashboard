@@ -263,7 +263,7 @@ export function getScoreHistory(program){
 
 export async function getCompositeScore(id){
 
-    const score = await web.lists.getByTitle("Total_Program_Scores").items.filter("ProgramID eq '"+id+"'").select("CompositeScore", "TotalScore").top(1).orderBy("Created", false).get().then( data => {
+    const score = await web.lists.getByTitle("Total_Program_Scores").items.filter("ProgramID eq '"+id+"'").select("CompositeScore", "TotalScore", "TotalGoal").top(1).orderBy("Created", false).get().then( data => {
         if(data.length > 0){
             return data[0];
         }else{

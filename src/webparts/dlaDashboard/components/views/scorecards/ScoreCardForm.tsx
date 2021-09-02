@@ -78,6 +78,7 @@ export default function ScoreCardForm() {
             actions.getCompositeScore(selectedProgram.ID).then(data => {
                 setTotalOriginal(data.CompositeScore);
                 setTotalTarget(data.TotalScore);
+                setTotalGoal(data.TotalGoal)
             });
 
         }
