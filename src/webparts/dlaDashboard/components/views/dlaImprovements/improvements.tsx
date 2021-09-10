@@ -21,6 +21,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
+import AddImprovements from './AddImprovements';
 
 import improvementStyle from './index.module.scss';
 
@@ -40,6 +41,18 @@ const useStyles = makeStyles((theme: Theme) =>
         '& > *': {
           margin: theme.spacing(1),
         },
+    },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    modalPaper: {
+        outline:'none',
+        width:'50%',
+        backgroundColor: 'transparent',
+        border: '0px',
+        padding: theme.spacing(2, 4, 3),
     },
     paper: {
         margin: theme.spacing(2),
@@ -183,15 +196,19 @@ export default function DLAImprovements() {
     const selectedProgram = useSelector(state => state.programs.program);
     const improvements = useSelector((state) => state.programs.programImprovements);
     const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
+    const [openModal, setOpenModal] = React.useState(false);
+    const [improvementOptions, setImprovementOptions] = React.useState({});
+    const [improvementData, setImprovementData] = React.useState('');
+    const [responsibilityData, setResponsibilityData] = React.useState('');
 
     React.useEffect(() => {
-        
+
         console.log(content);
 
     }, [content]);
-    
+
     React.useEffect(() => {
-        
+
         setLabelWidth(inputLabel.current ? inputLabel.current.offsetWidth: 100 );
         if(selectedProgram){
             if(selectedProgram.ID && program.ID !== selectedProgram.ID){
@@ -230,8 +247,21 @@ export default function DLAImprovements() {
         }
     }
 
+    const handleOpen = (options) => {
+      setImprovementOptions(options);
+      setOpenModal(true);
+    }
+
+    const handleClose = improvement => {
+      setOpenModal(false);
+      console.log("got improvement: ", improvement)
+      if (improvement.options.type === 'improvement') setImprovementData(improvement.value);
+      if (improvement.options.type === 'responsibility') setResponsibilityData(improvement.value);
+      handleInputUpdate(improvement.options.key, improvement.options.item.ID, improvement.options.value, improvement.value);
+    }
+
     function addImprovements(){
-        
+
         const newItem = {
             ID: 0,
             Lens: '',
@@ -240,7 +270,7 @@ export default function DLAImprovements() {
             Estimated_Completion: null,
             Status: '',
         };
-        
+
         setContent([
             newItem,
             ...content,
@@ -267,6 +297,7 @@ export default function DLAImprovements() {
     function handleInputChange(index, id, key) {
 
         return (e) => {
+          console.log("event is : ", e)
             // const index = content.findIndex(element => element.ID == item );
             let newArray = [...content];
             newArray[index] = {
@@ -282,6 +313,20 @@ export default function DLAImprovements() {
 
     }
 
+    function handleInputUpdate(index, id, key, value) {
+
+        let newArray = [...content];
+        newArray[index] = {
+            ...newArray[index],
+            ID: id ? id: 0,
+            Lens: lens,
+            [key]: value,
+        };
+
+        setContent(newArray);
+
+    }
+
     async function deleteInput(index) {
         let newArray = [...content];
         let remove = newArray[index];
@@ -291,7 +336,7 @@ export default function DLAImprovements() {
     }
 
     function changeImprovements(e){
-        if(Object.keys(program).length > 0){ 
+        if(Object.keys(program).length > 0){
             setLens(e.target.value);
             switch (e.target.value) {
                 case 'governance':
@@ -313,7 +358,7 @@ export default function DLAImprovements() {
                     setContent([]);
                     break;
             }
-            
+
         }else{
             const msg = 'Please Select the Program First';
             setAlertMessage(msg);
@@ -339,7 +384,7 @@ export default function DLAImprovements() {
             dispatch(actions.addDLAImprovement(item.ID, update)).then((result) => {
                 loadImprovements();
             });
-            
+
         });
 
     }
@@ -378,28 +423,28 @@ export default function DLAImprovements() {
                     {content.map( (item, key) => (
                         <Grid container className={improvementStyle.improvementData} style={{backgroundColor: key % 2 === 0 ? '#E7ECF3' : '#ffffff'}} spacing={3}>
                             <Grid item xs={6}>
-                                <FormControl variant="outlined" style={{width:"100%", margin:5}} key={key} >
-                                    <TextField
-                                        label="Improvements"
-                                        multiline
-                                        onChange={handleInputChange(key, item.ID, 'Remediation')}
-                                        rows="4"
-                                        value={item.Remediation}
-                                        variant="outlined"
-                                    />   
-                                </FormControl>
+                                <div style={{padding:20}}>
+                                  {
+                                    improvementData ?
+                                    improvementData.substr(0, 50) + (improvementData.length > 50 ? '...' : '') : ''
+                                  }
+                                </div>
+                                <div style={{padding:20}}>
+                                    <Button variant="contained" color="secondary" onClick={() =>
+                                      handleOpen({ type: 'improvement', value: 'Remediation', key, item })}>Add Improvements</Button>
+                                </div>
                             </Grid>
                             <Grid item xs={6}>
-                                <FormControl variant="outlined" style={{width:"100%", margin:5}} key={key} >
-                                    <TextField
-                                        label="Responsibility"
-                                        multiline
-                                        onChange={handleInputChange(key, item.ID, 'Responsibility')}
-                                        rows="4"
-                                        value={item.Responsibility}
-                                        variant="outlined"
-                                    />   
-                                </FormControl>
+                                <div style={{padding:20}}>
+                                  {
+                                    responsibilityData ?
+                                    responsibilityData.substr(0, 50) + (responsibilityData.length > 50 ? '...' : '') : ''
+                                  }
+                                </div>
+                                <div style={{padding:20}}>
+                                    <Button variant="contained" color="secondary" onClick={() =>
+                                      handleOpen({ type: 'responsibility', value: 'Responsibility', key, item })}>Add Responsibility</Button>
+                                </div>
                             </Grid>
                             <Grid item xs={6}>
                                 <FormControl variant="outlined" style={{width:"100%", margin:0}} key={key} >
@@ -437,17 +482,37 @@ export default function DLAImprovements() {
                                         <MenuItem style={{backgroundColor: '#00FF00'}} value="Completed">Completed</MenuItem>
 
                                     </Select>
-                                    <Fab className={classes.fab} color="secondary" onClick={() => deleteInput(key)}>x</Fab> 
+                                    <Fab className={classes.fab} color="secondary" onClick={() => deleteInput(key)}>x</Fab>
                                 </FormControl>
                             </Grid>
                         </Grid>
-                        
-                    ))}
+
+))}
                     <div style={{padding:20}}>
-                        <Button variant="contained" color="primary" onClick={() => saveImprovement()}>SAVE IMPROVEMENT</Button>
+                      <Button variant="contained" color="primary" onClick={() => saveImprovement()}>SAVE IMPROVEMENT</Button>
                     </div>
-                    
+
                 </Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={openModal}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                        timeout: 500,
+                    }}
+                >
+                    <Fade in={openModal}>
+                    <div className={classes.modalPaper}>
+                        <AddImprovements options={improvementOptions} closeModal={handleClose} />
+                    </div>
+                    </Fade>
+                </Modal>
             </Grid>
         </Grid>
     );

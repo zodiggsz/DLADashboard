@@ -115,7 +115,11 @@ function TabPanel(props) {
                 { lens && lens.map( (item, key) => (
 
                     <TableRow key={key}>
-                        <TableCell align="left" style={{whiteSpace: 'pre-wrap'}}>{item.Remediation}</TableCell>
+                        <TableCell align="left">
+                        {/* <TableCell align="left" style={{whiteSpace: 'pre-wrap'}}> */}
+                          {/* {item.Remediation} */}
+                          <div dangerouslySetInnerHTML={{__html: item.Remediation}} />
+                        </TableCell>
                         {/* <TableCell align="left">{item.Responsibility}</TableCell> */}
                         <TableCell align="left" style={{ textAlign: 'center' }}>
                           <span className={`${scoreStyles.lensStatus} ${
