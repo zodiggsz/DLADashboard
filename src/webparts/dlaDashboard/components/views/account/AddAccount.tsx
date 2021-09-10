@@ -165,7 +165,6 @@ export default function AddAccount({ admin, closeModal = () => {} }) {
                             </Select>
                         </FormControl>
                         {
-                            user.Group == 'admin' ||
                             user.Group == 'portfolio'  ?
                                 <TextField
                                     id="filled-full-width"
@@ -186,7 +185,7 @@ export default function AddAccount({ admin, closeModal = () => {} }) {
                                     label="Program Acronymn"
                                     style={{ marginBottom: 8 }}
                                     fullWidth
-                                    onChange={setState('Programs')}
+                                    onChange={setState('ACRONYM')}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
