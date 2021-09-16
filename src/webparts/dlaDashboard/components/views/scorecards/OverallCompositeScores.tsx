@@ -72,7 +72,7 @@ function EtmResult({ label, name, original, result=false, showProgram }) {
             <StyledTableCell align="center"
                 style={{width:80}}
                 className={scoreResults}>
-                {original === 0 ? 'N/A' : original}
+                {parseFloat(original) === 0 ? 'N/A' : original}
             </StyledTableCell>
         </StyledTableRow>
     );

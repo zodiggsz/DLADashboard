@@ -116,39 +116,39 @@ export default function Score(props: ScoreProps) {
 
                         <ScoreResult
                             label="People & Culture"
-                            original={people.OriginalScore === 0 ? 'N/A' : people.OriginalScore}
-                            target={people.TargetScore === 0 ? 'N/A' : people.TargetScore}
+                            original={parseFloat(people.OriginalScore) === 0 ? 'N/A' : people.OriginalScore}
+                            target={parseFloat(people.TargetScore) === 0 ? 'N/A' : people.TargetScore}
                         />
                         
                         <ScoreResult
                             label="Strategy"
-                            original={strategy.OriginalScore === 0 ? 'N/A' : strategy.OriginalScore}
-                            target={strategy.TargetScore === 0 ? 'N/A' : strategy.TargetScore}
+                            original={parseFloat(strategy.OriginalScore) === 0 ? 'N/A' : strategy.OriginalScore}
+                            target={parseFloat(strategy.TargetScore) === 0 ? 'N/A' : strategy.TargetScore}
                         />
                         
                         <ScoreResult
                             label="Operations"
-                            original={operations.OriginalScore === 0 ? 'N/A' : operations.OriginalScore}
-                            target={operations.TargetScore === 0 ? 'N/A' : operations.TargetScore}
+                            original={parseFloat(operations.OriginalScore) === 0 ? 'N/A' : operations.OriginalScore}
+                            target={parseFloat(operations.TargetScore) === 0 ? 'N/A' : operations.TargetScore}
                         />
 
                         <ScoreResult
                             label="Governance"
-                            original={governance.OriginalScore === 0 ? 'N/A' : governance.OriginalScore}
-                            target={governance.TargetScore === 0 ? 'N/A' : governance.TargetScore}
+                            original={parseFloat(governance.OriginalScore) === 0 ? 'N/A' : governance.OriginalScore}
+                            target={parseFloat(governance.TargetScore) === 0 ? 'N/A' : governance.TargetScore}
                         />
                                                 
                         <ScoreResult
                             label="Technology"
-                            original={technology.OriginalScore === 0 ? 'N/A' : technology.OriginalScore}
-                            target={technology.TargetScore === 0 ? 'N/A' : technology.TargetScore}
+                            original={parseFloat(technology.OriginalScore) === 0 ? 'N/A' : technology.OriginalScore}
+                            target={parseFloat(technology.TargetScore) === 0 ? 'N/A' : technology.TargetScore}
                         />
                         
                         <ScoreResult
                             label="Composite Score"
                             compositeResults={true}
-                            original={total.CompositeScore === 0 ? 'N/A' : total.CompositeScore}
-                            target={total.TotalScore === 0 ? 'N/A' : total.TotalScore}
+                            original={parseFloat(total.CompositeScore) === 0 ? 'N/A' : total.CompositeScore}
+                            target={parseFloat(total.TotalScore) === 0 ? 'N/A' : total.TotalScore}
                         />
                     </TableBody>
                     </Table>

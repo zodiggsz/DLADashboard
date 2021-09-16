@@ -186,18 +186,18 @@ export default function ScoreCard() {
               {
                 goalShown ?
                 <div className={scoreStyles.lens}>
-                    <GoalScoreItem label="People & Culture" goalScore={scores.people.GoalScore || 0} />
-                    <GoalScoreItem label="Strategy" goalScore={scores.strategy.GoalScore || 0} />
-                    <GoalScoreItem label="Operations" goalScore={scores.operations.GoalScore || 0} />
-                    <GoalScoreItem label="Governance" goalScore={scores.governance.GoalScore || 0} />
-                    <GoalScoreItem label="Technology" goalScore={scores.technology.GoalScore || 0} />
+                    <GoalScoreItem label="People & Culture" goalScore={parseFloat(scores.people.GoalScore) === 0 ? 'N/A' : scores.people.GoalScore} />
+                    <GoalScoreItem label="Strategy" goalScore={parseFloat(scores.strategy.GoalScore) === 0 ? 'N/A' : scores.strategy.GoalScore} />
+                    <GoalScoreItem label="Operations" goalScore={parseFloat(scores.operations.GoalScore) === 0 ? 'N/A' : scores.operations.GoalScore} />
+                    <GoalScoreItem label="Governance" goalScore={parseFloat(scores.governance.GoalScore) === 0 ? 'N/A' : scores.governance.GoalScore} />
+                    <GoalScoreItem label="Technology" goalScore={parseFloat(scores.technology.GoalScore) === 0 ? 'N/A' : scores.technology.GoalScore} />
                 </div> :
                 <div className={scoreStyles.lens}>
-                    <Item label="People & Culture" score={scores.people.OriginalScore === 0 ? 'N/A' : scores.people.OriginalScore} />
-                    <Item label="Strategy" score={scores.strategy.OriginalScore === 0 ? 'N/A' : scores.strategy.OriginalScore} />
-                    <Item label="Operations" score={scores.operations.OriginalScore === 0 ? 'N/A' : scores.operations.OriginalScore} />
-                    <Item label="Governance" score={scores.governance.OriginalScore === 0 ? 'N/A' : scores.governance.OriginalScore} />
-                    <Item label="Technology" score={scores.technology.OriginalScore === 0 ? 'N/A' : scores.technology.OriginalScore} />
+                    <Item label="People & Culture" score={parseFloat(scores.people.OriginalScore) === 0 ? 'N/A' : scores.people.OriginalScore} />
+                    <Item label="Strategy" score={parseFloat(scores.strategy.OriginalScore) === 0 ? 'N/A' : scores.strategy.OriginalScore} />
+                    <Item label="Operations" score={parseFloat(scores.operations.OriginalScore) === 0 ? 'N/A' : scores.operations.OriginalScore} />
+                    <Item label="Governance" score={parseFloat(scores.governance.OriginalScore) === 0 ? 'N/A' : scores.governance.OriginalScore} />
+                    <Item label="Technology" score={parseFloat(scores.technology.OriginalScore) === 0 ? 'N/A' : scores.technology.OriginalScore} />
                 </div>
               }
                 <ul className={scoreStyles.programHeaderNav}>

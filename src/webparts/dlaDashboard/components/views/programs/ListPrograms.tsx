@@ -560,7 +560,7 @@ export default function ListPrograms({userID, navigate = false}) {
                                     inputProps={{ 'aria-labelledby': labelId }}
                                 />
                                 </TableCell>
-                                <TableCell className={scoreResults} align="left">{row.Score === 0 ? 'N/A' : row.Score}</TableCell>
+                                <TableCell className={scoreResults} align="left">{parseFloat(row.Score) === 0 ? 'N/A' : row.Score}</TableCell>
                                 <TableCell align="left">{navigate?<a href="" onClick={goToPrograms}>{row.Acronym}</a>:row.Acronym}</TableCell>
                                 <TableCell align="left">{row.ProgramManager}</TableCell>
                             </StyledTableRow>
