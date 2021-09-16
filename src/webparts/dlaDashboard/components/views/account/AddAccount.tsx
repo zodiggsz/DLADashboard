@@ -126,11 +126,11 @@ export default function AddAccount({ admin, closeModal = () => {} }) {
         // e.preventDefault();
         if(user.First_Name && user.Last_Name && user.Email && user.Group){
             const middleInitial = ` ${user.Middle_Initial}`;
-            const title = {Title: `${user.Last_Name}, ${user.First_Name}${middleInitial}`};
+            const title = {Title: `${user.Last_Name}, ${user.First_Name}${middleInitial}`.trim()};
 
             const updatedUser = {...user, ...title};
 
-            console.log(updatedUser);
+            console.log('user updated: ', updatedUser);
             dispatch(actions.addAccount(updatedUser));
             closeModal();
         }
