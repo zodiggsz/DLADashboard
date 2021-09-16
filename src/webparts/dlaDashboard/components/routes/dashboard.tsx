@@ -49,7 +49,7 @@ var dashRoutes = [
         icon: AccountTreeIcon,
         component: ManageTeams,
         hidden: false,
-        group:["admin","portfolio","program"]
+        group:["admin"]
     },
     {
         path: "/scores",
@@ -57,7 +57,7 @@ var dashRoutes = [
         icon: TableChartIcon,
         component: EditScoreCard,
         hidden: false,
-        group:["portfolio","program"]
+        group:[]
     },
     {
         path: "/insights",
@@ -65,7 +65,7 @@ var dashRoutes = [
         icon: EqualizerIcon,
         component: Insights,
         hidden: false,
-        group:["portfolio","program"]
+        group:[]
     },
     {
         form: true,
@@ -74,7 +74,7 @@ var dashRoutes = [
         icon: ShowChartIcon,
         component: DLAImprovements,
         hidden: true,
-        group:["portfolio","program"]
+        group:[]
     },
     {
         path: "/scores",
@@ -119,7 +119,7 @@ var dashRoutes = [
         icon: DescriptionIcon,
         component: Programs,
         hidden: false,
-        group:["portfolio","program"],
+        group:[],
         exact:true,
         breadcrumb: null
     },
@@ -129,7 +129,7 @@ var dashRoutes = [
         icon: FileCopyIcon,
         component: Programs,
         hidden: false,
-        group:["portfolio","program"],
+        group:[],
         exact:true,
         breadcrumb: null
     }

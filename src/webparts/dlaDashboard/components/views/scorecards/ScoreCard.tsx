@@ -92,6 +92,28 @@ function Item({ label, score }) {
     );
 }
 
+function GoalScoreItem({ label, goalScore }) {
+    const value = Number(goalScore);
+    let scoreResults = cx({
+        green: goalScore >= 3.76,
+        yellow: goalScore < 3.76 && goalScore > 2.50,
+        red: goalScore <= 2.50
+    });
+
+    return (
+        <div className={scoreStyles.item}>
+            <div className={scoreStyles.itemTitle}>
+                {label}
+            </div>
+            <div className={scoreStyles.itemScore}>
+                <div className={`${scoreStyles.goalScore} ${scoreResults}`}>
+                    {goalScore}
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export default function ScoreCard() {
     const dispatch = useDispatch();
     const group = useSelector(state => state.user.data.Group);
@@ -148,7 +170,7 @@ export default function ScoreCard() {
                 </div>
                 <div className={scoreStyles.score}>
                     <div className={`${scoreStyles.display} ${scoreResults}`}>
-                        <span>{score.CompositeScore}</span>
+                        <span>{score.CompositeScore === 0 ? 'N/A' : score.CompositeScore}</span>
                     </div>
                     <span className={scoreStyles.label}>COMPOSITE SCORE</span>
                 </div>
@@ -164,18 +186,18 @@ export default function ScoreCard() {
               {
                 goalShown ?
                 <div className={scoreStyles.lens}>
-                    <Item label="People & Culture" score={scores.people.GoalScore || 0} />
-                    <Item label="Strategy" score={scores.strategy.GoalScore || 0} />
-                    <Item label="Operations" score={scores.operations.GoalScore || 0} />
-                    <Item label="Governance" score={scores.governance.GoalScore || 0} />
-                    <Item label="Technology" score={scores.technology.GoalScore || 0} />
+                    <GoalScoreItem label="People & Culture" goalScore={scores.people.GoalScore || 0} />
+                    <GoalScoreItem label="Strategy" goalScore={scores.strategy.GoalScore || 0} />
+                    <GoalScoreItem label="Operations" goalScore={scores.operations.GoalScore || 0} />
+                    <GoalScoreItem label="Governance" goalScore={scores.governance.GoalScore || 0} />
+                    <GoalScoreItem label="Technology" goalScore={scores.technology.GoalScore || 0} />
                 </div> :
                 <div className={scoreStyles.lens}>
-                    <Item label="People & Culture" score={scores.people.OriginalScore} />
-                    <Item label="Strategy" score={scores.strategy.OriginalScore} />
-                    <Item label="Operations" score={scores.operations.OriginalScore} />
-                    <Item label="Governance" score={scores.governance.OriginalScore} />
-                    <Item label="Technology" score={scores.technology.OriginalScore} />
+                    <Item label="People & Culture" score={scores.people.OriginalScore === 0 ? 'N/A' : scores.people.OriginalScore} />
+                    <Item label="Strategy" score={scores.strategy.OriginalScore === 0 ? 'N/A' : scores.strategy.OriginalScore} />
+                    <Item label="Operations" score={scores.operations.OriginalScore === 0 ? 'N/A' : scores.operations.OriginalScore} />
+                    <Item label="Governance" score={scores.governance.OriginalScore === 0 ? 'N/A' : scores.governance.OriginalScore} />
+                    <Item label="Technology" score={scores.technology.OriginalScore === 0 ? 'N/A' : scores.technology.OriginalScore} />
                 </div>
               }
                 <ul className={scoreStyles.programHeaderNav}>
