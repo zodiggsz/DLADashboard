@@ -92,6 +92,28 @@ function Item({ label, score }) {
     );
 }
 
+function GoalScoreItem({ label, goalScore }) {
+    const value = Number(goalScore);
+    let scoreResults = cx({
+        green: goalScore >= 3.76,
+        yellow: goalScore < 3.76 && goalScore > 2.50,
+        red: goalScore <= 2.50
+    });
+
+    return (
+        <div className={scoreStyles.item}>
+            <div className={scoreStyles.itemTitle}>
+                {label}
+            </div>
+            <div className={scoreStyles.itemScore}>
+                <div className={`${scoreStyles.goalScore} ${scoreResults}`}>
+                    {goalScore}
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export default function ScoreCard() {
     const dispatch = useDispatch();
     const group = useSelector(state => state.user.data.Group);
@@ -164,11 +186,11 @@ export default function ScoreCard() {
               {
                 goalShown ?
                 <div className={scoreStyles.lens}>
-                    <Item label="People & Culture" score={scores.people.GoalScore || 0} />
-                    <Item label="Strategy" score={scores.strategy.GoalScore || 0} />
-                    <Item label="Operations" score={scores.operations.GoalScore || 0} />
-                    <Item label="Governance" score={scores.governance.GoalScore || 0} />
-                    <Item label="Technology" score={scores.technology.GoalScore || 0} />
+                    <GoalScoreItem label="People & Culture" goalScore={scores.people.GoalScore || 0} />
+                    <GoalScoreItem label="Strategy" goalScore={scores.strategy.GoalScore || 0} />
+                    <GoalScoreItem label="Operations" goalScore={scores.operations.GoalScore || 0} />
+                    <GoalScoreItem label="Governance" goalScore={scores.governance.GoalScore || 0} />
+                    <GoalScoreItem label="Technology" goalScore={scores.technology.GoalScore || 0} />
                 </div> :
                 <div className={scoreStyles.lens}>
                     <Item label="People & Culture" score={scores.people.OriginalScore === 0 ? 'N/A' : scores.people.OriginalScore} />
