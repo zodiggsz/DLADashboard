@@ -17,7 +17,7 @@ if (Environment.type === EnvironmentType.Local) {
     web = Web(config.spURi);
 }
 
-export async function addAccount(account){
+export function addAccount(account){
 
   async function updatePrograms(mgr) {
     if (mgr.ACRONYM) {
@@ -56,11 +56,12 @@ export async function addAccount(account){
   }
 
   const { ACRONYM, JCODE, Title } = account;
+  console.log('adding account: ', account);
   return async (dispatch) => {
     dispatch(slice.actions.setLoading(true));
     try {
         web.lists.getByTitle("DLA_Users").items.add(account).then( async result => {
-            console.log(result.data);
+            console.log('account added: ', account, result.data);
             dispatch(slice.actions.updateAccounts(result.data));
             if (ACRONYM || JCODE) await updatePrograms({ ACRONYM, JCODE });
         });
