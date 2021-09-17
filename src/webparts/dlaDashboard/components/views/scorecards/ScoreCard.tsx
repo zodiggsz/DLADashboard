@@ -97,7 +97,8 @@ function GoalScoreItem({ label, goalScore }) {
     let scoreResults = cx({
         green: goalScore >= 3.76,
         yellow: goalScore < 3.76 && goalScore > 2.50,
-        red: goalScore <= 2.50
+        red: goalScore <= 2.50,
+        blue: goalScore == 0 || goalScore == 'N/A'
     });
 
     return (
