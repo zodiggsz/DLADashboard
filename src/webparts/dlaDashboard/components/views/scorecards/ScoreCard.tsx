@@ -13,6 +13,7 @@ import Score from './cards/Score';
 import Budgets from './cards/Budget';
 import Insights from './cards/Insights';
 import Improvements from './cards/Improvements';
+import './index.scss';
 
 let cx = classNames.bind(scoreStyles);
 
