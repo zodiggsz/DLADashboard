@@ -75,7 +75,8 @@ function Item({ label, score }) {
     let scoreResults = cx({
         green: score >= 3.76,
         yellow: score < 3.76 && score > 2.50,
-        red: score <= 2.50
+        red: score > 0 && score <= 2.50,
+        blue: !score || score == 'N/A'
     });
 
     return (
@@ -97,8 +98,8 @@ function GoalScoreItem({ label, goalScore }) {
     let scoreResults = cx({
         green: goalScore >= 3.76,
         yellow: goalScore < 3.76 && goalScore > 2.50,
-        red: goalScore <= 2.50,
-        blue: goalScore == 0 || goalScore == 'N/A'
+        red: goalScore > 0 && goalScore <= 2.50,
+        blue: !goalScore || goalScore == 'N/A'
     });
 
     return (
@@ -128,7 +129,8 @@ export default function ScoreCard() {
     let scoreResults = cx({
         green: score.CompositeScore >= 3.76,
         yellow: score.CompositeScore < 3.76 && score.CompositeScore > 2.50,
-        red: score.CompositeScore <= 2.50
+        red: score.CompositeScore && score.CompositeScore <= 2.50,
+        white: !score.CompositeScore
     });
 
     React.useEffect(() => {
@@ -187,18 +189,18 @@ export default function ScoreCard() {
               {
                 goalShown ?
                 <div className={scoreStyles.lens}>
-                    <GoalScoreItem label="People & Culture" goalScore={parseFloat(scores.people.GoalScore) === 0 ? 'N/A' : scores.people.GoalScore} />
-                    <GoalScoreItem label="Strategy" goalScore={parseFloat(scores.strategy.GoalScore) === 0 ? 'N/A' : scores.strategy.GoalScore} />
-                    <GoalScoreItem label="Operations" goalScore={parseFloat(scores.operations.GoalScore) === 0 ? 'N/A' : scores.operations.GoalScore} />
-                    <GoalScoreItem label="Governance" goalScore={parseFloat(scores.governance.GoalScore) === 0 ? 'N/A' : scores.governance.GoalScore} />
-                    <GoalScoreItem label="Technology" goalScore={parseFloat(scores.technology.GoalScore) === 0 ? 'N/A' : scores.technology.GoalScore} />
+                    <GoalScoreItem label="People & Culture" goalScore={scores.people.GoalScore || 'N/A'} />
+                    <GoalScoreItem label="Strategy" goalScore={scores.strategy.GoalScore || 'N/A'} />
+                    <GoalScoreItem label="Operations" goalScore={scores.operations.GoalScore || 'N/A'} />
+                    <GoalScoreItem label="Governance" goalScore={scores.governance.GoalScore || 'N/A'} />
+                    <GoalScoreItem label="Technology" goalScore={scores.technology.GoalScore || 'N/A'} />
                 </div> :
                 <div className={scoreStyles.lens}>
-                    <Item label="People & Culture" score={parseFloat(scores.people.OriginalScore) === 0 ? 'N/A' : scores.people.OriginalScore} />
-                    <Item label="Strategy" score={parseFloat(scores.strategy.OriginalScore) === 0 ? 'N/A' : scores.strategy.OriginalScore} />
-                    <Item label="Operations" score={parseFloat(scores.operations.OriginalScore) === 0 ? 'N/A' : scores.operations.OriginalScore} />
-                    <Item label="Governance" score={parseFloat(scores.governance.OriginalScore) === 0 ? 'N/A' : scores.governance.OriginalScore} />
-                    <Item label="Technology" score={parseFloat(scores.technology.OriginalScore) === 0 ? 'N/A' : scores.technology.OriginalScore} />
+                    <Item label="People & Culture" score={!scores.people.OriginalScore ? scores.people.TargetScore || 'N/A' : scores.people.OriginalScore} />
+                    <Item label="Strategy" score={!scores.strategy.OriginalScore ? scores.strategy.TargetScore || 'N/A' : scores.strategy.OriginalScore} />
+                    <Item label="Operations" score={!scores.operations.OriginalScore ? scores.operations.TargetScore || 'N/A' : scores.operations.OriginalScore} />
+                    <Item label="Governance" score={!scores.governance.OriginalScore ? scores.governance.TargetScore || 'N/A' : scores.governance.OriginalScore} />
+                    <Item label="Technology" score={!scores.technology.OriginalScore ? scores.technology.TargetScore || 'N/A' : scores.technology.OriginalScore} />
                 </div>
               }
                 <ul className={scoreStyles.programHeaderNav}>

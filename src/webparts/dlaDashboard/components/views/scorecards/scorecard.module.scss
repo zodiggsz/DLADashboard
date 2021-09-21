@@ -149,6 +149,10 @@
             &.red {
                 background-color: red;
             }
+
+            &.white {
+              background-color: white;
+            }
         }
 
         .label {
@@ -341,10 +345,9 @@
             &.red {
                 background-color: red;
             }
-            
+
             &.blue {
-                color: white !important;
-                background-color: blue;
+                background-color: #93b3d7;
             }
         }
 
@@ -427,8 +430,7 @@
             }
 
             &.blue {
-                color: white !important;
-                background-color: blue;
+              background-color: #93b3d7;
             }
         }
     }
