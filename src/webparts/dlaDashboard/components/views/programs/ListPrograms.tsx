@@ -428,7 +428,8 @@ export default function ListPrograms({userID, navigate = false}) {
           await programActions.getCompositeScore(program.ID).then(data => {
                 const update = {
                     ...program,
-                    Score: data.CompositeScore ? data.CompositeScore : 0.0
+                    Score: data.CompositeScore ? data.CompositeScore : 0.0,
+                    Original: data.TotalScore ? data.TotalScore : 0.0
                 };
 
                 list.push(update);
@@ -537,10 +538,10 @@ export default function ListPrograms({userID, navigate = false}) {
                                 selected: isItemSelected
                             });
                             let scoreResults = cx({
-                                green: row.Score >= 3.76,
-                                yellow: row.Score < 3.76 && row.Score > 2.50,
-                                red: row.Score < 2.50 && row.Score > 1,
-                                neutral: row.Score == 0 || row.Score == 0.0
+                                green: (row.Score || row.Original) >= 3.76,
+                                yellow: row.Score ? row.Score < 3.76 && row.Score > 2.50 : row.Original < 3.76 && row.Original > 2.50,
+                                red: row.Score ? row.Score < 2.50 && row.Score > 1 : row.Original < 2.50 && row.Original > 1,
+                                neutral: !(row.Socre || row.Original)
                             });
 
                         return (
@@ -560,7 +561,7 @@ export default function ListPrograms({userID, navigate = false}) {
                                     inputProps={{ 'aria-labelledby': labelId }}
                                 />
                                 </TableCell>
-                                <TableCell className={scoreResults} align="left">{parseFloat(row.Score) === 0 ? 'N/A' : row.Score}</TableCell>
+                                <TableCell className={scoreResults} align="left">{!row.Score ? row.Original || 'N/A' : row.Score}</TableCell>
                                 <TableCell align="left">{navigate?<a href="" onClick={goToPrograms}>{row.Acronym}</a>:row.Acronym}</TableCell>
                                 <TableCell align="left">{row.ProgramManager}</TableCell>
                             </StyledTableRow>

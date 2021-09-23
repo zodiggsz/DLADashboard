@@ -128,10 +128,10 @@ export default function ScoreCard() {
     const [score, setComposite] = React.useState<CompositeData>(defaultComposite);
     const [card, setCard] = React.useState('Scorecard');
     let scoreResults = cx({
-        green: score.CompositeScore >= 3.76,
-        yellow: score.CompositeScore < 3.76 && score.CompositeScore > 2.50,
-        red: score.CompositeScore && score.CompositeScore <= 2.50,
-        white: !score.CompositeScore
+        green: (score.CompositeScore || score.TotalScore) >= 3.76,
+        yellow: (score.CompositeScore || score.TotalScore) < 3.76 && (score.CompositeScore || score.TotalScore) > 2.50,
+        red: score.CompositeScore && score.CompositeScore || score.TotalScore && score.TotalScore <= 2.50,
+        white: !(score.CompositeScore || score.TotalScore)
     });
 
     React.useEffect(() => {
@@ -174,7 +174,7 @@ export default function ScoreCard() {
                 </div>
                 <div className={scoreStyles.score}>
                     <div className={`${scoreStyles.display} ${scoreResults}`}>
-                        <span>{score.CompositeScore === 0 ? 'N/A' : score.CompositeScore}</span>
+                        <span>{!score.CompositeScore ? score.TotalScore || 'N/A' : score.CompositeScore}</span>
                     </div>
                     <span className={scoreStyles.label}>COMPOSITE SCORE</span>
                 </div>

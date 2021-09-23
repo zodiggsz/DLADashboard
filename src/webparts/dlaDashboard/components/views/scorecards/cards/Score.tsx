@@ -98,7 +98,7 @@ export default function Score(props: ScoreProps) {
     const { governance, people, technology, strategy, operations, total } = props;
     const classes = useStyles();
 
-    return (    
+    return (
         <Grid container id={scoreStyles.scorecard}>
 
             <Grid item xs={12}>
@@ -116,39 +116,39 @@ export default function Score(props: ScoreProps) {
 
                         <ScoreResult
                             label="People & Culture"
-                            original={parseFloat(people.OriginalScore) === 0 ? 'N/A' : people.OriginalScore}
-                            target={parseFloat(people.TargetScore) === 0 ? 'N/A' : people.TargetScore}
+                            original={people.OriginalScore || 'N/A'}
+                            target={people.TargetScore || 'N/A'}
                         />
-                        
+
                         <ScoreResult
                             label="Strategy"
-                            original={parseFloat(strategy.OriginalScore) === 0 ? 'N/A' : strategy.OriginalScore}
-                            target={parseFloat(strategy.TargetScore) === 0 ? 'N/A' : strategy.TargetScore}
+                            original={strategy.OriginalScore || 'N/A'}
+                            target={strategy.TargetScore || 'N/A'}
                         />
-                        
+
                         <ScoreResult
                             label="Operations"
-                            original={parseFloat(operations.OriginalScore) === 0 ? 'N/A' : operations.OriginalScore}
-                            target={parseFloat(operations.TargetScore) === 0 ? 'N/A' : operations.TargetScore}
+                            original={operations.OriginalScore || 'N/A'}
+                            target={operations.TargetScore || 'N/A'}
                         />
 
                         <ScoreResult
                             label="Governance"
-                            original={parseFloat(governance.OriginalScore) === 0 ? 'N/A' : governance.OriginalScore}
-                            target={parseFloat(governance.TargetScore) === 0 ? 'N/A' : governance.TargetScore}
+                            original={governance.OriginalScore || 'N/A'}
+                            target={governance.TargetScore || 'N/A'}
                         />
-                                                
+
                         <ScoreResult
                             label="Technology"
-                            original={parseFloat(technology.OriginalScore) === 0 ? 'N/A' : technology.OriginalScore}
-                            target={parseFloat(technology.TargetScore) === 0 ? 'N/A' : technology.TargetScore}
+                            original={technology.OriginalScore || 'N/A'}
+                            target={technology.TargetScore || 'N/A'}
                         />
-                        
+
                         <ScoreResult
                             label="Composite Score"
                             compositeResults={true}
-                            original={parseFloat(total.CompositeScore) === 0 ? 'N/A' : total.CompositeScore}
-                            target={parseFloat(total.TotalScore) === 0 ? 'N/A' : total.TotalScore}
+                            original={total.CompositeScore || 'N/A'}
+                            target={total.TotalScore || 'N/A'}
                         />
                     </TableBody>
                     </Table>
@@ -157,13 +157,13 @@ export default function Score(props: ScoreProps) {
             </Grid>
             <Grid item xs={12}>
                 <section className={scoreStyles.legendText}>
-                        The following scores are based on critical factors across the following 
-                        five lenses: Strategy, Operations, Technology, People & Culture and 
-                        Governance. Each lens and the composite are scored on a 5 point scale. 
-                        Further, each lens is weighted and those weights are included in the 
-                        calculation of the composite score. The scores are based on research, 
-                        analysis of data, and interviews with government and contract personnel 
-                        from the Functional Sponsor and Program Management Office, Customers, and 
+                        The following scores are based on critical factors across the following
+                        five lenses: Strategy, Operations, Technology, People & Culture and
+                        Governance. Each lens and the composite are scored on a 5 point scale.
+                        Further, each lens is weighted and those weights are included in the
+                        calculation of the composite score. The scores are based on research,
+                        analysis of data, and interviews with government and contract personnel
+                        from the Functional Sponsor and Program Management Office, Customers, and
                         System Vendors and Integrators.
                 </section>
                 <div className={scoreStyles.legend}>
@@ -192,6 +192,6 @@ export default function Score(props: ScoreProps) {
                 </div>
             </Grid>
         </Grid>
-            
+
     );
 }
