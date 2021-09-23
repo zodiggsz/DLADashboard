@@ -225,33 +225,33 @@ export default function ScoreCardForm() {
 
         const updateGovernance = {
             ...update,
-            OriginalScore: governance.OriginalScore,
-            TargetScore: governance.TargetScore,
-            GoalScore: governance.GoalScore
+            OriginalScore: governance.OriginalScore || 0,
+            TargetScore: governance.TargetScore || 0,
+            GoalScore: governance.GoalScore || 0,
         };
         const updatePeople = {
             ...update,
-            OriginalScore: people.OriginalScore,
-            TargetScore: people.TargetScore,
-            GoalScore: people.GoalScore
+            OriginalScore: people.OriginalScore || 0,
+            TargetScore: people.TargetScore || 0,
+            GoalScore: people.GoalScore || 0,
         };
         const updateStrategy = {
             ...update,
-            OriginalScore: strategy.OriginalScore,
-            TargetScore: strategy.TargetScore,
-            GoalScore: strategy.GoalScore
+            OriginalScore: strategy.OriginalScore || 0,
+            TargetScore: strategy.TargetScore || 0,
+            GoalScore: strategy.GoalScore || 0,
         };
         const updateTechnology = {
             ...update,
-            OriginalScore: technology.OriginalScore,
-            TargetScore: technology.TargetScore,
-            GoalScore: technology.GoalScore
+            OriginalScore: technology.OriginalScore || 0,
+            TargetScore: technology.TargetScore || 0,
+            GoalScore: technology.GoalScore || 0,
         };
         const updateOperations = {
             ...update,
-            OriginalScore: operations.OriginalScore,
-            TargetScore: operations.TargetScore,
-            GoalScore: operations.GoalScore
+            OriginalScore: operations.OriginalScore || 0,
+            TargetScore: operations.TargetScore || 0,
+            GoalScore: operations.GoalScore || 0,
         };
 
         dispatch(actions.addScore(updateGovernance, 'Program_Governance'));

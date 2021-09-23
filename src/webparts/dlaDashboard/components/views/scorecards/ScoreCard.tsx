@@ -130,7 +130,7 @@ export default function ScoreCard() {
     let scoreResults = cx({
         green: (score.CompositeScore || score.TotalScore) >= 3.76,
         yellow: (score.CompositeScore || score.TotalScore) < 3.76 && (score.CompositeScore || score.TotalScore) > 2.50,
-        red: score.CompositeScore && score.CompositeScore || score.TotalScore && score.TotalScore <= 2.50,
+        red: score.CompositeScore && score.CompositeScore <= 2.50 || score.TotalScore && score.TotalScore <= 2.50,
         white: !(score.CompositeScore || score.TotalScore)
     });
 
