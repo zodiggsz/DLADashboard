@@ -57,16 +57,22 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function AddImprovements({ options, closeModal = value => {} }) {
     const classes = useStyles();
     const [loading, setLoader] = React.useState(false);
-    const [value, setValue] = React.useState('');
+    const [value, setValue] = React.useState(options.item[options.value]);
 
     function handleChange(value) {
       setValue(value);
     }
 
     function onSubmit() {
-      options.item[options.value] = value;
-      console.log("options and value are: ", options, value);
-      closeModal({ options, value });
+      let newOptions;
+      console.log("options and value are: ", options, newOptions, value);
+      if (options.value === 'Remediation') {
+        newOptions = {
+          ...options, Remediation: value
+        }
+      }
+      // newOptions.item[options.value] = value;
+      closeModal({ options: newOptions, value });
     }
 
     return(

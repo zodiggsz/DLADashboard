@@ -198,8 +198,8 @@ export default function DLAImprovements() {
     const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
     const [openModal, setOpenModal] = React.useState(false);
     const [improvementOptions, setImprovementOptions] = React.useState({});
-    const [improvementData, setImprovementData] = React.useState('');
-    const [responsibilityData, setResponsibilityData] = React.useState('');
+    // const [improvementData, setImprovementData] = React.useState('');
+    // const [responsibilityData, setResponsibilityData] = React.useState('');
 
     React.useEffect(() => {
 
@@ -222,7 +222,7 @@ export default function DLAImprovements() {
 
     async function loadImprovements(){
         const load = await dispatch(actions.getDLAImprovements(selectedProgram.ID));
-        console.log(load);
+        console.log("loaded improvements:", load);
         if (lens) {
             switch (lens) {
                 case 'governance':
@@ -254,9 +254,7 @@ export default function DLAImprovements() {
 
     const handleClose = improvement => {
       setOpenModal(false);
-      console.log("got improvement: ", improvement)
-      if (improvement.options.type === 'improvement') setImprovementData(improvement.value);
-      if (improvement.options.type === 'responsibility') setResponsibilityData(improvement.value);
+      console.log("got improvement from modal: ", improvement)
       handleInputUpdate(improvement.options.key, improvement.options.item.ID, improvement.options.value, improvement.value);
     }
 
@@ -369,7 +367,7 @@ export default function DLAImprovements() {
 
     function saveImprovement(){
         // const insightData = Object.values(inputs);
-        console.log(content);
+        console.log("Improvement content: ", content);
         content.map(item => {
             const update = {
                 Title:selectedProgram.Acronym,
@@ -380,6 +378,8 @@ export default function DLAImprovements() {
                 Estimated_Completion: item.Estimated_Completion,
                 Status: item.Status
             };
+
+            console.log("Saving Improvements: ", update);
 
             dispatch(actions.addDLAImprovement(item.ID, update)).then((result) => {
                 loadImprovements();
@@ -425,25 +425,25 @@ export default function DLAImprovements() {
                             <Grid item xs={6}>
                                 <div style={{padding:20}}>
                                   {
-                                    improvementData ?
-                                    improvementData.substr(0, 50) + (improvementData.length > 50 ? '...' : '') : ''
+                                    item.Remediation ?
+                                    item.Remediation.replace(/(<([^>]+)>)/ig, '').substr(0, 50) + (item.Remediation.length > 50 ? '...' : '') : ''
                                   }
                                 </div>
                                 <div style={{padding:20}}>
                                     <Button variant="contained" color="secondary" onClick={() =>
-                                      handleOpen({ type: 'improvement', value: 'Remediation', key, item })}>Add Improvements</Button>
+                                      handleOpen({ type: 'improvement', value: 'Remediation', key, item })}>{item.Remediation ? 'Edit' : 'Add'} Improvements</Button>
                                 </div>
                             </Grid>
                             <Grid item xs={6}>
                                 <div style={{padding:20}}>
                                   {
-                                    responsibilityData ?
-                                    responsibilityData.substr(0, 50) + (responsibilityData.length > 50 ? '...' : '') : ''
+                                    item.Responsibility ?
+                                    item.Responsibility.replace(/(<([^>]+)>)/ig, '').substr(0, 50) + (item.Responsibility.length > 50 ? '...' : '') : ''
                                   }
                                 </div>
                                 <div style={{padding:20}}>
                                     <Button variant="contained" color="secondary" onClick={() =>
-                                      handleOpen({ type: 'responsibility', value: 'Responsibility', key, item })}>Add Responsibility</Button>
+                                      handleOpen({ type: 'responsibility', value: 'Responsibility', key, item })}>{item.Responsibility ? 'Edit' : 'Add'} Responsibility</Button>
                                 </div>
                             </Grid>
                             <Grid item xs={6}>

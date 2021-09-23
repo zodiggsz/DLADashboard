@@ -355,6 +355,8 @@ export function getProgramScores(id, type){
 
         const scoreData = {governance, operations, people, strategy, technology};
 
+        console.log("Got score data: ", scoreData);
+
         dispatch(slice.actions.setProgramScores(scoreData));
 
     };
