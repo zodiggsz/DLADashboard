@@ -71,6 +71,11 @@ export default function AddImprovements({ options, closeModal = value => {} }) {
           ...options, Remediation: value
         }
       }
+      if (options.value === 'Responsibility') {
+        newOptions = {
+          ...options, Responsibility: value
+        }
+      }
       // newOptions.item[options.value] = value;
       closeModal({ options: newOptions, value });
     }
