@@ -17,6 +17,7 @@ import './index.scss';
 
 let cx = classNames.bind(scoreStyles);
 
+//comment to redeploy
 const style = {
     invertBg: { backgroundColor: '#fff' },
     invertText: { color: '#04487b' },
@@ -55,7 +56,7 @@ interface ProgramData {
 
 const defaultData = {
     ProgramID: 0,
-    Title: '',
+    Title: "",
     OriginalScore: 0,
     TargetScore: 0,
     TotalScoreID: 0
