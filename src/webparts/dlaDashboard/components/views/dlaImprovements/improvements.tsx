@@ -172,6 +172,7 @@ const defaultContent = {
     Responsibility: '',
     Estimated_Completion: null,
     Status: '',
+    Manager: null
 };
 
 const defaultProgramData = {
@@ -267,6 +268,7 @@ export default function DLAImprovements() {
             Responsibility: '',
             Estimated_Completion: null,
             Status: '',
+            Manager: true
         };
 
         setContent([
@@ -369,7 +371,7 @@ export default function DLAImprovements() {
         // const insightData = Object.values(inputs);
         console.log("Improvement content: ", content);
         content.map(item => {
-            const update = {
+            const update: any = {
                 Title:selectedProgram.Acronym,
                 ProgramID: selectedProgram.ID,
                 Lens: lens,
@@ -378,6 +380,8 @@ export default function DLAImprovements() {
                 Estimated_Completion: item.Estimated_Completion,
                 Status: item.Status
             };
+
+            if (user.Group == 'portfolio' || user.Group == 'program') update.Manager = user.Title;
 
             console.log("Saving Improvements: ", update);
 
@@ -420,7 +424,11 @@ export default function DLAImprovements() {
                     <Fab color="primary" onClick={() => addImprovements()} aria-label="add">
                         <AddIcon />
                     </Fab>
-                    {content.map( (item, key) => (
+                    {content.map( (item, key) => {
+                      function isManager(): boolean {
+                        return ((user.Group == 'program' || user.Group == 'portfolio') && !item.Manager)
+                      }
+                      return (
                         <Grid container className={improvementStyle.improvementData} style={{backgroundColor: key % 2 === 0 ? '#E7ECF3' : '#ffffff'}} spacing={3}>
                             <Grid item xs={6}>
                                 <div style={{padding:20}}>
@@ -430,7 +438,7 @@ export default function DLAImprovements() {
                                   }
                                 </div>
                                 <div style={{padding:20}}>
-                                    <Button variant="contained" color="secondary" onClick={() =>
+                                    <Button variant="contained" color="secondary" disabled={isManager()} onClick={() =>
                                       handleOpen({ type: 'improvement', value: 'Remediation', key, item })}>{item.Remediation ? 'Edit' : 'Add'} Improvements</Button>
                                 </div>
                             </Grid>
@@ -442,7 +450,7 @@ export default function DLAImprovements() {
                                   }
                                 </div>
                                 <div style={{padding:20}}>
-                                    <Button variant="contained" color="secondary" onClick={() =>
+                                    <Button variant="contained" color="secondary" disabled={isManager()} onClick={() =>
                                       handleOpen({ type: 'responsibility', value: 'Responsibility', key, item })}>{item.Responsibility ? 'Edit' : 'Add'} Responsibility</Button>
                                 </div>
                             </Grid>
@@ -487,7 +495,7 @@ export default function DLAImprovements() {
                             </Grid>
                         </Grid>
 
-))}
+)})}
                     <div style={{padding:20}}>
                       <Button variant="contained" color="primary" onClick={() => saveImprovement()}>SAVE IMPROVEMENT</Button>
                     </div>
