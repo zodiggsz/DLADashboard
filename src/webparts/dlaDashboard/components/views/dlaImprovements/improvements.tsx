@@ -21,6 +21,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
 import AddImprovements from './AddImprovements';
 
 import improvementStyle from './index.module.scss';
@@ -83,6 +84,13 @@ const useStyles = makeStyles((theme: Theme) =>
         '& > *': {
             margin: theme.spacing(1),
         },
+    },
+    buttonSuccess: {
+      color: 'white',
+      backgroundColor: 'green',
+      '&:hover': {
+        backgroundColor: '#076807'
+      }
     },
     extendedIcon: {
         marginRight: theme.spacing(1),
@@ -421,38 +429,54 @@ export default function DLAImprovements() {
 
                         </Select>
                     </FormControl>
-                    <Fab color="primary" onClick={() => addImprovements()} aria-label="add">
+                    <div style={{padding:20, textAlign: 'right'}}>
+                      <Fab color="primary" onClick={() => addImprovements()} aria-label="add">
                         <AddIcon />
-                    </Fab>
+                      </Fab>
+                      <Button variant="contained" className={classes.buttonSuccess} style={{ marginLeft: 20 }} onClick={() => saveImprovement()}>SAVE</Button>
+                    </div>
                     {content.map( (item, key) => {
                       function isManager(): boolean {
                         return ((user.Group == 'program' || user.Group == 'portfolio') && !item.Manager)
                       }
                       return (
-                        <Grid container className={improvementStyle.improvementData} style={{backgroundColor: key % 2 === 0 ? '#E7ECF3' : '#ffffff'}} spacing={3}>
-                            <Grid item xs={6}>
-                                <div style={{padding:20}}>
+                        <Grid container className={improvementStyle.improvementData} style={{backgroundColor: '#a3bdd1'}} spacing={3}>
+                            <Grid item xs={8}>
+                                <div style={{padding:20, backgroundColor: 'white', border: '1px solid blue', textAlign: 'left'}}>
                                   {
                                     item.Remediation ?
-                                    item.Remediation.replace(/(<([^>]+)>)/ig, '').substr(0, 50) + (item.Remediation.length > 50 ? '...' : '') : ''
+                                    item.Remediation.replace(/(<([^>]+)>)/ig, '').substr(0, 150) + (
+                                      item.Remediation.replace(/(<([^>]+)>)/ig, '').length > 150 ? '...' : '') : ''
                                   }
                                 </div>
-                                <div style={{padding:20}}>
-                                    <Button variant="contained" color="secondary" disabled={isManager()} onClick={() =>
-                                      handleOpen({ type: 'improvement', value: 'Remediation', key, item })}>{item.Remediation ? 'Edit' : 'Add'} Improvements</Button>
+                                <div style={{padding: '10px 0', textAlign: 'right'}}>
+                                    <Button variant="contained" color="primary" disabled={isManager()} onClick={() =>
+                                      handleOpen({ type: 'improvement', value: 'Remediation', key, item })}>
+                                        <EditIcon />
+                                    </Button>
                                 </div>
                             </Grid>
-                            <Grid item xs={6}>
-                                <div style={{padding:20}}>
+                            <Grid item xs={4}>
+                                {/* <div style={{padding:20}}>
                                   {
                                     item.Responsibility ?
                                     item.Responsibility.replace(/(<([^>]+)>)/ig, '').substr(0, 50) + (item.Responsibility.length > 50 ? '...' : '') : ''
                                   }
                                 </div>
                                 <div style={{padding:20}}>
-                                    <Button variant="contained" color="secondary" disabled={isManager()} onClick={() =>
+                                    <Button variant="contained" color="primary" disabled={isManager()} onClick={() =>
                                       handleOpen({ type: 'responsibility', value: 'Responsibility', key, item })}>{item.Responsibility ? 'Edit' : 'Add'} Responsibility</Button>
-                                </div>
+                                </div> */}
+                                <FormControl variant="standard" style={{width:"100%", margin:5}} key={key} >
+                                    <TextField
+                                        label="Responsibility"
+                                        multiline
+                                        onChange={handleInputChange(key, item.ID, 'Responsibility')}
+                                        rows="4"
+                                        value={item.Responsibility}
+                                        variant="outlined"
+                                    />
+                                </FormControl>
                             </Grid>
                             <Grid item xs={6}>
                                 <FormControl variant="outlined" style={{width:"100%", margin:0}} key={key} >
@@ -496,9 +520,6 @@ export default function DLAImprovements() {
                         </Grid>
 
 )})}
-                    <div style={{padding:20}}>
-                      <Button variant="contained" color="primary" onClick={() => saveImprovement()}>SAVE IMPROVEMENT</Button>
-                    </div>
 
                 </Paper>
             </Grid>
