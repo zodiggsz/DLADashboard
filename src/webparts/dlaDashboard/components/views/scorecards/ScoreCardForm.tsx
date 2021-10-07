@@ -268,7 +268,7 @@ export default function ScoreCardForm() {
         dispatch(actions.addScore(updateStrategy, 'Program_Strategy'));
         dispatch(actions.addScore(updateTechnology, 'Program_Technology'));
         dispatch(actions.addScore(updateOperations, 'Program_Operations'));
-        dispatch(actions.addScore(updateScores, 'DLA_Improvement_Scores'));
+        dispatch(actions.addScore(updateScores, '5LENS_Scores'));
 
     }
 
