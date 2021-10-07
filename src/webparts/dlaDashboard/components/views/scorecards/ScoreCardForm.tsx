@@ -253,12 +253,22 @@ export default function ScoreCardForm() {
             TargetScore: operations.TargetScore || 0,
             GoalScore: operations.GoalScore || 0,
         };
+        const updateScores = {
+            Title: program.Acronym,
+            People_Culture_Score: updatePeople.OriginalScore || updatePeople.TargetScore,
+            Strategy_Score: updateStrategy.OriginalScore || updateStrategy.TargetScore,
+            Operations_Score: updateOperations.OriginalScore || updateOperations.TargetScore,
+            Governance_Score: updateGovernance.OriginalScore || updateGovernance.TargetScore,
+            Technology_Score: updateTechnology.OriginalScore || updateTechnology.TargetScore,
+            Date: new Date().toJSON()
+        }
 
         dispatch(actions.addScore(updateGovernance, 'Program_Governance'));
         dispatch(actions.addScore(updatePeople, 'Program_People_Culture'));
         dispatch(actions.addScore(updateStrategy, 'Program_Strategy'));
         dispatch(actions.addScore(updateTechnology, 'Program_Technology'));
         dispatch(actions.addScore(updateOperations, 'Program_Operations'));
+        dispatch(actions.addScore(updateScores, 'DLA_Improvement_Scores'));
 
     }
 
