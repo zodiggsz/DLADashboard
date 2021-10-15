@@ -622,6 +622,8 @@ export function getDLAImprovements(id){
 
         const improvementData = {governance, operations, people, strategy, technology};
 
+        console.log("got improvement data: ", improvementData);
+
         dispatch(slice.actions.setProgramImprovements(improvementData));
         return improvementData;
 

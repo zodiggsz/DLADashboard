@@ -212,7 +212,7 @@ export default function DLAImprovements() {
 
     React.useEffect(() => {
 
-        console.log(content);
+        console.log('state content:', content);
 
     }, [content]);
 
