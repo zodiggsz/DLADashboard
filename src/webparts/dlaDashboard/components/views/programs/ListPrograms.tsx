@@ -357,9 +357,9 @@ export default function ListPrograms({userID, navigate = false}) {
             filterPrograms();
         });
 
-        dispatch(programActions.getDITMR()).then((all) => {
-          console.log("got ditmr data: ", all);
-        });
+        // dispatch(programActions.getDITMR()).then((all) => {
+        //   console.log("got ditmr data: ", all);
+        // });
 
         dispatch(programActions.getPortfolios()).then((all) => {
           console.log("got portfolios data: ", all);
