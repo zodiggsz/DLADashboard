@@ -72,7 +72,7 @@ function EtmResult({ label, name, original, result=false, showProgram }) {
             <StyledTableCell align="center"
                 style={{width:80}}
                 className={scoreResults}>
-                {parseFloat(original) === 0 ? 'N/A' : original}
+                {original ? original : 'N/A'}
             </StyledTableCell>
         </StyledTableRow>
     );
@@ -109,7 +109,7 @@ export default function OverallCompositeScores(props) {
                 if(data){
                     setScore( scores => ({
                         ...scores,
-                        [item.Acronym]:data['CompositeScore'],
+                        [item.Acronym]:(data['CompositeScore']||data['TotalScore']),
                     }));
 
                 }else{
