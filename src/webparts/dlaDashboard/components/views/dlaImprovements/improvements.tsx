@@ -276,7 +276,7 @@ export default function DLAImprovements() {
             Responsibility: '',
             Estimated_Completion: null,
             Status: '',
-            Manager: true
+            Manager: user.Group == 'portfolio' || user.Group == 'program' ? user.Title : null
         };
 
         setContent([
@@ -386,10 +386,10 @@ export default function DLAImprovements() {
                 Remediation: item.Remediation,
                 Responsibility: item.Responsibility,
                 Estimated_Completion: item.Estimated_Completion,
-                Status: item.Status
+                Status: item.Status,
+                Manager: item.Manager || null
             };
 
-            if (user.Group == 'portfolio' || user.Group == 'program') update.Manager = user.Title;
 
             console.log("Saving Improvements: ", update);
 
@@ -475,6 +475,7 @@ export default function DLAImprovements() {
                                         rows="4"
                                         value={item.Responsibility}
                                         variant="outlined"
+                                        disabled={isManager()}
                                     />
                                 </FormControl>
                             </Grid>

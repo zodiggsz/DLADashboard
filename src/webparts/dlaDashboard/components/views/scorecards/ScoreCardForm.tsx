@@ -255,13 +255,15 @@ export default function ScoreCardForm() {
         };
         const updateScores = {
             Title: program.Acronym,
-            People_Culture_Score: updatePeople.OriginalScore || updatePeople.TargetScore,
-            Strategy_Score: updateStrategy.OriginalScore || updateStrategy.TargetScore,
-            Operations_Score: updateOperations.OriginalScore || updateOperations.TargetScore,
-            Governance_Score: updateGovernance.OriginalScore || updateGovernance.TargetScore,
-            Technology_Score: updateTechnology.OriginalScore || updateTechnology.TargetScore,
+            People_Culture_Score: Number(updatePeople.OriginalScore) || updatePeople.TargetScore,
+            Strategy_Score: Number(updateStrategy.OriginalScore) || updateStrategy.TargetScore,
+            Operations_Score: Number(updateOperations.OriginalScore) || updateOperations.TargetScore,
+            Governance_Score: Number(updateGovernance.OriginalScore) || updateGovernance.TargetScore,
+            Technology_Score: Number(updateTechnology.OriginalScore) || updateTechnology.TargetScore,
             Date: new Date().toJSON()
         }
+
+        console.log("updating scores: ", updateScores, updatePeople, updateStrategy);
 
         dispatch(actions.addScore(updateGovernance, 'Program_Governance'));
         dispatch(actions.addScore(updatePeople, 'Program_People_Culture'));
