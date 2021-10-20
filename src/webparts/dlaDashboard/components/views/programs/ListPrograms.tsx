@@ -77,7 +77,7 @@ interface HeadCell {
 const headCells: HeadCell[] = [
     { id: 'Score', enabled:true, numeric: false, disablePadding: false, label: 'Score' },
     { id: 'Acronym', enabled:true, numeric: false, disablePadding: false, label: 'Acronym' },
-    { id: 'ProgramManager', enabled:true, numeric: false, disablePadding: false, label: 'Program Manager' },
+    { id: 'HeadManager', enabled:true, numeric: false, disablePadding: false, label: 'Program Manager' },
 ];
 
 interface EnhancedTableProps {
@@ -90,6 +90,7 @@ interface EnhancedTableProps {
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
+    console.log('Props on List Programs', props)
     const { classes, order, orderBy, numSelected, rowCount, onRequestSort } = props;
     const createSortHandler = (property: keyof ProgramData) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
@@ -272,7 +273,7 @@ interface ProgramData {
     Acronym: string;
     JCODE: string;
     PortfolioManager: string;
-    ProgramManager: string;
+    HeadManager: string;
     Score:number;
 }
 
@@ -412,7 +413,7 @@ export default function ListPrograms({userID, navigate = false}) {
         if (account.Group === 'program') {
           console.log("filtering programs for PM");
           P = P.filter(program => {
-            const mgr: string = program.ProgramManager.toLowerCase();
+            const mgr: string = program.HeadManager.toLowerCase();
             return mgr.includes(account.First_Name.toLowerCase()) && mgr.includes(account.Last_Name.toLowerCase())
           })
         }
@@ -564,7 +565,7 @@ export default function ListPrograms({userID, navigate = false}) {
                                 </TableCell>
                                 <TableCell className={scoreResults} align="left">{!row.Score ? row.Original || 'N/A' : row.Score}</TableCell>
                                 <TableCell align="left">{navigate?<a href="" onClick={goToPrograms}>{row.Acronym}</a>:row.Acronym}</TableCell>
-                                <TableCell align="left">{row.ProgramManager}</TableCell>
+                                <TableCell align="left">{row.HeadManager}</TableCell>
                             </StyledTableRow>
                         );
                         })}

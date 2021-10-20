@@ -88,7 +88,7 @@ export default function AddImprovements({ options, closeModal = value => {} }) {
                 <Grid item xs={12}>
                   <ReactQuill theme="snow" value={value} onChange={handleChange} />
                   <Fab className={classes.submit} variant="extended" onClick={onSubmit}>
-                      ADD { options.type }
+                      SAVE
                   </Fab>
                 </Grid>
             </Grid>
