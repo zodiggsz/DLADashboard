@@ -220,7 +220,7 @@ export default function PlatformDrawer({ drawer = false }) {
                 
                 <div className={classes.toolbar}>
                     <IconButton onClick={toggleDrawer}>
-                        <MenuIcon style={{color:"#ffffff"}} />
+                        {/* <MenuIcon style={{color:"#ffffff"}}/> */}
                     </IconButton>
                 </div>
                 {dashRoutes.map((route, key) => {
