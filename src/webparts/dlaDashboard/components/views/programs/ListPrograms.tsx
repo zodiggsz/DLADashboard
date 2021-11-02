@@ -502,7 +502,7 @@ export default function ListPrograms({userID, navigate = false}) {
     return (
         <div className={classes.root}>
             <ThemeProvider theme={programTheme}>
-            { (account.Group === 'peo' || account.Group === 'portfolio') &&
+            { (account.Group === 'peo' || account.Group === 'admin') &&
               <Select
                 isClearable
                 isSearchable
