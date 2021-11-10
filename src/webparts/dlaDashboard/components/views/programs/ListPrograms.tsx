@@ -77,7 +77,7 @@ interface HeadCell {
 const headCells: HeadCell[] = [
     { id: 'Score', enabled:true, numeric: false, disablePadding: false, label: 'Score' },
     { id: 'Acronym', enabled:true, numeric: false, disablePadding: false, label: 'Acronym' },
-    { id: 'HeadManager', enabled:true, numeric: false, disablePadding: false, label: 'Program Manager' },
+    { id: 'ProgramManager', enabled:true, numeric: false, disablePadding: false, label: 'Program Manager' },
 ];
 
 interface EnhancedTableProps {
@@ -273,9 +273,12 @@ interface ProgramData {
     Acronym: string;
     JCODE: string;
     PortfolioManager: string;
+    ProgramManager: string;
     HeadManager: string;
     Score:number;
 }
+
+let times = 0;
 
 export default function ListPrograms({userID, navigate = false}) {
     const classes = useStyles();
@@ -295,6 +298,7 @@ export default function ListPrograms({userID, navigate = false}) {
     const account = useSelector((state) => state.user.data);
     const userAccounts = useSelector(state => state.user.accounts);
     const [selected, setSelected] = React.useState<string[]>(['0']);
+    const [filteredPortfolio, setFilteredPortfolio] = React.useState<any>('');
     const [programList, setProgramList] = React.useState([]);
     const [score, setScore] = React.useState([]);
     const [programFilter, setProgramFilter] = React.useState(false);
@@ -314,6 +318,8 @@ export default function ListPrograms({userID, navigate = false}) {
       control: styles => ({ ...styles, backgroundColor: 'white', marginBottom: 15 }),
       // input: styles => ({ ...styles, marginBottom: 10 }),
     }
+
+    console.log('component ListPrograms rendered %d times', ++times);
 
     console.log("user data: ", user, account, userAccounts, account.Group === 'portfolio');
 
@@ -407,14 +413,17 @@ export default function ListPrograms({userID, navigate = false}) {
         }
     }, [programs]);
 
-    async function filterPrograms(P = programs){
+    async function filterPrograms(P = programs, F = filteredPortfolio){
     // async function filterPrograms(P = acronyms){
-      console.log("filtering programs..........", P, account.Group, account.Group === 'program');
+      console.log("filtering programs..........", P, account.Group, account.Group === 'program', F);
         if (account.Group === 'program') {
           console.log("filtering programs for PM");
           P = P.filter(program => {
-            const mgr: string = program.HeadManager.toLowerCase();
-            return mgr.includes(account.First_Name.toLowerCase()) && mgr.includes(account.Last_Name.toLowerCase())
+            if (program.ProgramManager) {
+              const mgr: string = program.ProgramManager.toLowerCase();
+              return mgr.includes(account.First_Name.toLowerCase()) && mgr.includes(account.Last_Name.toLowerCase())
+            }
+            return false;
           })
         }
         if (account.Group === 'portfolio') {
@@ -423,6 +432,13 @@ export default function ListPrograms({userID, navigate = false}) {
             const mgr: string = program.PortfolioManager.toLowerCase();
             return mgr.includes(account.First_Name.toLowerCase()) && mgr.includes(account.Last_Name.toLowerCase())
           })
+        }
+        if (F) {
+          P = P.filter(p => {
+            const portfolio: any = Object.values(Portfolios).find((f: any) => f.Title === F.label.replace(/\s/g, ''))
+            // console.log('got portfolio: ', portfolio)
+            return portfolio && portfolio.Acronyms.includes(p.Acronym)
+          });
         }
         const list = [];
         const getPrograms = P.map( async program => {
@@ -480,12 +496,14 @@ export default function ListPrograms({userID, navigate = false}) {
     const selectPortfolio = (event: any) => {
       console.log('new porfolio selected: ', event, Portfolios);
       // if (event) filterPrograms(programs.filter(p => p.Managing_x0020_Group_x0020__x002 === event.label));
-      if (event) filterPrograms(programs.filter(p => {
-        const portfolio: any = Object.values(Portfolios).find((f: any) => f.Title === event.label.replace(/\s/g, ''))
-        // console.log('got portfolio: ', portfolio)
-        return portfolio && portfolio.Acronyms.includes(p.Acronym)
-      }));
-      else filterPrograms();
+      setFilteredPortfolio(event);
+      if (event) {
+        filterPrograms(programs.filter(p => {
+          const portfolio: any = Object.values(Portfolios).find((f: any) => f.Title === event.label.replace(/\s/g, ''))
+          // console.log('got portfolio: ', portfolio)
+          return portfolio && portfolio.Acronyms.includes(p.Acronym)
+        }));
+      } else filterPrograms(programs, null);
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -565,7 +583,7 @@ export default function ListPrograms({userID, navigate = false}) {
                                 </TableCell>
                                 <TableCell className={scoreResults} align="left">{!row.Score ? row.Original || 'N/A' : row.Score}</TableCell>
                                 <TableCell align="left">{navigate?<a href="" onClick={goToPrograms}>{row.Acronym}</a>:row.Acronym}</TableCell>
-                                <TableCell align="left">{row.HeadManager}</TableCell>
+                                <TableCell align="left">{row.HeadManager||row.ProgramManager}</TableCell>
                             </StyledTableRow>
                         );
                         })}
