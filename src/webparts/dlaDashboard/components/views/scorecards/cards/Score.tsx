@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import classNames from 'classnames/bind';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import scoreStyles from '../index.module.scss';
+import { Button } from 'reactstrap';
 let cx = classNames.bind(scoreStyles);
 
 const StyledTableCell = withStyles(theme => ({
@@ -47,6 +48,26 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   }));
 
+function GoalResult({ label, goal=0, compositeResults=false }) {
+    let composite = cx({
+        compositeResults: compositeResults
+    });
+
+    let results = cx({
+        green: goal >= 3.76,
+        yellow: goal < 3.76 && goal > 2.50,
+        red: goal < 2.50 && goal > 1,
+        neutral: goal == 0 || goal == 0.0
+    });
+
+    return (
+        <StyledTableRow className={composite}>
+            <StyledTableCell align="center" className={scoreStyles.labelCell}>{label}</StyledTableCell>
+            <StyledTableCell align="center" className={scoreStyles.targetCell}>{goal === 0 ? 'N/A' : goal}</StyledTableCell>
+        </StyledTableRow>
+    );
+}
+
 function ScoreResult({ label, original=0, target=0, compositeResults=false }) {
     let composite = cx({
         compositeResults: compositeResults
@@ -78,11 +99,13 @@ function ScoreResult({ label, original=0, target=0, compositeResults=false }) {
 interface Results {
     OriginalScore: any;
     TargetScore: any;
+    GoalScore: any;
 }
 
 interface Total {
     CompositeScore: any;
     TotalScore: any;
+    TotalGoal: any;
 }
 
 interface ScoreProps {
@@ -97,59 +120,148 @@ interface ScoreProps {
 export default function Score(props: ScoreProps) {
     const { governance, people, technology, strategy, operations, total } = props;
     const classes = useStyles();
+    const [showGoalScores, setShowGoalScores] = React.useState(false);
 
     return (
         <Grid container id={scoreStyles.scorecard}>
-
             <Grid item xs={12}>
                 <Paper className={classes.paper}>
+            <div>
+              <div className={scoreStyles.goalScores}>
+                {showGoalScores ?
+                  <Button
+                    onClick={() => setShowGoalScores(false)}
+                  >
+                    Hide Goal Scores
+                  </Button>
+                :
+                  <Button
+                    onClick={() => setShowGoalScores(true)}
+                  >
+                    Show Goal Scores
+                  </Button>
+                }
+              </div>
+                {/* <div className={scoreStyles.lens}>
+                    <GoalScoreItem label="People & Culture" goalScore={scores.people.GoalScore || 'N/A'} />
+                    <GoalScoreItem label="Strategy" goalScore={scores.strategy.GoalScore || 'N/A'} />
+                    <GoalScoreItem label="Operations" goalScore={scores.operations.GoalScore || 'N/A'} />
+                    <GoalScoreItem label="Governance" goalScore={scores.governance.GoalScore || 'N/A'} />
+                    <GoalScoreItem label="Technology" goalScore={scores.technology.GoalScore || 'N/A'} />
+                </div> :
+                <div className={scoreStyles.lens}>
+                    <Item label="People & Culture" score={!scores.people.OriginalScore ? scores.people.TargetScore || 'N/A' : scores.people.OriginalScore} />
+                    <Item label="Strategy" score={!scores.strategy.OriginalScore ? scores.strategy.TargetScore || 'N/A' : scores.strategy.OriginalScore} />
+                    <Item label="Operations" score={!scores.operations.OriginalScore ? scores.operations.TargetScore || 'N/A' : scores.operations.OriginalScore} />
+                    <Item label="Governance" score={!scores.governance.OriginalScore ? scores.governance.TargetScore || 'N/A' : scores.governance.OriginalScore} />
+                    <Item label="Technology" score={!scores.technology.OriginalScore ? scores.technology.TargetScore || 'N/A' : scores.technology.OriginalScore} />
+                </div> */}
+                </div>
                 <TableContainer>
                     <Table className={classes.table} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell align="center">LENS</StyledTableCell>
+                          <StyledTableCell align="center">LENS</StyledTableCell>
+                          {
+                            showGoalScores ?
+                            <StyledTableCell align="center">GOAL</StyledTableCell>
+                            :
                             <StyledTableCell align="center">ORIGINAL</StyledTableCell>
+                          }
+                          {
+                            showGoalScores ? null
+                            :
                             <StyledTableCell align="center">POST-IMPROVEMENT</StyledTableCell>
+                          }
                         </TableRow>
                     </TableHead>
                     <TableBody>
 
+                      {
+                        showGoalScores ?
+                          <GoalResult
+                              label="People & Culture"
+                              goal={people.GoalScore || 0}
+                          />
+                        :
                         <ScoreResult
                             label="People & Culture"
                             original={people.OriginalScore || 'N/A'}
                             target={people.TargetScore || 'N/A'}
                         />
+                      }
 
+                      {
+                        showGoalScores ?
+                          <GoalResult
+                              label="Strategy"
+                              goal={strategy.GoalScore || 0}
+                          />
+                        :
                         <ScoreResult
                             label="Strategy"
                             original={strategy.OriginalScore || 'N/A'}
                             target={strategy.TargetScore || 'N/A'}
                         />
+                      }
 
+                      {
+                        showGoalScores ?
+                          <GoalResult
+                              label="Operations"
+                              goal={operations.GoalScore || 0}
+                          />
+                        :
                         <ScoreResult
                             label="Operations"
                             original={operations.OriginalScore || 'N/A'}
                             target={operations.TargetScore || 'N/A'}
                         />
+                      }
 
+                      {
+                        showGoalScores ?
+                          <GoalResult
+                              label="Governance"
+                              goal={governance.GoalScore || 0}
+                          />
+                        :
                         <ScoreResult
                             label="Governance"
                             original={governance.OriginalScore || 'N/A'}
                             target={governance.TargetScore || 'N/A'}
                         />
+                      }
 
+                      {
+                        showGoalScores ?
+                          <GoalResult
+                              label="Technology"
+                              goal={technology.GoalScore || 0}
+                          />
+                        :
                         <ScoreResult
                             label="Technology"
                             original={technology.OriginalScore || 'N/A'}
                             target={technology.TargetScore || 'N/A'}
                         />
+                      }
 
+                      {
+                        showGoalScores ?
+                          <GoalResult
+                              label="Composite Score"
+                              compositeResults={true}
+                              goal={total.TotalGoal || 0}
+                          />
+                        :
                         <ScoreResult
                             label="Composite Score"
                             compositeResults={true}
                             original={total.CompositeScore || 'N/A'}
                             target={total.TotalScore || 'N/A'}
                         />
+                      }
                     </TableBody>
                     </Table>
                 </TableContainer>

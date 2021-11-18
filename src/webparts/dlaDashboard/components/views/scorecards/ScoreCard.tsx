@@ -47,6 +47,7 @@ interface ScoreData {
 interface CompositeData {
     CompositeScore: number;
     TotalScore:number;
+    TotalGoal:number;
 }
 
 interface ProgramData {
@@ -70,6 +71,7 @@ const defaultProgramData = {
 const defaultComposite = {
     CompositeScore: 0,
     TotalScore: 0,
+    TotalGoal: 0
 };
 
 function Item({ label, score }) {
@@ -180,13 +182,13 @@ export default function ScoreCard() {
                     </div>
                     <span className={scoreStyles.label}>COMPOSITE SCORE</span>
                 </div>
-                <div className={scoreStyles.goalScores}>
+                {/* <div className={scoreStyles.goalScores}>
                   <span
                     onMouseEnter={() => setGoalShown(true)}
                     onMouseLeave={() => setGoalShown(false)}>
                     Show Goal Scores
                   </span>
-                </div>
+                </div> */}
             </div>
             <div className={scoreStyles.programHead}>
               {

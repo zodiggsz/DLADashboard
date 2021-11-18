@@ -100,14 +100,14 @@ function ScoresHistoryPanel(props) {
                 </TableHead>
                 <TableBody>
                 { history && history.map( (item, key) => (
-                        
+
                     <TableRow key={key}>
                         <TableCell align="left">
                             <Moment format="MM-DD-YYYY h:mm">{item.Created}</Moment></TableCell>
                         {/* <TableCell align="left">{item.Author.Title}</TableCell> */}
-                        <TableCell align="left">{item.CompositeScore}</TableCell>
+                        <TableCell align="left">{item.CompositeScore || 'N/A'}</TableCell>
                     </TableRow>
-                    
+
                 ))}
                 </TableBody>
             </Table>
@@ -135,13 +135,13 @@ function InsightHistoryPanel(props) {
                 </TableHead>
                 <TableBody>
                 { history && history.map( (item, key) => (
-                        
+
                     <TableRow key={key}>
                         <TableCell align="left"><Moment format="MM-DD-YYYY h:mm">{item.Created}</Moment></TableCell>
                         {/* <TableCell align="left">{item.Author.Title}</TableCell> */}
                         <TableCell align="left"><b>{item.Lens}:</b><br />{item.Content}</TableCell>
                     </TableRow>
-                    
+
                 ))}
                 </TableBody>
             </Table>
@@ -169,13 +169,13 @@ function ImprovementsHistoryPanel(props) {
                 </TableHead>
                 <TableBody>
                 { history && history.map( (item, key) => (
-                        
+
                     <TableRow key={key}>
                         <TableCell align="left"><Moment format="MM-DD-YYYY h:mm">{item.Created}</Moment></TableCell>
                         {/* <TableCell align="left">{item.Author.Title}</TableCell> */}
                         <TableCell align="left"><b>{item.Subject}:</b><br />{item.Description}</TableCell>
                     </TableRow>
-                    
+
                 ))}
                 </TableBody>
             </Table>
@@ -208,7 +208,9 @@ export default function ListHistory() {
     const programHistory = useSelector((state) => state.programs.programHistory);
     const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
     const [value, setValue] = React.useState(0);
-    
+
+    console.log("history score: ", programHistory);
+
     React.useEffect(() => {
 
         if(selectedProgram){
@@ -227,7 +229,7 @@ export default function ListHistory() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    
+
     function setLensLabel(label){
         switch (label) {
             case 'governance':
@@ -241,7 +243,7 @@ export default function ListHistory() {
 
             case 'strategy':
                 return 'Strategy';
-            
+
             case 'operations':
                 return 'Operations';
             default:
@@ -262,7 +264,7 @@ export default function ListHistory() {
 
             case 'strategy':
                 return <img className="insightIcon" src={strategy} width="50px" height="50px" />;
-            
+
             case 'operations':
                 return <img className="insightIcon" src={operations} width="50px" height="50px" />;
 
@@ -278,7 +280,7 @@ export default function ListHistory() {
                 return <img className="insightIcon" src={governance} width="50px" height="50px" />;
         }
     }
-    
+
         return (
             <div id="programInsights" className={classes.listRoot}>
                 <AppBar position="static" color="default">
@@ -305,6 +307,6 @@ export default function ListHistory() {
                 <InsightHistoryPanel value={value} history={programHistory.insights} index={1} />
                 <ImprovementsHistoryPanel value={value} history={programHistory.improvements} index={2} />
             </div>
-            
+
         );
 }

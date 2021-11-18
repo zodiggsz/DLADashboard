@@ -210,7 +210,7 @@ export default function ScoreCardForm() {
         const composite_scores = {
             ProgramID: program.ID,
             Title: program.Acronym,
-            CompositeScore: totalOriginal || 0,
+            CompositeScore: totalOriginal || totalTarget || 0,
             TotalScore: totalTarget || 0,
             TotalGoal: totalGoal || 0
         };
