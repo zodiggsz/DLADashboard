@@ -63,7 +63,7 @@ function GoalResult({ label, goal=0, compositeResults=false }) {
     return (
         <StyledTableRow className={composite}>
             <StyledTableCell align="center" className={scoreStyles.labelCell}>{label}</StyledTableCell>
-            <StyledTableCell align="center" className={scoreStyles.targetCell}>{goal === 0 ? 'N/A' : goal}</StyledTableCell>
+            <StyledTableCell align="center" className={compositeResults ? results : scoreStyles.targetCell}>{goal === 0 ? 'N/A' : goal}</StyledTableCell>
         </StyledTableRow>
     );
 }

@@ -210,13 +210,13 @@ export default function ScoreCardForm() {
         const composite_scores = {
             ProgramID: program.ID,
             Title: program.Acronym,
-            CompositeScore: totalOriginal || totalTarget || 0,
-            TotalScore: totalTarget || 0,
-            TotalGoal: totalGoal || 0
+            CompositeScore: Number(totalOriginal) || Number(totalTarget) || 0,
+            TotalScore: Number(totalTarget) || 0,
+            TotalGoal: Number(totalGoal) || 0
         };
 
         const result = await dispatch(actions.addCompositeScore(composite_scores));
-        console.log("Composite scores added: ", result);
+        console.log("Composite scores added: ", result, composite_scores);
         const update = {
             TotalScoreID: result.data.ID,
             ProgramID: program.ID,
