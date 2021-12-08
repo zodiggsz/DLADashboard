@@ -88,11 +88,11 @@ function TabPanel(props) {
             <Table size="medium">
                 <TableBody>
                 { lens && lens.map( (item, key) => (
-                        
+
                     <TableRow key={key}>
                         <TableCell align="left">{item.Content}</TableCell>
                     </TableRow>
-                    
+
                 ))}
                 </TableBody>
             </Table>
@@ -128,8 +128,8 @@ interface InsightData {
 const defaultData = {
     ProgramID: 0,
     Title: '',
-    OriginalScore: 0,
     TargetScore: 0,
+    OriginalScore: 0,
     TotalScoreID: 0
 };
 
@@ -146,7 +146,7 @@ export default function ProgramInsights() {
     const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
     // const [insights, setInsights] = React.useState<InsightData>();
     const [value, setValue] = React.useState(0);
-    
+
     React.useEffect(() => {
         if(selectedProgram){
             if(selectedProgram.ID && program.ID !== selectedProgram.ID){
@@ -163,7 +163,7 @@ export default function ProgramInsights() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    
+
     function setLensLabel(label){
         switch (label) {
             case 'governance':
@@ -177,7 +177,7 @@ export default function ProgramInsights() {
 
             case 'strategy':
                 return 'Strategy';
-            
+
             case 'operations':
                 return 'Operations';
             default:
@@ -198,14 +198,14 @@ export default function ProgramInsights() {
 
             case 'strategy':
                 return <img className="insightIcon" src={strategy} width="50px" height="50px" />;
-            
+
             case 'operations':
                 return <img className="insightIcon" src={operations} width="50px" height="50px" />;
             default:
                 return <img className="insightIcon" src={governance} width="50px" height="50px" />;
         }
     }
-    
+
         return (
             <div id="programInsights" className={classes.listRoot}>
                 <AppBar position="static" color="default">
@@ -217,8 +217,8 @@ export default function ProgramInsights() {
                         indicatorColor="primary"
                         textColor="primary"
                         aria-label="scrollable force tabs example"
-                    >      
-                        <Tab label="People & Culture" icon={setLensImage('people')} {...a11yProps(3)} key={0} />                  
+                    >
+                        <Tab label="People & Culture" icon={setLensImage('people')} {...a11yProps(3)} key={0} />
                         <Tab label="Strategy" icon={setLensImage('strategy')} {...a11yProps(2)} key={1} />
                         <Tab label="Operations" icon={setLensImage('operations')} {...a11yProps(1)} key={2} />
                         <Tab label="Governance" icon={setLensImage('governance')} {...a11yProps(0)} key={3} />
@@ -231,6 +231,6 @@ export default function ProgramInsights() {
                 <TabPanel value={value} lens={insights.governance} index={3} />
                 <TabPanel value={value} lens={insights.technology} index={4} />
             </div>
-            
+
         );
 }

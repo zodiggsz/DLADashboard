@@ -109,7 +109,8 @@ export default function OverallCompositeScores(props) {
                 if(data){
                     setScore( scores => ({
                         ...scores,
-                        [item.Acronym]:(data['CompositeScore']||data['TotalScore']),
+                        [item.Acronym]:(data['CompositeScore'].split(' ')[0]),
+                        // [item.Acronym]:(data['CompositeScore']||data['TotalScore']),
                     }));
 
                 }else{

@@ -94,8 +94,8 @@ function ScoreResult({ label, original=0, target=0, compositeResults=false }) {
 }
 
 interface Results {
-    OriginalScore: number;
     TargetScore: number;
+    OriginalScore: number;
 }
 
 interface Total {

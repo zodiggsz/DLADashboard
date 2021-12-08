@@ -39,13 +39,13 @@ const useStyles = makeStyles({
 interface ScoreData {
     ProgramID: number;
     Title: string;
-    OriginalScore: number;
     TargetScore: number;
+    OriginalScore: number;
     TotalScoreID: number;
 }
 
 interface CompositeData {
-    CompositeScore: number;
+    CompositeScore: number | string;
     TotalScore:number;
     TotalGoal:number;
 }
@@ -58,8 +58,8 @@ interface ProgramData {
 const defaultData = {
     ProgramID: 0,
     Title: "",
-    OriginalScore: 0,
     TargetScore: 0,
+    OriginalScore: 0,
     TotalScoreID: 0
 };
 
@@ -130,13 +130,20 @@ export default function ScoreCard() {
     const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
     const [score, setComposite] = React.useState<CompositeData>(defaultComposite);
     const [card, setCard] = React.useState('Scorecard');
-    let scoreResults = cx({
-        green: (score.CompositeScore ? score.CompositeScore : score.TotalScore) >= 3.76,
-        yellow: (score.CompositeScore ? score.CompositeScore : score.TotalScore) < 3.76 &&
-          (score.CompositeScore ? score.CompositeScore : score.TotalScore) > 2.50,
-        red: score.CompositeScore ? score.CompositeScore <= 2.50 : (score.TotalScore && score.TotalScore <= 2.50),
-        white: !(score.CompositeScore || score.TotalScore)
+    let s = () => (score.CompositeScore ? Number((score.CompositeScore as string).split(' ')[0]) : 0),
+    scoreResults = cx({
+        green: s() >= 3.76,
+        yellow: s() < 3.76 && s() > 2.50,
+        red: s() <= 2.50,
+        white: !s()
     });
+    // let scoreResults = cx({
+    //     green: (score.CompositeScore ? score.CompositeScore : score.TotalScore) >= 3.76,
+    //     yellow: (score.CompositeScore ? score.CompositeScore : score.TotalScore) < 3.76 &&
+    //       (score.CompositeScore ? score.CompositeScore : score.TotalScore) > 2.50,
+    //     red: score.CompositeScore ? score.CompositeScore <= 2.50 : (score.TotalScore && score.TotalScore <= 2.50),
+    //     white: !(score.CompositeScore || score.TotalScore)
+    // });
 
     React.useEffect(() => {
         if(selectedProgram){
@@ -154,6 +161,7 @@ export default function ScoreCard() {
 
             if(data){
                 setComposite(data);
+                console.log("got composite score data: ", data);
             }else{
                 setComposite(defaultComposite);
             }
@@ -178,7 +186,7 @@ export default function ScoreCard() {
                 </div>
                 <div className={scoreStyles.score}>
                     <div className={`${scoreStyles.display} ${scoreResults}`}>
-                        <span>{!score.CompositeScore ? score.TotalScore || 'N/A' : score.CompositeScore}</span>
+                        <span>{s() || 'N/A'}</span>
                     </div>
                     <span className={scoreStyles.label}>COMPOSITE SCORE</span>
                 </div>
@@ -201,11 +209,11 @@ export default function ScoreCard() {
                     <GoalScoreItem label="Technology" goalScore={scores.technology.GoalScore || 'N/A'} />
                 </div> :
                 <div className={scoreStyles.lens}>
-                    <Item label="People & Culture" score={!scores.people.OriginalScore ? scores.people.TargetScore || 'N/A' : scores.people.OriginalScore} />
-                    <Item label="Strategy" score={!scores.strategy.OriginalScore ? scores.strategy.TargetScore || 'N/A' : scores.strategy.OriginalScore} />
-                    <Item label="Operations" score={!scores.operations.OriginalScore ? scores.operations.TargetScore || 'N/A' : scores.operations.OriginalScore} />
-                    <Item label="Governance" score={!scores.governance.OriginalScore ? scores.governance.TargetScore || 'N/A' : scores.governance.OriginalScore} />
-                    <Item label="Technology" score={!scores.technology.OriginalScore ? scores.technology.TargetScore || 'N/A' : scores.technology.OriginalScore} />
+                    <Item label="People & Culture" score={!scores.people.TargetScore ? scores.people.OriginalScore || 'N/A' : scores.people.TargetScore} />
+                    <Item label="Strategy" score={!scores.strategy.TargetScore ? scores.strategy.OriginalScore || 'N/A' : scores.strategy.TargetScore} />
+                    <Item label="Operations" score={!scores.operations.TargetScore ? scores.operations.OriginalScore || 'N/A' : scores.operations.TargetScore} />
+                    <Item label="Governance" score={!scores.governance.TargetScore ? scores.governance.OriginalScore || 'N/A' : scores.governance.TargetScore} />
+                    <Item label="Technology" score={!scores.technology.TargetScore ? scores.technology.OriginalScore || 'N/A' : scores.technology.TargetScore} />
                 </div>
               }
                 <ul className={scoreStyles.programHeaderNav}>

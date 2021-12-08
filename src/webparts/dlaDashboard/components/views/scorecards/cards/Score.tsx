@@ -76,14 +76,14 @@ function ScoreResult({ label, original=0, target=0, compositeResults=false }) {
     let originalResults = cx({
         green: original >= 3.76,
         yellow: original < 3.76 && original > 2.50,
-        red: original < 2.50 && original > 1,
+        red: original < 2.50 && original > 0,
         neutral: original == 0 || original == 0.0
     });
 
     let targetResults = cx({
         green: target >= 3.76,
         yellow: target < 3.76 && target > 2.50,
-        red: target < 2.50 && target > 1,
+        red: target < 2.50 && target > 0,
         neutral: target == 0 || target == 0.0
     });
 
@@ -97,8 +97,8 @@ function ScoreResult({ label, original=0, target=0, compositeResults=false }) {
 }
 
 interface Results {
-    OriginalScore: any;
     TargetScore: any;
+    OriginalScore: any;
     GoalScore: any;
 }
 
@@ -150,11 +150,11 @@ export default function Score(props: ScoreProps) {
                     <GoalScoreItem label="Technology" goalScore={scores.technology.GoalScore || 'N/A'} />
                 </div> :
                 <div className={scoreStyles.lens}>
-                    <Item label="People & Culture" score={!scores.people.OriginalScore ? scores.people.TargetScore || 'N/A' : scores.people.OriginalScore} />
-                    <Item label="Strategy" score={!scores.strategy.OriginalScore ? scores.strategy.TargetScore || 'N/A' : scores.strategy.OriginalScore} />
-                    <Item label="Operations" score={!scores.operations.OriginalScore ? scores.operations.TargetScore || 'N/A' : scores.operations.OriginalScore} />
-                    <Item label="Governance" score={!scores.governance.OriginalScore ? scores.governance.TargetScore || 'N/A' : scores.governance.OriginalScore} />
-                    <Item label="Technology" score={!scores.technology.OriginalScore ? scores.technology.TargetScore || 'N/A' : scores.technology.OriginalScore} />
+                    <Item label="People & Culture" score={!scores.people.TargetScore ? scores.people.OriginalScore || 'N/A' : scores.people.TargetScore} />
+                    <Item label="Strategy" score={!scores.strategy.TargetScore ? scores.strategy.OriginalScore || 'N/A' : scores.strategy.TargetScore} />
+                    <Item label="Operations" score={!scores.operations.TargetScore ? scores.operations.OriginalScore || 'N/A' : scores.operations.TargetScore} />
+                    <Item label="Governance" score={!scores.governance.TargetScore ? scores.governance.OriginalScore || 'N/A' : scores.governance.TargetScore} />
+                    <Item label="Technology" score={!scores.technology.TargetScore ? scores.technology.OriginalScore || 'N/A' : scores.technology.TargetScore} />
                 </div> */}
                 </div>
                 <TableContainer>
@@ -186,8 +186,8 @@ export default function Score(props: ScoreProps) {
                         :
                         <ScoreResult
                             label="People & Culture"
-                            original={people.OriginalScore || 'N/A'}
-                            target={people.TargetScore || 'N/A'}
+                            original={people.TargetScore || 'N/A'}
+                            target={people.OriginalScore || 'N/A'}
                         />
                       }
 
@@ -200,8 +200,8 @@ export default function Score(props: ScoreProps) {
                         :
                         <ScoreResult
                             label="Strategy"
-                            original={strategy.OriginalScore || 'N/A'}
-                            target={strategy.TargetScore || 'N/A'}
+                            original={strategy.TargetScore || 'N/A'}
+                            target={strategy.OriginalScore || 'N/A'}
                         />
                       }
 
@@ -214,8 +214,8 @@ export default function Score(props: ScoreProps) {
                         :
                         <ScoreResult
                             label="Operations"
-                            original={operations.OriginalScore || 'N/A'}
-                            target={operations.TargetScore || 'N/A'}
+                            original={operations.TargetScore || 'N/A'}
+                            target={operations.OriginalScore || 'N/A'}
                         />
                       }
 
@@ -228,8 +228,8 @@ export default function Score(props: ScoreProps) {
                         :
                         <ScoreResult
                             label="Governance"
-                            original={governance.OriginalScore || 'N/A'}
-                            target={governance.TargetScore || 'N/A'}
+                            original={governance.TargetScore || 'N/A'}
+                            target={governance.OriginalScore || 'N/A'}
                         />
                       }
 
@@ -242,8 +242,8 @@ export default function Score(props: ScoreProps) {
                         :
                         <ScoreResult
                             label="Technology"
-                            original={technology.OriginalScore || 'N/A'}
-                            target={technology.TargetScore || 'N/A'}
+                            original={technology.TargetScore || 'N/A'}
+                            target={technology.OriginalScore || 'N/A'}
                         />
                       }
 
@@ -258,7 +258,7 @@ export default function Score(props: ScoreProps) {
                         <ScoreResult
                             label="Composite Score"
                             compositeResults={true}
-                            original={total.CompositeScore || 'N/A'}
+                            original={total.CompositeScore ? total.CompositeScore.includes('target') ? Number(total.CompositeScore.split(' ')[0]) : 0 : 0}
                             target={total.TotalScore || 'N/A'}
                         />
                       }

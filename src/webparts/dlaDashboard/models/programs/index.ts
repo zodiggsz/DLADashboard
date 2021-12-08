@@ -4,7 +4,7 @@ import * as programActions from './actions';
 // import * as selectors from './selectors';
 
 const defaultScores = {
-    TargetScore: 0,
+    OriginalScore: 0,
     TotalScoreID: 0
 };
 

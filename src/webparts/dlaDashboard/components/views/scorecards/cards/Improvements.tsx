@@ -169,8 +169,8 @@ interface InsightData {
 const defaultData = {
     ProgramID: 0,
     Title: '',
-    OriginalScore: 0,
     TargetScore: 0,
+    OriginalScore: 0,
     TotalScoreID: 0
 };
 

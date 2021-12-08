@@ -446,7 +446,7 @@ export default function ListPrograms({userID, navigate = false}) {
           await programActions.getCompositeScore(program.ID).then(data => {
                 const update = {
                     ...program,
-                    Score: data.CompositeScore ? data.CompositeScore : 0.0,
+                    Score: data.CompositeScore ? Number(data.CompositeScore.split(' ')[0]) : 0.0,
                     Original: data.TotalScore ? data.TotalScore : 0.0
                 };
 
