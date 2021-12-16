@@ -25,6 +25,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddImprovements from './AddImprovements';
 
 import improvementStyle from './index.module.scss';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -228,6 +229,39 @@ export default function DLAImprovements() {
         }
 
     }, [programs, selectedProgram]);
+
+    // A custom hook that builds on useLocation to parse
+    // the query string for you.
+    function useQuery() {
+      const { search } = useLocation();
+
+      return React.useMemo(() => new URLSearchParams(search), [search]);
+    }
+
+    const query = useQuery();
+    const params = {
+      acronym: query.get('acronym'),
+      lens: query.get('lens'),
+    }
+
+    console.log('Query Params are: ', params, programs, programs && programs.length, selectedProgram)
+    console.log("Lens content is: ", lens, content);
+
+    if (programs && programs.length) {
+      if (params.acronym && !(selectedProgram && selectedProgram.Acronym == params.acronym)) {
+        console.log("setting program acronym: ", params.acronym)
+        dispatch(actions.getProgramByAcronym(params.acronym));
+      }
+      if (params.lens && lens != params.lens) {
+        changeImprovements({ target: { value: params.lens }})
+      }
+    } else {
+      dispatch(actions.getAllPrograms());
+      console.log("getting programs from improvements")
+    }
+
+
+    console.log("programs: ", programs, programs.length)
 
     async function loadImprovements(){
         const load = await dispatch(actions.getDLAImprovements(selectedProgram.ID));

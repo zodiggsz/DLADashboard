@@ -646,3 +646,15 @@ export function getProgramAccomplishments(id){
     };
 
 }
+
+export function getProgramByAcronym(acronym){
+
+  return async (dispatch) => {
+      dispatch(slice.actions.setLoading(true));
+      const program = await web.lists.getByTitle("DLA_Programs").items.filter(`Acronym eq '${acronym}'`).get();
+      dispatch(slice.actions.setProgram(program[0]));
+
+  };
+
+}
+
