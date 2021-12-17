@@ -413,6 +413,11 @@ export default function ListPrograms({userID, navigate = false}) {
         }
     }, [programs]);
 
+    if( selected.indexOf("0") == 0 && selectedProgram.ID){
+      const id = `${selectedProgram.ID}`;
+      setSelected([id]);
+    }
+
     async function filterPrograms(P = programs, F = filteredPortfolio){
     // async function filterPrograms(P = acronyms){
       console.log("filtering programs..........", P, account.Group, account.Group === 'program', F);
