@@ -208,6 +208,8 @@ export default function DLAImprovements() {
     const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
     const [openModal, setOpenModal] = React.useState(false);
     const [improvementOptions, setImprovementOptions] = React.useState({});
+    const [lensLoaded, setLensLoaded] = React.useState(false);
+    const [programLoaded, setProgramLoaded] = React.useState(false);
     // const [improvementData, setImprovementData] = React.useState('');
     // const [responsibilityData, setResponsibilityData] = React.useState('');
 
@@ -248,12 +250,14 @@ export default function DLAImprovements() {
     console.log("Lens content is: ", lens, content);
 
     if (programs && programs.length) {
-      if (params.acronym && !(selectedProgram && selectedProgram.Acronym == params.acronym)) {
+      if (!programLoaded && params.acronym && !(selectedProgram && selectedProgram.Acronym == params.acronym)) {
         console.log("setting program acronym: ", params.acronym)
         dispatch(actions.getProgramByAcronym(params.acronym));
+        setProgramLoaded(true);
       }
-      if (params.lens && lens != params.lens) {
+      if (!lensLoaded && params.lens && lens != params.lens) {
         changeImprovements({ target: { value: params.lens }})
+        setLensLoaded(true);
       }
     } else {
       dispatch(actions.getAllPrograms());
