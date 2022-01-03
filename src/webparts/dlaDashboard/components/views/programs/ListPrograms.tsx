@@ -78,6 +78,7 @@ const headCells: HeadCell[] = [
     { id: 'Score', enabled:true, numeric: false, disablePadding: false, label: 'Score' },
     { id: 'Acronym', enabled:true, numeric: false, disablePadding: false, label: 'Acronym' },
     { id: 'ProgramManager', enabled:true, numeric: false, disablePadding: false, label: 'Program Manager' },
+    { id: 'Approved', enabled:true, numeric: false, disablePadding: false, label: 'Approved' },
 ];
 
 interface EnhancedTableProps {
@@ -87,11 +88,12 @@ interface EnhancedTableProps {
     order: Order;
     orderBy: string;
     rowCount: number;
+    role: string;
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
     console.log('Props on List Programs', props)
-    const { classes, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+    const { classes, order, orderBy, numSelected, rowCount, role, onRequestSort } = props;
     const createSortHandler = (property: keyof ProgramData) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
     };
@@ -103,13 +105,14 @@ return (
 
         </TableCell>
         {headCells.map((headCell) => (
-        <TableCell
+          headCell.id === 'Approved' && !isManager(role) ? null :
+          <TableCell
             key={headCell.id}
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === headCell.id ? order : false}
             className={classes.labelCell}
-        >
+          >
             <TableSortLabel
             active={orderBy === headCell.id}
             direction={orderBy === headCell.id ? order : 'asc'}
@@ -122,7 +125,7 @@ return (
                 </span>
             ) : null}
             </TableSortLabel>
-        </TableCell>
+          </TableCell>
         ))}
     </TableRow>
     </TableHead>
@@ -271,6 +274,7 @@ interface ProgramData {
     ID: string;
     Title: string;
     Acronym: string;
+    Approved: boolean;
     JCODE: string;
     PortfolioManager: string;
     ProgramManager: string;
@@ -279,6 +283,10 @@ interface ProgramData {
 }
 
 let times = 0;
+
+function isManager(role) {
+  return role === 'admin' || role === 'program' || role === 'portfolio'
+}
 
 export default function ListPrograms({userID, navigate = false}) {
     const classes = useStyles();
@@ -393,10 +401,7 @@ export default function ListPrograms({userID, navigate = false}) {
         //     }
         // }
 
-        if( selected.indexOf("0") == 0 && selectedProgram.ID){
-            const id = `${selectedProgram.ID}`;
-            setSelected([id]);
-        }
+        setSelectedProgram();
 
     }, [userAccounts, userPrograms, selected]);
 
@@ -413,14 +418,22 @@ export default function ListPrograms({userID, navigate = false}) {
         }
     }, [programs]);
 
-    if( selected.indexOf("0") == 0 && selectedProgram.ID){
-      const id = `${selectedProgram.ID}`;
-      setSelected([id]);
+    function setSelectedProgram() {
+      if( selected.indexOf("0") == 0 && selectedProgram.ID){
+        const id = `${selectedProgram.ID}`;
+        setSelected([id]);
+      }
     }
+    setSelectedProgram();
+
+
 
     async function filterPrograms(P = programs, F = filteredPortfolio){
     // async function filterPrograms(P = acronyms){
       console.log("filtering programs..........", P, account.Group, account.Group === 'program', F);
+        if (!isManager(account.Group)) {
+          P = P.filter(program => program.Approved)
+        }
         if (account.Group === 'program') {
           console.log("filtering programs for PM");
           P = P.filter(program => {
@@ -494,6 +507,25 @@ export default function ListPrograms({userID, navigate = false}) {
         // }
     };
 
+    const toggleApproval = (event: React.ChangeEvent<HTMLInputElement>, program) => {
+        const id = `${program.ID}`;
+        console.log("Approval status: ", id, event.target, event.target.checked, program.Approved);
+        dispatch(programActions.updateProgramApproval({ ...program, Approved: !program.Approved })).then(() => {
+
+          filterPrograms();
+        });
+        // dispatch(programActions.getAllPrograms());
+        // dispatch(programActions.getAllPrograms()).then((all) => {
+        //   filterPrograms();
+        // });
+
+        // setSelected([id]);
+
+        // if(navigate){
+        //     history.push(`/programs`);
+        // }
+    };
+
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
@@ -552,6 +584,7 @@ export default function ListPrograms({userID, navigate = false}) {
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
                     rowCount={programs.length}
+                    role={account.Group}
                     />
                     <TableBody>
                     {programList && stableSort(programList, getComparator(order, orderBy))
@@ -589,6 +622,16 @@ export default function ListPrograms({userID, navigate = false}) {
                                 <TableCell className={scoreResults} align="left">{!row.Score ? row.Original || 'N/A' : row.Score}</TableCell>
                                 <TableCell align="left">{navigate?<a href="" onClick={goToPrograms}>{row.Acronym}</a>:row.Acronym}</TableCell>
                                 <TableCell align="left">{row.HeadManager||row.ProgramManager}</TableCell>
+                                {
+                                  account.Group === 'admin' ?
+                                  <TableCell padding="checkbox">
+                                  <Checkbox
+                                      checked={row.Approved}
+                                      inputProps={{ 'aria-labelledby': labelId }}
+                                      onChange={(event) => toggleApproval(event, row)}
+                                  />
+                                  </TableCell> : null
+                                }
                             </StyledTableRow>
                         );
                         })}

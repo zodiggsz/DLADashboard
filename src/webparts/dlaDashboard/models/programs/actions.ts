@@ -565,6 +565,26 @@ export function removeImprovement(id){
     };
 }
 
+export function updateProgramApproval(program){
+
+    return async (dispatch) => {
+        // dispatch(slice.actions.setLoading(true));
+        try {
+          delete program.Score
+          delete program.Original
+          console.log("updating program: ", program)
+          web.lists.getByTitle("DLA_Programs").items.getById(program.ID).update(program);
+          // dispatch(slice.actions.setLoading(false));
+          toast.success(`Updated Approal Status for ${program.Title}!`);
+        } catch (e) {
+            toast.error("Error updating Approval status");
+            console.log(e);
+            return e;
+        }
+
+    };
+}
+
 export function addDLAImprovement(id, improvement){
 
     return async (dispatch) => {
