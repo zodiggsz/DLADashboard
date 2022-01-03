@@ -511,19 +511,11 @@ export default function ListPrograms({userID, navigate = false}) {
         const id = `${program.ID}`;
         console.log("Approval status: ", id, event.target, event.target.checked, program.Approved);
         dispatch(programActions.updateProgramApproval({ ...program, Approved: !program.Approved })).then(() => {
-
           filterPrograms();
         });
-        // dispatch(programActions.getAllPrograms());
         // dispatch(programActions.getAllPrograms()).then((all) => {
         //   filterPrograms();
         // });
-
-        // setSelected([id]);
-
-        // if(navigate){
-        //     history.push(`/programs`);
-        // }
     };
 
     const handleChangePage = (event: unknown, newPage: number) => {
