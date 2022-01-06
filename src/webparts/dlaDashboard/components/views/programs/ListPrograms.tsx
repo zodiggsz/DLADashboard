@@ -78,7 +78,7 @@ const headCells: HeadCell[] = [
     { id: 'Score', enabled:true, numeric: false, disablePadding: false, label: 'Score' },
     { id: 'Acronym', enabled:true, numeric: false, disablePadding: false, label: 'Acronym' },
     { id: 'ProgramManager', enabled:true, numeric: false, disablePadding: false, label: 'Program Manager' },
-    { id: 'Approved', enabled:true, numeric: false, disablePadding: false, label: 'Approved' },
+    // { id: 'Approved', enabled:true, numeric: false, disablePadding: false, label: 'Approved' },
 ];
 
 interface EnhancedTableProps {
@@ -617,11 +617,11 @@ export default function ListPrograms({userID, navigate = false}) {
                                 {
                                   account.Group === 'admin' ?
                                   <TableCell padding="checkbox">
-                                  <Checkbox
+                                  {/* <Checkbox
                                       checked={row.Approved}
                                       inputProps={{ 'aria-labelledby': labelId }}
                                       onChange={(event) => toggleApproval(event, row)}
-                                  />
+                                  /> */}
                                   </TableCell> : null
                                 }
                             </StyledTableRow>
