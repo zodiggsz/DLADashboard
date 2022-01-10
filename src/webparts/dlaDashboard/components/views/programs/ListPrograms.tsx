@@ -22,7 +22,7 @@ import Button from '@material-ui/core/Button';
 import Select from 'react-select';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { actions as userActions } from '../../../models/user';
 import { actions as programActions } from '../../../models/programs';
 
@@ -326,6 +326,32 @@ export default function ListPrograms({userID, navigate = false}) {
       control: styles => ({ ...styles, backgroundColor: 'white', marginBottom: 15 }),
       // input: styles => ({ ...styles, marginBottom: 10 }),
     }
+
+    const [programLoaded, setProgramLoaded] = React.useState(false);
+    const query = useQuery();
+    const params = {
+      acronym: query.get('acronym'),
+      lens: query.get('lens'),
+    }
+
+    function useQuery() {
+      const { search } = useLocation();
+      return React.useMemo(() => new URLSearchParams(search), [search]);
+    }
+
+    console.log('Query Params are: ', params, programs, programs && programs.length, selectedProgram)
+
+    if (programs && programs.length) {
+      if (!programLoaded && params.acronym && !(selectedProgram && selectedProgram.Acronym == params.acronym)) {
+        console.log("setting program acronym: ", params.acronym)
+        dispatch(programActions.getProgramByAcronym(params.acronym));
+        setProgramLoaded(true);
+      }
+    } else {
+      dispatch(programActions.getAllPrograms());
+      console.log("getting programs from list programs")
+    }
+
 
     console.log('component ListPrograms rendered %d times', ++times);
 

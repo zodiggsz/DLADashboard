@@ -234,35 +234,35 @@ export default function DLAImprovements() {
 
     // A custom hook that builds on useLocation to parse
     // the query string for you.
-    function useQuery() {
-      const { search } = useLocation();
+    // function useQuery() {
+    //   const { search } = useLocation();
 
-      return React.useMemo(() => new URLSearchParams(search), [search]);
-    }
+    //   return React.useMemo(() => new URLSearchParams(search), [search]);
+    // }
 
-    const query = useQuery();
-    const params = {
-      acronym: query.get('acronym'),
-      lens: query.get('lens'),
-    }
+    // const query = useQuery();
+    // const params = {
+    //   acronym: query.get('acronym'),
+    //   lens: query.get('lens'),
+    // }
 
-    console.log('Query Params are: ', params, programs, programs && programs.length, selectedProgram)
-    console.log("Lens content is: ", lens, content);
+    // console.log('Query Params are: ', params, programs, programs && programs.length, selectedProgram)
+    // console.log("Lens content is: ", lens, content);
 
-    if (programs && programs.length) {
-      if (!programLoaded && params.acronym && !(selectedProgram && selectedProgram.Acronym == params.acronym)) {
-        console.log("setting program acronym: ", params.acronym)
-        dispatch(actions.getProgramByAcronym(params.acronym));
-        setProgramLoaded(true);
-      }
-      if (!lensLoaded && params.lens && lens != params.lens) {
-        changeImprovements({ target: { value: params.lens }})
-        setLensLoaded(true);
-      }
-    } else {
-      dispatch(actions.getAllPrograms());
-      console.log("getting programs from improvements")
-    }
+    // if (programs && programs.length) {
+    //   if (!programLoaded && params.acronym && !(selectedProgram && selectedProgram.Acronym == params.acronym)) {
+    //     console.log("setting program acronym: ", params.acronym)
+    //     dispatch(actions.getProgramByAcronym(params.acronym));
+    //     setProgramLoaded(true);
+    //   }
+    //   if (!lensLoaded && params.lens && lens != params.lens) {
+    //     changeImprovements({ target: { value: params.lens }})
+    //     setLensLoaded(true);
+    //   }
+    // } else {
+    //   dispatch(actions.getAllPrograms());
+    //   console.log("getting programs from improvements")
+    // }
 
 
     console.log("programs: ", programs, programs.length)
