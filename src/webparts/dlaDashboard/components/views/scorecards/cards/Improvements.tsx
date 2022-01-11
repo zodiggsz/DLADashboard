@@ -16,6 +16,7 @@ import classNames from 'classnames/bind';
 import { actions } from '../../../../models/programs';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import scoreStyles from '../index.module.scss';
+import { useLocation } from 'react-router-dom';
 let cx = classNames.bind(scoreStyles);
 var moment: any = require('moment');
 const people: string =  require("../../../../assets/images/lens_icons/people.png");
@@ -179,6 +180,14 @@ const defaultProgramData = {
     Acronym: 'Program'
 };
 
+const lensIndices = {
+  governance: 3,
+  technology: 4,
+  strategy: 1,
+  operations: 2,
+  people: 0,
+}
+
 function statusClass(classes, status) {
     let className = '';
 
@@ -209,6 +218,25 @@ export default function Improvements() {
     const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
     // const [improvements, setInsights] = React.useState<InsightData>();
     const [value, setValue] = React.useState(0);
+
+
+    const [lensLoaded, setLensLoaded] = React.useState(false);
+    const query = useQuery();
+    const params = {
+      lens: query.get('lens'),
+    }
+
+
+    function useQuery() {
+      const { search } = useLocation();
+      return React.useMemo(() => new URLSearchParams(search), [search]);
+    }
+
+    if (!lensLoaded && params.lens) {
+      console.log('Lens set for Improvements: ', params.lens, selectedProgram)
+      setValue(lensIndices[params.lens])
+      setLensLoaded(true);
+    }
 
     React.useEffect(() => {
         if(selectedProgram){
@@ -289,11 +317,11 @@ export default function Improvements() {
                         <Tab label="Technology" icon={setLensImage('technology')} {...a11yProps(4)} key={4} />
                     </Tabs>
                 </AppBar>
-                <TabPanel value={value} lens={improvements.people} index={0} />
-                <TabPanel value={value} lens={improvements.strategy} index={1} />
-                <TabPanel value={value} lens={improvements.operations} index={2} />
-                <TabPanel value={value} lens={improvements.governance} index={3} />
-                <TabPanel value={value} lens={improvements.technology} index={4} />
+                <TabPanel value={value} lens={improvements.people} index={lensIndices.people} />
+                <TabPanel value={value} lens={improvements.strategy} index={lensIndices.strategy} />
+                <TabPanel value={value} lens={improvements.operations} index={lensIndices.operations} />
+                <TabPanel value={value} lens={improvements.governance} index={lensIndices.governance} />
+                <TabPanel value={value} lens={improvements.technology} index={lensIndices.technology} />
             </div>
 
         );

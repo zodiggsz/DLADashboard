@@ -14,6 +14,7 @@ import Budgets from './cards/Budget';
 import Insights from './cards/Insights';
 import Improvements from './cards/Improvements';
 import './index.scss';
+import { useLocation } from 'react-router-dom';
 
 let cx = classNames.bind(scoreStyles);
 
@@ -144,6 +145,26 @@ export default function ScoreCard() {
     //     red: score.CompositeScore ? score.CompositeScore <= 2.50 : (score.TotalScore && score.TotalScore <= 2.50),
     //     white: !(score.CompositeScore || score.TotalScore)
     // });
+
+    const [lensLoaded, setLensLoaded] = React.useState(false);
+    const query = useQuery();
+    const params = {
+      lens: query.get('lens'),
+    }
+
+    console.log('Query Params are: ', params, selectedProgram)
+
+    function useQuery() {
+      const { search } = useLocation();
+      return React.useMemo(() => new URLSearchParams(search), [search]);
+    }
+
+    if (!lensLoaded && params.lens) {
+      setCard('Improvements')
+      setLensLoaded(true);
+    }
+
+
 
     React.useEffect(() => {
         if(selectedProgram){

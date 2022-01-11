@@ -327,11 +327,11 @@ export default function ListPrograms({userID, navigate = false}) {
       // input: styles => ({ ...styles, marginBottom: 10 }),
     }
 
+    const [lensLoaded, setLensLoaded] = React.useState(false);
     const [programLoaded, setProgramLoaded] = React.useState(false);
     const query = useQuery();
     const params = {
       acronym: query.get('acronym'),
-      lens: query.get('lens'),
     }
 
     function useQuery() {
