@@ -73,14 +73,14 @@ function ScoreResult({ label, original=0, target=0, compositeResults=false }) {
     let originalResults = cx({
         green: original >= 3.76,
         yellow: original < 3.76 && original > 2.50,
-        red: original < 2.50 && original > 1,
+        red: original < 2.50 && original >= 1,
         neutral: original == 0 || original == 0.0
     });
 
     let targetResults = cx({
         green: target >= 3.76,
         yellow: target < 3.76 && target > 2.50,
-        red: target < 2.50 && target > 1,
+        red: target < 2.50 && target >= 1,
         neutral: target == 0 || target == 0.0
     });
 

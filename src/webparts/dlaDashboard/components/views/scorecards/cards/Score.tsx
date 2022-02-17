@@ -56,7 +56,7 @@ function GoalResult({ label, goal=0, compositeResults=false }) {
     let results = cx({
         green: goal >= 3.76,
         yellow: goal < 3.76 && goal > 2.50,
-        red: goal < 2.50 && goal > 1,
+        red: goal < 2.50 && goal >= 1,
         neutral: goal == 0 || goal == 0.0
     });
 

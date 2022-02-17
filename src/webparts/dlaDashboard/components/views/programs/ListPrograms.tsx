@@ -616,8 +616,8 @@ export default function ListPrograms({userID, navigate = false}) {
                             let scoreResults = cx({
                                 green: (row.Score || row.Original) >= 3.76,
                                 yellow: row.Score ? row.Score < 3.76 && row.Score > 2.50 : row.Original < 3.76 && row.Original > 2.50,
-                                red: row.Score ? row.Score < 2.50 && row.Score > 1 : row.Original < 2.50 && row.Original > 1,
-                                neutral: !(row.Socre || row.Original)
+                                red: row.Score ? row.Score < 2.50 && row.Score >= 1 : row.Original < 2.50 && row.Original >= 1,
+                                neutral: !(row.Score || row.Original)
                             });
 
                         return (
