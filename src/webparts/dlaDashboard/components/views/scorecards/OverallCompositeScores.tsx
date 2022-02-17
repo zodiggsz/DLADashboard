@@ -53,13 +53,13 @@ const useStyles = makeStyles({
   });
 
 function EtmResult({ label, name, original, result=false, showProgram }) {
-    let data = original ? Number(original).toFixed(2) : 0.00;
+    let data = Number(original) ? Number(original).toFixed(2) : 0.00;
     let scoreResults = cx({
         score: true,
-        basic: data === 0,
+        basic: !data,
         green: data >= 3.76,
         yellow: data < 3.76 && data > 2.50,
-        red: data <= 2.50
+        red: data && data <= 2.50
     });
 
     let showResult = cx({
@@ -72,7 +72,7 @@ function EtmResult({ label, name, original, result=false, showProgram }) {
             <StyledTableCell align="center"
                 style={{width:80}}
                 className={scoreResults}>
-                {original ? original : 'N/A'}
+                {Number(original) ? original : 'N/A'}
             </StyledTableCell>
         </StyledTableRow>
     );
