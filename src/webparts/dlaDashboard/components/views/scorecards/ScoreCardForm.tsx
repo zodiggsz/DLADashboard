@@ -78,8 +78,8 @@ export default function ScoreCardForm() {
             actions.getCompositeScore(selectedProgram.ID).then(data => {
                 console.log('Data from the getCompositeScore Call: ', data)
                 setTotalTarget(data.CompositeScore && data.CompositeScore.split(' ')[1] !== 'original' ? data.CompositeScore.split(' ')[0] : '');
-                setTotalOriginal(data.TotalScore);
-                setTotalGoal(data.TotalGoal)
+                setTotalOriginal(data.TotalScore || '');
+                setTotalGoal(data.TotalGoal || '')
             });
 
         }
