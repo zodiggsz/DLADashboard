@@ -149,6 +149,7 @@ export default function ProgramInsights() {
 
     React.useEffect(() => {
         if(selectedProgram){
+          console.log("got selected program on insights: ", selectedProgram)
             if(selectedProgram.ID && program.ID !== selectedProgram.ID){
                 setProgram(selectedProgram);
                 loadInsights();
@@ -207,29 +208,34 @@ export default function ProgramInsights() {
     }
 
         return (
-            <div id="programInsights" className={classes.listRoot}>
-                <AppBar position="static" color="default">
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        variant="scrollable"
-                        scrollButtons="on"
-                        indicatorColor="primary"
-                        textColor="primary"
-                        aria-label="scrollable force tabs example"
-                    >
-                        <Tab label="People & Culture" icon={setLensImage('people')} {...a11yProps(3)} key={0} />
-                        <Tab label="Strategy" icon={setLensImage('strategy')} {...a11yProps(2)} key={1} />
-                        <Tab label="Operations" icon={setLensImage('operations')} {...a11yProps(1)} key={2} />
-                        <Tab label="Governance" icon={setLensImage('governance')} {...a11yProps(0)} key={3} />
-                        <Tab label="Technology" icon={setLensImage('technology')} {...a11yProps(4)} key={4} />
-                    </Tabs>
-                </AppBar>
-                <TabPanel value={value} lens={insights.people} index={0} />
-                <TabPanel value={value} lens={insights.strategy} index={1} />
-                <TabPanel value={value} lens={insights.operations} index={2} />
-                <TabPanel value={value} lens={insights.governance} index={3} />
-                <TabPanel value={value} lens={insights.technology} index={4} />
+            <div>
+              <div  style={{color: 'white', fontWeight: 'bold', marginBottom: 16}}>
+                BLUF: { selectedProgram.BLUF || '(none)' }
+              </div>
+              <div id="programInsights" className={classes.listRoot}>
+                  <AppBar position="static" color="default">
+                      <Tabs
+                          value={value}
+                          onChange={handleChange}
+                          variant="scrollable"
+                          scrollButtons="on"
+                          indicatorColor="primary"
+                          textColor="primary"
+                          aria-label="scrollable force tabs example"
+                      >
+                          <Tab label="People & Culture" icon={setLensImage('people')} {...a11yProps(3)} key={0} />
+                          <Tab label="Strategy" icon={setLensImage('strategy')} {...a11yProps(2)} key={1} />
+                          <Tab label="Operations" icon={setLensImage('operations')} {...a11yProps(1)} key={2} />
+                          <Tab label="Governance" icon={setLensImage('governance')} {...a11yProps(0)} key={3} />
+                          <Tab label="Technology" icon={setLensImage('technology')} {...a11yProps(4)} key={4} />
+                      </Tabs>
+                  </AppBar>
+                  <TabPanel value={value} lens={insights.people} index={0} />
+                  <TabPanel value={value} lens={insights.strategy} index={1} />
+                  <TabPanel value={value} lens={insights.operations} index={2} />
+                  <TabPanel value={value} lens={insights.governance} index={3} />
+                  <TabPanel value={value} lens={insights.technology} index={4} />
+              </div>
             </div>
 
         );

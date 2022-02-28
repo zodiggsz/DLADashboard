@@ -174,10 +174,11 @@ export default function Insights() {
     const selectedProgram = useSelector(state => state.programs.program);
     const insight = useSelector((state) => state.programs.programInsights);
     const [program, setProgram] = React.useState<ProgramData>(defaultProgramData);
+    const [BLUF, setBLUF] = React.useState('');
 
 
     React.useEffect(() => {
-        
+
         setLabelWidth(inputLabel.current.offsetWidth);
         if(selectedProgram){
             if(selectedProgram.ID && program.ID !== selectedProgram.ID){
@@ -194,13 +195,13 @@ export default function Insights() {
     }
 
     function addInsight(){
-        
+
         const newItem = {
             ID: 0,
             Lens: '',
             Content: '',
         };
-        
+
         setContent([
             ...content,
             newItem
@@ -210,6 +211,26 @@ export default function Insights() {
 
     function toggleAlert(){
         setAlert(!alert);
+    }
+
+    function saveBLUF(){
+      content.map(item => {
+          console.log("Saving Program Bluf: ", selectedProgram.Title, BLUF);
+
+          dispatch(actions.updateProgramBLUF(selectedProgram, BLUF)).then((result) => {
+            console.log("Bluf updated successfully.");
+          });
+
+      });
+    }
+
+    function handleBLUFChange() {
+
+        return (e) => {
+            setBLUF(e.target.value);
+            console.log("Program BLUF: ", BLUF);
+        };
+
     }
 
     function handleInputChange(index, id) {
@@ -246,7 +267,7 @@ export default function Insights() {
     }
 
     function changeInsight(e){
-        if(Object.keys(program).length > 0){ 
+        if(Object.keys(program).length > 0){
             setLens(e.target.value);
             switch (e.target.value) {
                 case 'governance':
@@ -268,7 +289,7 @@ export default function Insights() {
                     setContent([]);
                     break;
             }
-            
+
         }else{
             const msg = 'Please Select the Program First';
             setAlertMessage(msg);
@@ -288,7 +309,7 @@ export default function Insights() {
                 Content: item.Content
             };
             dispatch(actions.addInsight(item.ID, update));
-            
+
         });
 
     }
@@ -321,7 +342,7 @@ export default function Insights() {
 
                         </Select>
                     </FormControl>
-                    
+
                     {content.map( (item, key) => (
                         <FormControl variant="outlined" style={{width:"100%", margin:5}} key={key} >
                             <TextField
@@ -331,8 +352,8 @@ export default function Insights() {
                                 rows="4"
                                 value={item.Content}
                                 variant="outlined"
-                            />   
-                            <Fab className={classes.fab} color="secondary" onClick={() => deleteInput(key)}>x</Fab> 
+                            />
+                            <Fab className={classes.fab} color="secondary" onClick={() => deleteInput(key)}>x</Fab>
                         </FormControl>
                     ))}
                     <Fab color="primary" onClick={() => addInsight()} aria-label="add">
@@ -341,7 +362,21 @@ export default function Insights() {
                     <div style={{padding:20}}>
                         <Button variant="contained" color="primary" onClick={() => saveInsight()}>SAVE INSIGHT</Button>
                     </div>
-                    
+
+                </Paper>
+                <Paper className={classes.paper}>
+                  <h1>{Object.keys(program).length > 0 ? program.Acronym + " BLUF" : "Choose Program"}</h1>
+                  <FormControl variant="standard" style={{width:"100%", margin:5}} >
+                    <TextField
+                        label="Enter BLUF"
+                        multiline
+                        onChange={handleBLUFChange()}
+                        rows="4"
+                        value={selectedProgram.BLUF}
+                        variant="outlined"
+                    />
+                  </FormControl>
+                  <Button variant="contained" color="secondary" style={{ marginLeft: 20 }} onClick={() => saveBLUF()}>UPDATE BLUF</Button>
                 </Paper>
             </Grid>
         </Grid>

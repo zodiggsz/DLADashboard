@@ -365,6 +365,8 @@ export function getProgramScores(id, type){
 
 export function getProgramHistory(id){
 
+  console.log("getting programs history for: ", id);
+
 
     const select = ["*", "Author/ID", "Author/Title"];
     let includeFields = ['ID', 'Title', 'Modified', 'Modified By', 'Created', 'Created By'];
@@ -386,6 +388,8 @@ export function getProgramHistory(id){
         } );
 
         const historyData = {improvements, insights, score};
+
+        console.log("got history data for: ", id, historyData);
 
         dispatch(slice.actions.setProgramHistory(historyData));
 
@@ -578,6 +582,25 @@ export function updateProgramApproval(program){
           toast.success(`Updated Approal Status for ${program.Title}!`);
         } catch (e) {
             toast.error("Error updating Approval status");
+            console.log(e);
+            return e;
+        }
+
+    };
+}
+
+export function updateProgramBLUF(program, BLUF){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        try {
+          const update = { BLUF };
+          console.log("updating program: ", program, update)
+          web.lists.getByTitle("DLA_Programs").items.getById(program.ID).update(update);
+          dispatch(slice.actions.setLoading(false));
+          toast.success(`Updated BLUF for ${program.Title}!`);
+        } catch (e) {
+            toast.error("Error updating program BLUF");
             console.log(e);
             return e;
         }
