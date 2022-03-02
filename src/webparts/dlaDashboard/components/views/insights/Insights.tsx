@@ -183,6 +183,7 @@ export default function Insights() {
         if(selectedProgram){
             if(selectedProgram.ID && program.ID !== selectedProgram.ID){
                 setProgram(selectedProgram);
+                setBLUF(selectedProgram.BLUF || '');
                 loadInsights();
                 setContent([defaultContent]);
             }
@@ -372,7 +373,7 @@ export default function Insights() {
                         multiline
                         onChange={handleBLUFChange()}
                         rows="4"
-                        value={selectedProgram.BLUF}
+                        value={BLUF}
                         variant="outlined"
                     />
                   </FormControl>
