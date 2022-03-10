@@ -34,7 +34,7 @@ export default class Welcome extends React.Component<WelcomeProps, WelcomeState>
       <Jumbotron className={styles.jumbotron}>
         <h1>DLA Dashboard</h1>
         <p className="lead">
-            MVP Dashboard for ECM Administration
+            Dashboard for ECM Administration
         </p>
         <WelcomeContent
           isAuthenticated={this.props.isAuthenticated}
