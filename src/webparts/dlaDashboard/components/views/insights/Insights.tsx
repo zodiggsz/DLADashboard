@@ -217,11 +217,10 @@ export default function Insights() {
     function saveBLUF(){
       content.map(item => {
           console.log("Saving Program Bluf: ", selectedProgram.Title, BLUF);
-
           dispatch(actions.updateProgramBLUF(selectedProgram, BLUF)).then((result) => {
-            console.log("Bluf updated successfully.");
+            console.log("Bluf updated successfully.", result);
+            dispatch(actions.setProgram({ ... selectedProgram, BLUF }));
           });
-
       });
     }
 
