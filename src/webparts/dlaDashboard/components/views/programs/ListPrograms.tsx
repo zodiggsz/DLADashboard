@@ -445,6 +445,7 @@ export default function ListPrograms({userID, navigate = false}) {
     }, [programs]);
 
     function setSelectedProgram() {
+      // console.log('selected: ', selected, selected.indexOf('0'), selectedProgram.ID, selectedProgram.Acronym, selectedProgram.BLUF);
       if( selected.indexOf("0") == 0 && selectedProgram.ID){
         const id = `${selectedProgram.ID}`;
         setSelected([id]);
