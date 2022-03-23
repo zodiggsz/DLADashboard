@@ -78,7 +78,7 @@ const headCells: HeadCell[] = [
     { id: 'Score', enabled:true, numeric: false, disablePadding: false, label: 'Score' },
     { id: 'Acronym', enabled:true, numeric: false, disablePadding: false, label: 'Acronym' },
     { id: 'ProgramManager', enabled:true, numeric: false, disablePadding: false, label: 'Program Manager' },
-    // { id: 'Approved', enabled:true, numeric: false, disablePadding: false, label: 'Approved' },
+    { id: 'Approved', enabled:true, numeric: false, disablePadding: false, label: 'Approved' },
 ];
 
 interface EnhancedTableProps {
@@ -535,10 +535,18 @@ export default function ListPrograms({userID, navigate = false}) {
     };
 
     const toggleApproval = (event: React.ChangeEvent<HTMLInputElement>, program) => {
-        const id = `${program.ID}`;
+        const id = `${program.ID}`, approvedProgram = { ...program, Approved: !program.Approved };
         console.log("Approval status: ", id, event.target, event.target.checked, program.Approved);
-        dispatch(programActions.updateProgramApproval({ ...program, Approved: !program.Approved })).then(() => {
-          filterPrograms();
+        let p = programs.map(program => {
+          if (program.ID === id) return approvedProgram;
+          return program;
+        })
+        dispatch(programActions.updateProgramApproval(approvedProgram)).then(() => {
+          dispatch(programActions.setPrograms(p)).then(() => {
+            setTimeout(() => {
+              filterPrograms()
+            }, 1200);
+          });
         });
         // dispatch(programActions.getAllPrograms()).then((all) => {
         //   filterPrograms();
@@ -644,11 +652,11 @@ export default function ListPrograms({userID, navigate = false}) {
                                 {
                                   account.Group === 'admin' ?
                                   <TableCell padding="checkbox">
-                                  {/* <Checkbox
-                                      checked={row.Approved}
-                                      inputProps={{ 'aria-labelledby': labelId }}
-                                      onChange={(event) => toggleApproval(event, row)}
-                                  /> */}
+                                  <Checkbox
+                                    checked={row.Approved}
+                                    inputProps={{ 'aria-labelledby': labelId }}
+                                    onChange={(event) => toggleApproval(event, row)}
+                                  />
                                   </TableCell> : null
                                 }
                             </StyledTableRow>
