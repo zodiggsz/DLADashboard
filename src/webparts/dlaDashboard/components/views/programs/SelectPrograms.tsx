@@ -388,6 +388,7 @@ export default function SelectPrograms({userID}) {
                 items.push(program);
             }
         });
+        console.log('Ray - SelectPrograms =.tsx', items)
         dispatch(programActions.setPrograms(items));
         setProgramFilter(!programFilter);
         setPage(0);
