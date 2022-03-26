@@ -376,7 +376,7 @@ export default function Insights() {
                         variant="outlined"
                     />
                   </FormControl>
-                  <Button variant="contained" color="secondary" style={{ marginLeft: 20 }} onClick={() => saveBLUF()}>UPDATE BLUF</Button>
+                  <Button variant="contained" color="primary" style={{ marginLeft: 20 }} onClick={() => saveBLUF()}>UPDATE BLUF</Button>
                 </Paper>
             </Grid>
         </Grid>
