@@ -63,6 +63,7 @@ export const slice = createSlice({
             state.program = action.payload;
         },
         setPrograms(state, action) {
+            console.log('Ray - Set programs called', action.payload)
             state.list = action.payload;
         },
         setDITMR(state, action) {

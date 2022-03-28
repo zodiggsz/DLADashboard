@@ -64,6 +64,8 @@ export default function PFAccount() {
 
     console.log('Account page  for user:', user);
 
+    console.log('programs on index', programs)
+
 
     const [data, setData] = React.useState({
         First_Name: user.First_Name || "",

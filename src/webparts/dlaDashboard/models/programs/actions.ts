@@ -151,7 +151,11 @@ export function getAllPrograms(){
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
         let programs = web.lists.getByTitle("DLA_Programs").items.filter("Active eq 'Active'").top(50).orderBy("Created", false).getPaged().then( items => {
-            dispatch(slice.actions.setPrograms(items.results));
+            console.log('Ray - get all programs', items.results)
+            dispatch(slice.actions.setPrograms(items.results))
+                .then((data => {
+                    console.log('Ray - check this here', data)
+                }))
 
             if(items.hasNext){
                 dispatch(slice.actions.setNext(items.nextUrl));

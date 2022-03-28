@@ -78,7 +78,7 @@ const headCells: HeadCell[] = [
     { id: 'Score', enabled:true, numeric: false, disablePadding: false, label: 'Score' },
     { id: 'Acronym', enabled:true, numeric: false, disablePadding: false, label: 'Acronym' },
     { id: 'ProgramManager', enabled:true, numeric: false, disablePadding: false, label: 'Program Manager' },
-    // { id: 'Approved', enabled:true, numeric: false, disablePadding: false, label: 'Approved' },
+    { id: 'Approved', enabled:true, numeric: false, disablePadding: false, label: 'Approved' },
 ];
 
 interface EnhancedTableProps {
@@ -350,6 +350,8 @@ export default function ListPrograms({userID, navigate = false}) {
     } else {
       dispatch(programActions.getAllPrograms());
       console.log("getting programs from list programs")
+      //Route back to home page with a query parameter that says /#/?page=*
+      //On home page, write logic that says if page is not undefined, null, or empty string then, route back to page after program load else act normal
     }
 
 
@@ -394,9 +396,11 @@ export default function ListPrograms({userID, navigate = false}) {
 
     React.useEffect(() => {
 
-        dispatch(programActions.getAllPrograms()).then((all) => {
-            filterPrograms();
-        });
+        // dispatch(programActions.getAllPrograms()).then((all) => {
+        //     filterPrograms();
+        // });
+
+        filterPrograms()
 
         // dispatch(programActions.getDITMR()).then((all) => {
         //   console.log("got ditmr data: ", all);
@@ -429,7 +433,7 @@ export default function ListPrograms({userID, navigate = false}) {
 
         setSelectedProgram();
 
-    }, [userAccounts, userPrograms, selected]);
+    }, [selected]);
 
     // React.useEffect(() => {
     //     if(acronyms.length > 0){
@@ -439,10 +443,10 @@ export default function ListPrograms({userID, navigate = false}) {
     // }, [acronyms]);
     React.useEffect(() => {
         if(programs.length > 0){
-            console.log(programs);
+            console.log('This is running', programs);
             filterPrograms();
         }
-    }, [programs]);
+    }, []);
 
     function setSelectedProgram() {
       // console.log('selected: ', selected, selected.indexOf('0'), selectedProgram.ID, selectedProgram.Acronym, selectedProgram.BLUF);
@@ -535,11 +539,42 @@ export default function ListPrograms({userID, navigate = false}) {
     };
 
     const toggleApproval = (event: React.ChangeEvent<HTMLInputElement>, program) => {
-        const id = `${program.ID}`;
+        const id = `${program.ID}`, approvedProgram = { ...program, Approved: !program.Approved };
         console.log("Approval status: ", id, event.target, event.target.checked, program.Approved);
-        dispatch(programActions.updateProgramApproval({ ...program, Approved: !program.Approved })).then(() => {
-          filterPrograms();
-        });
+        let p = programs.map(program => {
+          if (program.ID === id) return approvedProgram;
+          return program;
+        })
+
+        console.log('Approved Program', approvedProgram)
+        console.log('Program List', programList)
+
+        
+        let newProgramList = programList.filter(program => program.ID === approvedProgram.ID)
+        let _programList = programList.filter(program => program.ID !== approvedProgram.ID)
+
+        console.log('Ray Here newProgramList', newProgramList)
+
+        newProgramList[0] = {...newProgramList[0], Approved: !newProgramList[0].Approved}
+
+        console.log('Ray here _programList before', _programList)
+        _programList.push(newProgramList[0])
+        console.log('Ray here _programList after', _programList)
+
+        // setProgramList([..._programList])
+        // console.log('Program List After', programList)
+        // dispatch(programActions.updateProgramApproval(approvedProgram)).then(() => {
+        //   dispatch(programActions.setPrograms(_programList)).then(() => {
+        //     setTimeout(() => {
+        //       filterPrograms()
+        //     }, 1200);
+        //   });
+        // });
+
+        dispatch(programActions.updateProgramApproval(approvedProgram))
+        console.log('Ray - ListPrograms.tsx', _programList)
+        dispatch(programActions.setPrograms(_programList))
+
         // dispatch(programActions.getAllPrograms()).then((all) => {
         //   filterPrograms();
         // });
@@ -644,11 +679,11 @@ export default function ListPrograms({userID, navigate = false}) {
                                 {
                                   account.Group === 'admin' ?
                                   <TableCell padding="checkbox">
-                                  {/* <Checkbox
-                                      checked={row.Approved}
-                                      inputProps={{ 'aria-labelledby': labelId }}
-                                      onChange={(event) => toggleApproval(event, row)}
-                                  /> */}
+                                  <Checkbox
+                                    checked={row.Approved}
+                                    inputProps={{ 'aria-labelledby': labelId }}
+                                    onChange={(event) => toggleApproval(event, row)}
+                                  />
                                   </TableCell> : null
                                 }
                             </StyledTableRow>
