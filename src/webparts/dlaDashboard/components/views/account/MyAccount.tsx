@@ -11,6 +11,7 @@ import { actions } from '../../../models/user';
 import AppLoader from '../../loader';
 import dlaStyles from './index.module.scss';
 import styles from '../../DlaDashboard.module.scss';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
         '& > *': {
             padding: theme.spacing(0),
         },
-    }, 
+    },
     paper: {
         overflow:"hidden",
         padding: '20px',
@@ -68,6 +69,24 @@ export default function MyAccount({ user, card }) {
     const group = user.Group;
     const [loading, setLoader] = React.useState(false);
     const [profile, setProfile] = React.useState(user.Image?user.Image: (userImage || "https://s3.amazonaws.com/yams-give/default_profile_picture.png"));
+    const history = useHistory();
+    const query = useQuery();
+    const params = {
+      page: query.get('page'),
+    }
+
+    if (params.page) {
+      setTimeout(() => {
+        history.push('/' + params.page)
+      }, 999);
+    }
+
+
+    function useQuery() {
+      const { search } = useLocation();
+      return React.useMemo(() => new URLSearchParams(search), [search]);
+    }
+
 
     const [data, setData] = React.useState({
         First_Name: user.First_Name || "",
@@ -101,7 +120,7 @@ export default function MyAccount({ user, card }) {
             const updatedUser = {
                 First_Name: data.First_Name,
                 Last_Name: data.Last_Name,
-                Email: data.Email,    
+                Email: data.Email,
                 Image: imageData['ServerRelativeUrl']
             };
 
@@ -124,14 +143,14 @@ export default function MyAccount({ user, card }) {
                         <input accept="image/*" className={classes.fileInput} id="icon-button-file" type="file" onChange={(e) => uploadProfileImage(e.target.files)}/>
                         <label htmlFor="icon-button-file">
                             <IconButton className={dlaStyles.profile_image_container}  color="primary" aria-label="upload picture" component="span">
-                            {(profile) ? 
+                            {(profile) ?
                                 <div className={dlaStyles.profile_image_container} style={{ backgroundImage: `url("${profile}")`, backgroundSize:"cover" }}>
                                 </div>
-                                : 
+                                :
                                 <AccountCircleIcon className={classes.profileInput} />
                             }
                             </IconButton>
-                        </label> 
+                        </label>
                     </Grid>
                     <Grid className={dlaStyles.user_info} item xs={7}>
                         {group === 'dlaAdmin' && <h1> ECM ADMIN </h1>}
@@ -203,7 +222,7 @@ export default function MyAccount({ user, card }) {
             )
             : <div>
                 <h5>
-                    Welcome to your dashboard! 
+                    Welcome to your dashboard!
                     <img className={classes.avatar} src={profile} alt=""/>
                     <span>{data.First_Name + ' ' + data.Last_Name}</span>
                 </h5>
