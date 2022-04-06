@@ -348,11 +348,11 @@ export default function ListPrograms({userID, navigate = false}) {
         setProgramLoaded(true);
       }
     } else {
+      const { pathname } = useLocation();
+      const page = pathname.replace('/', '');
       dispatch(programActions.getAllPrograms());
       console.log("getting programs from list programs")
-      history.push('/?page=programs');
-      //Route back to home page with a query parameter that says /#/?page=*
-      //On home page, write logic that says if page is not undefined, null, or empty string then, route back to page after program load else act normal
+      if (page) history.push('/?page=' + page);
     }
 
 
