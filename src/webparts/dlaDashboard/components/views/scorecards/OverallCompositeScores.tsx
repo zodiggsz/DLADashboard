@@ -52,7 +52,7 @@ const useStyles = makeStyles({
     },
   });
 
-function EtmResult({ label, name, original, result=false, showProgram }) {
+function EtmResult({ label, selected, original, result=false, showProgram }) {
     let data = Number(original) ? Number(original).toFixed(2) : 0.00;
     let scoreResults = cx({
         score: true,
@@ -68,7 +68,7 @@ function EtmResult({ label, name, original, result=false, showProgram }) {
 
     return (
         <StyledTableRow className={showResult} onClick={() => showProgram()}>
-            <StyledTableCell align="center" className={scoreStyle.labelCell}>{label}</StyledTableCell>
+            <StyledTableCell align="center" className={selected ? scoreStyle.labelCellSelected : scoreStyle.labelCell}>{label}</StyledTableCell>
             <StyledTableCell align="center"
                 style={{width:80}}
                 className={scoreResults}>
@@ -82,6 +82,7 @@ export default function OverallCompositeScores(props) {
     const dispatch = useDispatch();
     const classes = useStyles();
     const programs = useSelector((state) => state.programs.list);
+    const selectedProgram = useSelector((state) => state.programs.program);
     const [score, setScore] = React.useState({});
     const { etmTitle="ECM Scorecard Results" } = props;
 
@@ -139,7 +140,7 @@ export default function OverallCompositeScores(props) {
 
                         return (
                             <EtmResult
-                                name="score"
+                                selected={selectedProgram && selectedProgram.ID === item.ID}
                                 label={item.Acronym}
                                 result={true}
                                 original={score[item.Acronym]}

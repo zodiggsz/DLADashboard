@@ -150,15 +150,20 @@ export function getAllPrograms(){
 
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
-        let programs = web.lists.getByTitle("DLA_Programs").items.filter("Active eq 'Active'").top(50).orderBy("Created", false).getPaged().then( items => {
+        let programs = await web.lists.getByTitle("DLA_Programs").items.filter("Active eq 'Active'").top(50).orderBy("Created", false).getPaged().then( items => {
             console.log('Ray - get all programs', items.results)
             dispatch(slice.actions.setPrograms(items.results))
 
+
             if(items.hasNext){
-                dispatch(slice.actions.setNext(items.nextUrl));
+              dispatch(slice.actions.setNext(items.nextUrl));
             }
 
-        });
+            return items.results;
+          });
+
+          console.log("got programs GET ALL: ", programs);
+        return { message: "programs set.", programs };
 
     };
 
