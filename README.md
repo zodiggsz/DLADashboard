@@ -26,8 +26,9 @@ This package produces the following:
 
 ### Build options
 
-Change file src/config.ts by uncommenting   spURi: 'https://dlamil.dps.mil/sites/SPO_PEODashboard',
-Change file src/components/views/scorecards/cards/Budget.tsx URL = 'https://dlamil.dps.mil/sites/SPO_PEODashboard/Shared%20Documents/FY21%20DFW%20Requirements.xlsx'
+1. Change file src/config.ts by uncommenting   spURi: 'https://dlamil.dps.mil/sites/SPO_PEODashboard',
+2. Change file src/components/views/scorecards/cards/Budget.tsx URL = 'https://dlamil.dps.mil/sites/SPO_PEODashboard/Shared%20Documents/FY21%20DFW%20Requirements.xlsx'
+3. Change file src/webparts/dlaDashboard/components/views/scorecards/ScoreCard.tsx by commenting out the Budgets section
 
 gulp clean 
 gulp test 
