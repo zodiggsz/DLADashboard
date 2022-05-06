@@ -120,6 +120,8 @@ function TabPanel(props) {
                         {/* <TableCell align="left" style={{whiteSpace: 'pre-wrap'}}> */}
                           {/* {item.Remediation} */}
                           <div dangerouslySetInnerHTML={{__html: item.Remediation}} />
+                          <hr /><h6 style={{fontWeight:700}}>Improvement Roadmap</h6>
+                          <div dangerouslySetInnerHTML={{__html: item.Roadmap || "Not provided"}} />
                         </TableCell>
                         {/* <TableCell align="left">{item.Responsibility}</TableCell> */}
                         <TableCell align="left" style={{ textAlign: 'center' }}>

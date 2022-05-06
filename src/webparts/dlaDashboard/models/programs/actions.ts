@@ -645,7 +645,7 @@ export function addDLAImprovement(id, improvement){
 
 export function getDLAImprovements(id){
 
-    const select = ['ID', 'Manager', 'Remediation', 'Responsibility', 'Estimated_Completion', 'Status'];
+    const select = ['ID', 'Manager', 'Remediation', 'Responsibility', 'Roadmap', 'Estimated_Completion', 'Status'];
 
     return async (dispatch) => {
         dispatch(slice.actions.setLoading(true));
