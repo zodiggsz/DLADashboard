@@ -179,6 +179,7 @@ const defaultContent = {
     Lens: '',
     Remediation: '',
     Responsibility: '',
+    Roadmap: '',
     Estimated_Completion: null,
     Status: '',
     Manager: null
@@ -312,6 +313,7 @@ export default function DLAImprovements() {
             Lens: '',
             Remediation: '',
             Responsibility: '',
+            Roadmap: '',
             Estimated_Completion: null,
             Status: '',
             Manager: user.Group == 'portfolio' || user.Group == 'program' ? user.Title : null
@@ -423,6 +425,7 @@ export default function DLAImprovements() {
                 Lens: lens,
                 Remediation: item.Remediation,
                 Responsibility: item.Responsibility,
+                Roadmap: item.Roadmap,
                 Estimated_Completion: item.Estimated_Completion,
                 Status: item.Status,
                 Manager: item.Manager || null
@@ -516,6 +519,20 @@ export default function DLAImprovements() {
                                         disabled={isManager()}
                                     />
                                 </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <h5>Improvement Roadmap</h5>
+                                <div style={{padding:20, height: 150, backgroundColor: 'white', border: '1px solid blue', textAlign: 'left'}}>
+                                  {
+                                    item.Roadmap ? item.Roadmap.replace(/(<([^>]+)>)/ig, '') : ''
+                                  }
+                                </div>
+                                <div style={{padding: '10px 0', textAlign: 'right'}}>
+                                    <Button variant="contained" color="primary" disabled={isManager()} onClick={() =>
+                                      handleOpen({ type: 'improvement', value: 'Roadmap', key, item })}>
+                                        <EditIcon />
+                                    </Button>
+                                </div>
                             </Grid>
                             <Grid item xs={6}>
                                 <FormControl variant="outlined" style={{width:"100%", margin:0}} key={key} >

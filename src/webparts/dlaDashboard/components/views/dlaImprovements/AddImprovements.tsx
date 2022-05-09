@@ -76,6 +76,11 @@ export default function AddImprovements({ options, closeModal = value => {} }) {
           ...options, Responsibility: value
         }
       }
+      if (options.value === 'Roadmap') {
+        newOptions = {
+          ...options, Roadmap: value
+        }
+      }
       // newOptions.item[options.value] = value;
       closeModal({ options: newOptions, value });
     }
