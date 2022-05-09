@@ -146,7 +146,7 @@ export default function Budget() {
         // const URL = 'https://dlamil.dps.mil/teams/C36/N71/TestForDB/ALLPEOs.xlsx';
         // const URL = 'https://dlamil.dps.mil/sites/SPO_PEODashboard/Shared%20Documents/DLABudgets.xlsx'; //production
         // const URL = 'https://dlamil.dps.mil/sites/SPO_PEODashboard/Shared%20Documents/FY22%20DFW%20Requirements.xlsx'; //production
-        const URL = 'https://dlamil.dps.mil/sites/STAGE_PEODashboard/Shared%20Documents/FY22%20DFW%20Requirements.xlsx'; //staging
+        const URL = 'https://dlamil.dps.mil/sites/STAGE_PEODashboard/Shared%20Documents/FY22%20DFW%20Requirements.xlsx';  //staging
 
         const loadXLSX = url => {
             return new Promise((resolve, reject) => {
