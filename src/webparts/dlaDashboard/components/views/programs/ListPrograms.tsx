@@ -285,7 +285,7 @@ interface ProgramData {
 let times = 0;
 
 function isManager(role) {
-  return role === 'admin' || role === 'program' || role === 'portfolio'
+  return role === 'admin'
 }
 
 export default function ListPrograms({userID, navigate = false}) {
