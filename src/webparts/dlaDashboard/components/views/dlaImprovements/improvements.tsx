@@ -478,7 +478,10 @@ export default function DLAImprovements() {
                     </div>
                     {content.map( (item, key) => {
                       function isManager(): boolean {
-                        return ((user.Group == 'program' || user.Group == 'portfolio') && !item.Manager)
+                        return ((user.Group == 'peo' || user.Group == 'program' || user.Group == 'portfolio') && !item.Manager)
+                      }
+                      function cantEditRoadmap(): boolean {
+                        return (user.Group == "peo")
                       }
                       return (
                         <Grid container className={improvementStyle.improvementData} style={{backgroundColor: '#a3bdd1'}} spacing={3}>
@@ -528,7 +531,7 @@ export default function DLAImprovements() {
                                   }
                                 </div>
                                 <div style={{padding: '10px 0', textAlign: 'right'}}>
-                                    <Button variant="contained" color="primary" disabled={isManager()} onClick={() =>
+                                    <Button variant="contained" color="primary" disabled={cantEditRoadmap()} onClick={() =>
                                       handleOpen({ type: 'improvement', value: 'Roadmap', key, item })}>
                                         <EditIcon />
                                     </Button>
