@@ -82,14 +82,16 @@ export default function ItemsOfInterest() {
     changeProgram(event);
   };
 
-  const changeProgram = (event: ChangeEvent<{ value: unknown }>) => {
+  const changeProgram = async (event: ChangeEvent<{ value: unknown }>) => {
     const value = event.target.value;
     const PROGRAM = programs.find(program => program.ID === value);
     console.log("got new program: ", value, PROGRAM);
     if (PROGRAM) {
       const { ID, Acronym } = PROGRAM;
-      dispatch(actions.setProgram(PROGRAM));
+      await dispatch(actions.setProgram(PROGRAM));
       setProgram({ ID, Acronym });
+      setItemsLoaded(false);
+      loadItems();
     }
   }
 
