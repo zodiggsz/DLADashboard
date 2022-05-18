@@ -29,6 +29,14 @@ export function getProgramImprovements(ID){
 
 }
 
+export function setProgramItems(items){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setProgramItems(items));
+    };
+
+}
+
 export function setProgramImprovements(improvements){
 
     return async (dispatch) => {
@@ -612,6 +620,54 @@ export function updateProgramBLUF(program, BLUF){
         }
 
     };
+}
+
+export function addDLAItem(id, Item){
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+        try {
+            if(id > 0){
+                const item = await web.lists.getByTitle("DLA_Items").items.filter(`ID eq ${id}`).get();
+                if (item) {
+                    web.lists.getByTitle("DLA_Items").items.getById(id).update(Item);
+                    dispatch(slice.actions.setLoading(false));
+                    toast.success(`Updated Item successfuly!`);
+                }
+
+            }else{
+                console.log('Adding new item: ', Item);
+                web.lists.getByTitle("DLA_Items").items.add(Item);
+                dispatch(slice.actions.setLoading(false));
+                toast.success(`Successfully added Item`);
+            }
+        } catch (e) {
+            toast.error("Error adding Item");
+            console.log(e);
+            return e;
+        }
+
+    };
+}
+
+export function getDLAItems(id){
+
+    const select = ['ID', 'ProgramID', 'Acronym', 'Subject', 'Message', 'Status', 'Response'];
+
+    return async (dispatch) => {
+        dispatch(slice.actions.setLoading(true));
+
+        const items = await web.lists.getByTitle("DLA_Items").items.select(select).filter(`ProgramID eq ${id}`).orderBy("Created", false).getAll().then( data => {
+            return data ? data: [];
+        } );
+
+        console.log("got items data: ", items);
+
+        dispatch(slice.actions.setProgramItems(items));
+        return items;
+
+    };
+
 }
 
 export function addDLAImprovement(id, improvement){

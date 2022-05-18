@@ -17,6 +17,7 @@ import ManageAccounts from '../views/account/ManageAccounts';
 import ManageTeams from '../views/account/ManageTeams';
 import EditScoreCard from '../views/scorecards/EditScoreCard';
 import Programs from '../views/programs/Programs';
+import ItemsOfInterest from '../views/programs/ItemsOfInterest';
 import Budgets from '../views/budgets/Budgets';
 import Insights from '../views/insights/Insights';
 import DLAImprovements from '../views/dlaImprovements/improvements';
@@ -130,6 +131,16 @@ var dashRoutes = [
         component: Programs,
         hidden: false,
         group:[],
+        exact:true,
+        breadcrumb: null
+    },
+    {
+        path: "/items-of-interest",
+        name: "Items of Interest",
+        icon: TableChartIcon,
+        component: ItemsOfInterest,
+        hidden: false,
+        group:["peo"],
         exact:true,
         breadcrumb: null
     }

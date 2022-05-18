@@ -72,12 +72,14 @@ export default function MyAccount({ user, card }) {
     const history = useHistory();
     const query = useQuery();
     const params = {
+      acronym: query.get('acronym'),
       page: query.get('page'),
     }
+    const ROUTE = `/${params.page}${params.acronym?'?acronym='+params.acronym:''}`;
 
     if (params.page) {
       setTimeout(() => {
-        history.push('/' + params.page)
+        history.push(ROUTE)
       }, 999);
     }
 
