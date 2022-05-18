@@ -39,6 +39,7 @@ export const slice = createSlice({
             technology: [],
         },
         programInterests: [],
+        programItems: [],
         programImprovements: {
             people: [],
             strategy: [],
@@ -83,6 +84,9 @@ export const slice = createSlice({
         },
         setProgramInterests(state, action) {
             state.programInterests = action.payload;
+        },
+        setProgramItems(state, action) {
+            state.programItems = action.payload;
         },
         setProgramImprovements(state, action) {
             state.programImprovements = action.payload;

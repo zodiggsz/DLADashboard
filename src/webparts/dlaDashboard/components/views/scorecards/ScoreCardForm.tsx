@@ -156,7 +156,6 @@ export default function ScoreCardForm() {
         const value = event.target.value;
         const prog = await dispatch(actions.getProgramByID(value));
         const calc = await dispatch(actions.getProgramScores(value, 'latest'));
-
     };
 
     function calcAvgOrig() {

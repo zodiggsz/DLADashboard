@@ -15,6 +15,7 @@ import ManageTeams from '../views/account/ManageTeams';
 import Account from '../views/account/Account';
 import EditScoreCard from '../views/scorecards/EditScoreCard';
 import Programs from '../views/programs/Programs';
+import ItemsOfInterest from '../views/programs/ItemsOfInterest';
 import Budgets from '../views/budgets/Budgets';
 import Insights from '../views/insights/Insights';
 import DLAImprovements from '../views/dlaImprovements/improvements';
@@ -100,6 +101,16 @@ var portfolioRoutes = [
         breadcrumb: null
     },
     {
+        path: "/items-of-interest",
+        name: "Items of Interest",
+        icon: TableChartIcon,
+        component: ItemsOfInterest,
+        hidden: false,
+        group:["peo"],
+        exact:true,
+        breadcrumb: null
+    },
+    {
         form: true,
         path: "/improvements",
         name: "Improvements",
@@ -108,7 +119,7 @@ var portfolioRoutes = [
         hidden: true,
         group:["admin","operator","peo","portfolio","program"]
     }
-  
+
 ];
 
 export default portfolioRoutes;
