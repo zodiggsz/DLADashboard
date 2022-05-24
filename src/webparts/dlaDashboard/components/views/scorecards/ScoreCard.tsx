@@ -257,22 +257,22 @@ export default function ScoreCard() {
                             IMPROVEMENTS
                         </a>
                     </li>
-                    {group === 'peo' ? /// COMMENT OUT FOR PRODUCTION
+                    {/* {group === 'peo' ? /// COMMENT OUT FOR PRODUCTION
                         <li style={card==='Budgets'?style.invertBg:{}}>
                             <a style={card==='Budgets'?style.invertText:{}} href="#"
                                 onClick={(event) => onSubmit(event,'Budgets')}>
                                 BUDGETS
                             </a>
                         </li>
-                    : null}
-                    {group === 'program' ?
+                    : null} */}
+                    {/* {group === 'program' ?
                         <li style={card==='Items'?style.invertBg:{}}>
                             <a style={card==='Items'?style.invertText:{}} href="#"
                                 onClick={(event) => onSubmit(event,'Items')}>
                                 ITEMS OF INTEREST
                             </a>
                         </li>
-                    : null}
+                    : null} */}
                 </ul>
             </div>
             <div className={`${scoreStyles.programMain}`}>
@@ -280,7 +280,7 @@ export default function ScoreCard() {
                 {card == 'Insights' && <Insights />}
                 {card == 'Budgets' && <Budgets />}
                 {card == 'Improvements' && <Improvements />}
-                {card == 'Items' && <Items />}
+                {/* {card == 'Items' && <Items />} */}
             </div>
         </div>
     );
