@@ -257,14 +257,14 @@ export default function ScoreCard() {
                             IMPROVEMENTS
                         </a>
                     </li>
-                    {group === 'peo' ? /// COMMENT OUT FOR PRODUCTION
+                    {/* {group === 'peo' ? /// COMMENT OUT FOR PRODUCTION
                         <li style={card==='Budgets'?style.invertBg:{}}>
                             <a style={card==='Budgets'?style.invertText:{}} href="#"
                                 onClick={(event) => onSubmit(event,'Budgets')}>
                                 BUDGETS
                             </a>
                         </li>
-                    : null}
+                    : null} */}
                     {/* {group === 'program' ?
                         <li style={card==='Items'?style.invertBg:{}}>
                             <a style={card==='Items'?style.invertText:{}} href="#"
