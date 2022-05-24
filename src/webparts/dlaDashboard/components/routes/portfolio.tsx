@@ -106,7 +106,8 @@ var portfolioRoutes = [
         icon: TableChartIcon,
         component: ItemsOfInterest,
         hidden: false,
-        group:["peo"],
+        // group:["peo"],
+        group:[],
         exact:true,
         breadcrumb: null
     },

@@ -265,14 +265,14 @@ export default function ScoreCard() {
                             </a>
                         </li>
                     : null}
-                    {group === 'program' ?
+                    {/* {group === 'program' ?
                         <li style={card==='Items'?style.invertBg:{}}>
                             <a style={card==='Items'?style.invertText:{}} href="#"
                                 onClick={(event) => onSubmit(event,'Items')}>
                                 ITEMS OF INTEREST
                             </a>
                         </li>
-                    : null}
+                    : null} */}
                 </ul>
             </div>
             <div className={`${scoreStyles.programMain}`}>
@@ -280,7 +280,7 @@ export default function ScoreCard() {
                 {card == 'Insights' && <Insights />}
                 {card == 'Budgets' && <Budgets />}
                 {card == 'Improvements' && <Improvements />}
-                {card == 'Items' && <Items />}
+                {/* {card == 'Items' && <Items />} */}
             </div>
         </div>
     );
